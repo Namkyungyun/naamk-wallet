@@ -150,3 +150,26 @@ Android 12(API 31+)부터 시스템은 앱이 시작될 때:
 해당 값이 없거나 설정이 잘못되었으면 → 기본으로 ic_launcher를 사용함!
 
 즉, 'flutter_native_splash.yaml' 파일에서의 android_12파트의 Image설정은 반드시 해주어야 함.
+
+### launcher icon 설정
+
+flutter_launcher_icons libarary를 이용
+
+-  이미지 준비
+
+   -  512x512 배경 색상 이미지 (ic_launcher_background.png)
+   -  512x512 로고 이미지 (ic_launcher_foreground.png)
+   -  512x512 로고+배경 이미지 (ic_launcher.png)
+
+-  설정 config파일 자동생성되게 cmd 실행
+   -  flutter_launcher_icons.yaml 파일이 생성되는 명령어
+
+```
+dart run flutter_launcher_icons:generate
+```
+
+-  flutter_launcher_icons.yaml 파일에 설정된 값으로 launcher 자동 생성 진행
+
+```
+dart run flutter_launcher_icons -f flutter_launcher_icons.yaml
+```
