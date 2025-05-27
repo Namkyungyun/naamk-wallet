@@ -1,0 +1,144 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'app_color.dart';
+
+class AppTheme {
+  static ThemeData get lightTheme {
+    return ThemeData(
+        primaryColor: AppColor.brand60,
+        primaryColorLight: AppColor.brand60,
+        primaryColorDark: AppColor.brand90,
+        appBarTheme: AppBarTheme(
+            elevation: 2,
+            iconTheme: IconThemeData(color: AppColor.brand100),
+            backgroundColor: AppColor.backgroundLight,
+            titleTextStyle: TextStyle(
+                color: AppColor.black,
+                fontSize: 16,
+                fontFamily: 'Raleway',
+                fontWeight: FontWeight.w800),
+            systemOverlayStyle: SystemUiOverlayStyle(
+                systemNavigationBarColor: AppColor.backgroundLight,
+                statusBarColor: AppColor.backgroundLight,
+                statusBarBrightness: Brightness.light,
+                statusBarIconBrightness: Brightness.dark)),
+        scaffoldBackgroundColor: AppColor.backgroundLight,
+        cardColor: AppColor.cardLight,
+        listTileTheme: ListTileThemeData(
+          horizontalTitleGap: 12,
+          minTileHeight: 40,
+          minVerticalPadding: 8,
+          tileColor: AppColor.listTileLight,
+          selectedTileColor: AppColor.selectedListTileLight,
+          visualDensity: VisualDensity.compact,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: BorderSide(
+              color: AppColor.dividerLight, // ✅ 테두리 색상
+              width: 0.5, // ✅ 테두리 두께
+            ),
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+            vertical: 4.0,
+          ),
+          titleTextStyle: TextStyle(
+            color: AppColor.grey80,
+          ),
+          iconColor: AppColor.listTileIconLight,
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: AppColor.bottomNavbarBackground,
+          elevation: 8,
+          selectedItemColor: AppColor.selectedBottomItem,
+          unselectedItemColor: AppColor.unselectedBottomItem,
+          type: BottomNavigationBarType.fixed,
+          selectedLabelStyle:
+              const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+          unselectedLabelStyle:
+              const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+        ),
+        dividerColor: AppColor.dividerLight,
+        splashColor: AppColor.transparent,
+        iconTheme: IconThemeData(color: AppColor.brand100),
+        fontFamily: 'Raleway',
+        textTheme: ThemeData.light().textTheme,
+        progressIndicatorTheme:
+            ProgressIndicatorThemeData(color: AppColor.brand80),
+        buttonTheme: ButtonThemeData(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+          buttonColor: AppColor.brand60,
+        ));
+  }
+
+  static ThemeData get darkTheme {
+    return ThemeData(
+        primaryColor: AppColor.brand70,
+        primaryColorLight: AppColor.brand60,
+        primaryColorDark: AppColor.brand70,
+        appBarTheme: AppBarTheme(
+            elevation: 2,
+            iconTheme: IconThemeData(color: AppColor.brand30),
+            backgroundColor: AppColor.backgroundDark,
+            titleTextStyle: TextStyle(
+                color: AppColor.white,
+                fontSize: 16,
+                fontFamily: 'Raleway',
+                fontWeight: FontWeight.w800),
+            systemOverlayStyle: SystemUiOverlayStyle(
+                systemNavigationBarColor: AppColor.backgroundDark,
+                statusBarColor: AppColor.backgroundDark,
+                statusBarBrightness: Brightness.dark,
+                statusBarIconBrightness: Brightness.light)),
+        scaffoldBackgroundColor: AppColor.backgroundDark,
+        cardColor: AppColor.cardDark,
+        listTileTheme: ListTileThemeData(
+          horizontalTitleGap: 12,
+          minVerticalPadding: 8,
+          minTileHeight: 40,
+          tileColor: AppColor.listTileDark,
+          selectedTileColor: AppColor.selectedListTileDark,
+          visualDensity: VisualDensity.compact,
+          titleTextStyle: TextStyle(
+            color: AppColor.white,
+          ),
+          iconColor: AppColor.listTileIconDark,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+            side: BorderSide(
+              color: AppColor.dividerLight, // ✅ 테두리 색상
+              width: 0.5, // ✅ 테두리 두께
+            ),
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16.0,
+            vertical: 4.0,
+          ),
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: AppColor.bottomNavbarBackgroundDark,
+          elevation: 8,
+          selectedItemColor: AppColor.selectedBottomItemDark,
+          unselectedItemColor: AppColor.unselectedBottomItemDark,
+          type: BottomNavigationBarType.fixed,
+          selectedLabelStyle:
+              const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+          unselectedLabelStyle:
+              const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+        ),
+        dividerColor: AppColor.dividerDark,
+        splashColor: AppColor.transparent,
+        iconTheme: IconThemeData(color: AppColor.white),
+        fontFamily: 'Raleway',
+        textTheme: ThemeData.dark().textTheme,
+        progressIndicatorTheme:
+            ProgressIndicatorThemeData(color: AppColor.brand80),
+        buttonTheme: ButtonThemeData(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
+          buttonColor: AppColor.brand60,
+        ));
+  }
+}
