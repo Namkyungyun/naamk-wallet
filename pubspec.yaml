@@ -46,6 +46,7 @@ dependencies:
    flutter_riverpod: ^2.6.1
    riverpod_annotation: ^2.6.1
    riverpod_generator: ^2.6.3
+   hooks_riverpod: ^2.6.1
 
    ## navigation
    go_router: ^15.1.2
@@ -59,9 +60,10 @@ dependencies:
    freezed_annotation: ^2.4.4
    json_annotation: ^4.9.0
 
-   ## localdata
+   ## local data
    flutter_secure_storage: ^9.2.4
    shared_preferences: ^2.5.3
+   hive_flutter: ^1.1.0
 
    ## number, date, muti-languate tool
    easy_localization: ^3.0.7+1
@@ -69,6 +71,8 @@ dependencies:
    ## env, device, app version tool
    device_info_plus: ^11.3.0
    package_info_plus: ^8.3.0
+
+   ## ui component & tool
    toggle_switch: ^2.3.0
    fluttertoast: ^8.2.12
    flutter_svg: ^2.1.0
@@ -77,12 +81,15 @@ dependencies:
    infinite_scroll_pagination: ^5.0.0
    flutter_local_notifications: ^19.2.1
    url_launcher: ^6.3.1
+   persistent_bottom_nav_bar: ^6.2.1
 
    ## develop tools
    flutter_dotenv: ^5.2.1
    mockito: ^5.4.4
    logger: ^2.5.0
    build_runner: ^2.4.13
+   json_serializable: ^6.9.0
+   path_provider: ^2.1.5
 
 dev_dependencies:
    flutter_test:
