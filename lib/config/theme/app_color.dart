@@ -47,8 +47,13 @@ class AppColor {
   static Color red = const Color(0xFFD13438);
   static Color redDark = const Color(0xFF982626);
 
-  static Color cardDark = grey70;
+  static Color cardDark = grey90;
   static Color cardLight = grey10;
+
+  static Color activeLight = brand80;
+  static Color activeDark = brand90;
+  static Color inactiveLight = grey20;
+  static Color inactiveDark = grey70;
 
   static Color listTileLight = white;
   static Color listTileDark = grey80;

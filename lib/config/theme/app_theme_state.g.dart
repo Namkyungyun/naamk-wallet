@@ -6,17 +6,17 @@ part of 'app_theme_state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appThemeLogicHash() => r'27dedbe93cc660a32d2abc6c387710560826d3c4';
+String _$appThemeStateHash() => r'051b523a44e392e19e070c6fc242b238dca2b1d0';
 
 /// See also [AppThemeState].
 @ProviderFor(AppThemeState)
-final appThemeLogicProvider =
+final appThemeStateProvider =
     AutoDisposeNotifierProvider<AppThemeState, AppThemeUiModel>.internal(
   AppThemeState.new,
-  name: r'appThemeLogicProvider',
+  name: r'appThemeStateProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$appThemeLogicHash,
+      : _$appThemeStateHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );

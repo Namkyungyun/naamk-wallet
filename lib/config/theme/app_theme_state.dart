@@ -20,7 +20,7 @@ class AppThemeState extends _$AppThemeState {
     return AppThemeUiModel(themeMode: themeMode);
   }
 
-  void setThemeMode(ThemeMode mode) async {
+  void setThemeMode(ThemeMode mode) {
     final prefs = injector<SharedPreferences>();
     prefs.setString(THEME_MODE, mode.toString());
 
