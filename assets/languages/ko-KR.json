@@ -1,0 +1,21 @@
+{
+   "bottom_nav": {
+      "notice": "공지",
+      "wallet": "지갑",
+      "home": "홈",
+      "community": "커뮤니티",
+      "settings": "설정"
+   },
+
+   "page_title": {
+      "setting": "설정"
+   },
+
+   "setting_page": {
+      "list": {
+         "language": "언어",
+         "about": "앱 소개",
+         "logout": "로그아웃"
+      }
+   }
+}
