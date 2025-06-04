@@ -173,3 +173,13 @@ dart run flutter_launcher_icons:generate
 ```
 dart run flutter_launcher_icons -f flutter_launcher_icons.yaml
 ```
+
+-  riverpod, freezed 어노테이션을 붙였을 때, 구현체 파일 자동 생성 명령어
+
+```
+dart run build_runner build --delete-conflicting-outputs
+
+or
+
+dart run build_runner watch
+```

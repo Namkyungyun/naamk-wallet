@@ -1,3 +1,4 @@
+import 'package:naamk_wallet/app/setting/setting_page_state.dart';
 import 'package:naamk_wallet/config/di/ui_common_module.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,6 +12,11 @@ class SettingPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final languageState = ref.watch(appLanguageStateProvider).languageMode;
+
+    final pageState = ref.watch(settingPageStateProvider);
+    final pageStateNotifier = ref.read(settingPageStateProvider.notifier);
+
     return Scaffold(
       appBar: const EmptyAppbarWidget(),
       backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
@@ -42,16 +48,19 @@ class SettingPage extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(8),
                         color: Theme.of(context).primaryColor),
                     child: Text(
-                      ref.watch(appLanguageStateProvider).languageMode.langCode,
+                      languageState.langCode,
                       style: TextStyle(
-                          color: Theme.of(context).listTileTheme.selectedColor),
+                        color: Theme.of(context).listTileTheme.selectedColor,
+                      ),
                     ),
                   ),
                   title: context.tr('setting_page.list.language'),
-                  onTap: () {},
+                  onTap: () {
+                    pageStateNotifier
+                        .setShowLanguageCard(!pageState.showLanguageCard);
+                  },
                 ),
-                const Gap(8),
-                const LanguageSwitchWidget(),
+                if (pageState.showLanguageCard) const LanguageSwitchWidget(),
                 const Gap(8),
                 SettigListPushItem(
                   icon: Icons.person,
