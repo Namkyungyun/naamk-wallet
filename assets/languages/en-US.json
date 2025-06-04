@@ -1,0 +1,21 @@
+{
+   "bottom_nav": {
+      "notice": "Notice",
+      "wallet": "Wallet",
+      "home": "Home",
+      "community": "Community",
+      "settings": "Settings"
+   },
+
+   "page_title": {
+      "setting": "Setting"
+   },
+
+   "setting_page": {
+      "list": {
+         "language": "Language",
+         "about": "About",
+         "logout": "Logout"
+      }
+   }
+}

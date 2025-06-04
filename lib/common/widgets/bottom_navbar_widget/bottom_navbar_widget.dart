@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:naamk_wallet/config/di/ui_common_module.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:naamk_wallet/app/setting/setting_page.dart';
 import 'package:naamk_wallet/common/widgets/bottom_navbar_widget/bottom_navbar_state.dart';
@@ -34,15 +34,15 @@ class BottomNavbarWidget extends HookConsumerWidget {
     },
         items: [
           {
-            'title': 'Notice',
+            'title': context.tr('bottom_nav.notice'),
             'icon': const Icon(Icons.notification_important),
           },
           {
-            'title': 'Wallet',
+            'title': context.tr('bottom_nav.wallet'),
             'icon': const Icon(Icons.account_balance_wallet),
           },
           {
-            'title': 'Home',
+            'title': context.tr('bottom_nav.home'),
             'icon': Icon(
               Icons.home,
               color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
@@ -50,11 +50,11 @@ class BottomNavbarWidget extends HookConsumerWidget {
             'isCenter': true
           },
           {
-            'title': 'Community',
+            'title': context.tr('bottom_nav.community'),
             'icon': const Icon(Icons.grid_view),
           },
           {
-            'title': 'Settings',
+            'title': context.tr('bottom_nav.settings'),
             'icon': const Icon(Icons.settings),
           },
         ].map(

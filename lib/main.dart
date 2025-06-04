@@ -1,11 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:naamk_wallet/config/di/injector.dart';
-import 'package:naamk_wallet/config/di/strings.dart';
 import 'package:naamk_wallet/app/root_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:naamk_wallet/config/language/app_language.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,22 +16,15 @@ Future main() async {
 
   FlutterNativeSplash.remove();
 
-  // 앱 실행될 때 우선적으로 'portraitUp'으로 설정된 후 앱 실행되도록 하기
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
-    runApp(
-      EasyLocalization(
-        supportedLocales: const <Locale>[
-          /// Add your supported locales here
-          Locale('en'),
-          Locale('tr'),
-        ],
-        path: Strings.localizationsPath,
-        fallbackLocale: const Locale('en', ''),
-        child: const ProviderScope(
-          child: RootScreen(),
-        ),
+  runApp(
+    EasyLocalization(
+      supportedLocales: AppLanguage.getAllLocale(),
+      path: AppLanguage.localizationPath,
+      fallbackLocale: AppLanguage.getLocale(''),
+      child: const ProviderScope(
+        // riverpod context pool 안에서 ui 요소가 들어가도록.
+        child: RootScreen(),
       ),
-    );
-  });
+    ),
+  );
 }
