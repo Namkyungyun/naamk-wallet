@@ -22,7 +22,7 @@ class SettingPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  context.tr('page_title.setting'),
+                  'page_title.setting'.tr(),
                   textAlign: TextAlign.start,
                   style: const TextStyle(
                     fontSize: 24,
@@ -36,13 +36,13 @@ class SettingPage extends StatelessWidget {
                 const Gap(8),
                 SettigPushListTileWidget(
                   icon: Icons.person,
-                  title: context.tr('setting_page.list.about'),
+                  title: 'setting_page.list.about'.tr(),
                   onTap: () {},
                 ),
                 const Gap(8),
                 SettigPushListTileWidget(
                   icon: Icons.logout,
-                  title: context.tr('setting_page.list.logout'),
+                  title: 'setting_page.list.logout'.tr(),
                   onTap: () {},
                 ),
               ],

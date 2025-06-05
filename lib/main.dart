@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:naamk_wallet/config/di/injector.dart';
@@ -20,9 +21,9 @@ Future main() async {
     EasyLocalization(
       supportedLocales: AppLanguage.getAllLocale(),
       path: AppLanguage.localizationPath,
-      fallbackLocale: AppLanguage.getLocale(''),
+      fallbackLocale: AppLanguage.getLocale(PlatformDispatcher
+          .instance.locale.languageCode), // 초기 locale or device locale일 때 사용
       child: const ProviderScope(
-        // riverpod context pool 안에서 ui 요소가 들어가도록.
         child: RootScreen(),
       ),
     ),

@@ -34,15 +34,15 @@ class BottomNavbarWidget extends ConsumerWidget {
     },
         items: [
           {
-            'title': context.tr('bottom_nav.notice'),
+            'title': 'bottom_nav.notice'.tr(),
             'icon': const Icon(Icons.notification_important),
           },
           {
-            'title': context.tr('bottom_nav.wallet'),
+            'title': 'bottom_nav.wallet'.tr(),
             'icon': const Icon(Icons.account_balance_wallet),
           },
           {
-            'title': context.tr('bottom_nav.home'),
+            'title': 'bottom_nav.home'.tr(),
             'icon': Icon(
               Icons.home,
               color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
@@ -50,11 +50,11 @@ class BottomNavbarWidget extends ConsumerWidget {
             'isCenter': true
           },
           {
-            'title': context.tr('bottom_nav.community'),
+            'title': 'bottom_nav.community'.tr(),
             'icon': const Icon(Icons.grid_view),
           },
           {
-            'title': context.tr('bottom_nav.settings'),
+            'title': 'bottom_nav.settings'.tr(),
             'icon': const Icon(Icons.settings),
           },
         ].map(

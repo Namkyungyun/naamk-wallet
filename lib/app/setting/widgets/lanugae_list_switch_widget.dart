@@ -35,7 +35,7 @@ class LanguageListSwitchWidget extends HookConsumerWidget {
                 ),
               ),
             ),
-            title: context.tr('setting_page.list.language'),
+            title: 'setting_page.list.language'.tr(),
             onTap: () => showLanguageCard.value = !showLanguageCard.value,
           ),
           if (showLanguageCard.value)

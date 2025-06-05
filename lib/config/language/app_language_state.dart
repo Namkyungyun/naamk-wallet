@@ -32,6 +32,7 @@ class AppLanguageState extends _$AppLanguageState {
     prefs.setString(LANG_MODE, currentLanguage.toString()); // 'AppLanguage.ko'
 
     context.setLocale(currentLocale);
+
     state = state.copyWith(languageMode: currentLanguage);
   }
 }

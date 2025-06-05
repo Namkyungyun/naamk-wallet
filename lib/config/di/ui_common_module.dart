@@ -1,2 +1,2 @@
 export 'package:flutter/material.dart';
-export 'package:naamk_wallet/config/language/context_extension.dart';
+export 'package:easy_localization/easy_localization.dart' hide TextDirection;

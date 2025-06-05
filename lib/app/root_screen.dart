@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naamk_wallet/config/language/app_language.dart';
 import 'package:naamk_wallet/config/language/app_language_state.dart';
-import 'package:naamk_wallet/config/language/app_language_ui_model.dart';
 import 'package:naamk_wallet/config/route/app_router.dart';
 import 'package:naamk_wallet/config/theme/app_theme.dart';
 import 'package:naamk_wallet/config/theme/app_theme_state.dart';
@@ -20,8 +19,8 @@ class RootScreen extends ConsumerWidget {
     final router = AppRouter();
     final AppThemeUiModel currentTheme = ref.watch(appThemeStateProvider);
 
-    final AppLanguageUiModel currentLanguage =
-        ref.watch(appLanguageStateProvider);
+    final String currentLanguage =
+        ref.watch(appLanguageStateProvider).languageMode.langCode;
 
     return MaterialApp.router(
       routerConfig: router.getGoRouter,
@@ -32,7 +31,7 @@ class RootScreen extends ConsumerWidget {
       themeMode: currentTheme.themeMode,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
-      locale: AppLanguage.getLocale(currentLanguage.languageMode.langCode),
+      locale: AppLanguage.getLocale(currentLanguage),
     );
   }
 }
