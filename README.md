@@ -192,13 +192,13 @@ get_it을 이용해 shared_preferences를 초기 injection 진행.
 
 -  injector.dart와 inject_local_module.dart에서 주입 확인가능
 
-**3. setting theme widget**
+**3. theme property class**
 app_theme.dart에서 lightTheme, darkTheme 케이스로 나누어 ThemeData를 정의
 
 -  ThemeData에서의 appBarTheme, listTileTheme, carTheme ... 와 같은 요소들을 등록할 경우, 앱 내에서
    AppBar, Card, ListTile등의 widget에 자동으로 theme가 적용됨.
 
-**4. setting theme color**
+**4. theme color class**
 app_theme.dart에서 공통 widget내에 적용될 color를
 app_theme.dart에서 lightTheme, darkTheme 케이스로 나누어 정의
 
@@ -389,3 +389,171 @@ theme_toggle_switch_widget.dart
    -  ConsumerWidget을 상속
    -  build 함수 내에서 WidgetRef로 theme provider의 themeMode값을 읽는 watch 추가
    -  build 함수 내에서 WidgetRef로 theme 상태값을 변경해야하므로, WidgetRef의 read로 변경 로직 호출
+
+## 언어 설정
+
+easy_localization libarary를 이용
+
+**1. 의존 library**
+
+```
+* get_it, shared_preferences (사용자경험유지를 위한 shared_preferences & 앱 기동 시 의존성 주입을 위한 get_it)
+* freezed, freezed_annotation (uiModel 불변객체(hashCode, ==, copyWith) 및 자동 구현체 생성을 위한 freezed)
+* riverpod, riverpod_annotation (uiModel의 값 속성 변화를 구독, 조작 및 자동 구현체 생성을 위한 riverpod)
+```
+
+**2. initialization injection**
+app initialization 시, local storage인 shared_preferences에 저장된 값을 가져와야하므로,
+get_it을 이용해 shared_preferences를 초기 injection 진행.(main.dart에서 앱 기동 전 호출)
+
+-  injector.dart와 inject_local_module.dart에서 주입 확인가능
+
+**3. language type 정의 enum [앱에서 취급할 언어 타입 정의]**
+app_language.dart에서 해당 앱에서 다룰 언어를 enum값으로 정의 (언어코드, 국가 코드)
+assets/language/ 경로 에서 '{언어코드}-{국가코드}.json'을 생성해 적용시킬 언어에 대한 key,value를 구성해야하므로,
+해당 json파일이 있는 경로를 app_language.dart의 변수에 정의 필요.
+
+-  취급 국가,언어 enum값 정의
+-  언어팩 파일(json)의 경로를 담은 변수 정의
+-  그 외 공통적으로 사용될 함수 정의 (find 함수 + 디폴트 value가 return되도록 고려.)
+
+**4. language uiModel class [구독 및 조작할 불변객체 생성]**
+language enum을 반환하는 불변 객체를 구성 + freezed 사용
+build_runner library를 이용해 구현체 파일 자동 생성되도록 진행
+
+-  freezed, freezed annotation을 이용해 불변 객체 구성
+   -  hashCode, ==, copyWith, 객체 <-> json 기능
+
+```
+dart run build_runner build --delete-conflicting-outputs
+
+or
+
+dart run build_runner watch
+```
+
+**5. language state class [구독 및 조작을 위한 상태관리 클래스]**
+riverpod + riverpod_annotation + riverpod_generator library를 이용하는 불변 객체의 속성값을 상태관리할 클래스 구성
+
+-  상태관리를 위한 notifier, provider 구현체를 자동으로 생성해줌.
+
+di library를 이용해 initailizaion injection된 shared_preferences 저장소를 가져와 key값을 이용해
+이전 사용자의 경험유지 값을 조회 (기기의 앱에 저장된 언어값)
+
+build_runner library를 이용해 구현체 파일 자동 생성되도록 진행
+
+```
+dart run build_runner build --delete-conflicting-outputs
+
+or
+
+dart run build_runner watch
+```
+
+**6. language json []**
+assets/languages/ 디렉토리에 언어팩 json파일을 아래의 규격대로 생성
+
+```
+{languageCode}-{countryCode}.json
+```
+
+json파일에 정의 되는 규격 (기본) > depth로 넣어도 가능
+
+```
+{
+   "bottom_nav": {
+      "notice": "공지",
+      "wallet": "지갑",
+      "home": "홈",
+      "community": "커뮤니티",
+      "settings": "설정"
+   },
+
+   ...
+}
+```
+
+**7. 위젯 적용**
+easy_localization library의 언어팩 적용 방법
+
+---
+
+String extension
+
+-  문법 예시 : 'key'.tr()
+-  context 필요 : ❌
+-  장점 : 가장 간단, 위젯/로직 어디서나 사용 가능
+-  단점 : key 관리 어려움
+-  사용 추천 상황 : 대부분의 일반 상황
+
+context 기반
+
+-  문법 예시 : context.tr('key')
+-  context 필요 : ✅
+-  장점 : 안전한 context 기반 처리
+-  단점 : 코드가 다소 길다
+-  사용 추천 상황 : 위젯 내 번역 로직
+
+정적 함수 호출
+
+-  문법 예시 : tr('key')
+-  context 필요 : ❌
+-  장점 : context 없이도 명시적 호출 가능
+-  단점 : context 없으면 오류 가능성 있음
+-  사용 추천 상황 : 전역 상태 등 context 없는 곳
+
+---
+
+args, namedArgs, plural() 까지 적용하는 것을 고려해 동일 규격을 지녓으며,
+언어가 변경될 경우 새로운 언어팩을 감지해 동적 앱 적용이 되도록
+String extension을 이용해 widget내 적용 진행
+
+```
+{
+  "greeting": "Hello, {name}!"
+}
+'greeting'.tr(namedArgs: {'name': 'Namkyung'})
+
+---
+
+'apples'.plural(2);         // ✅ 2개
+'apples'.plural('two');     // ❌ 타입 오류 (int만 가능)
+
+---
+
+{
+  "profile": {
+    "male": "He is a developer",
+    "female": "She is a developer",
+    "other": "They are developers"
+  }
+}
+'profile'.tr(gender: 'male')
+```
+
+**8. 앱 설정**
+main.dart
+root_screen.dart
+language_list_swtich_widget.dart
+
+_(8-1) main.dart_
+MaterialApp을 EasyLocalization으로 래핑
+_supportedLocales, path, fallbackLocale_ 속성 주입해야 함.
+(i) fallbackLocale : 초기 locale 결정 로직에 사용되는 기본값
+(ii) path : 번역 값 json 파일 디렉토리 경로
+(iii) supportedLocales : 지원 Locale list
+
+-  앱 전역에서 언어(localization) 기능을 작동시키기 위한 '진입점'
+-  앱의 최상단에서 설정과 상태전달을 맡음.
+-  해당 래핑작업이 되어 있어야, 내부 widget에서 easy_localization의 기능들을 사용 가능
+   -  tr() : 번역 적용 // String Extension 기능
+   -  context.setLocale() : 번역 언어 변경 // context Extension 기능
+   -  LocalizationsDelegate, LocaleResolutionCallback
+      -  내부적으로 자동 처리
+      -  수동 구현 없이 자동으로 다국어 전환과 fallback 지원
+
+_(8-2) root_screen.dart_
+MaterialApp에서 _localizationsDelegates, supportedLocales, locale_ 속성 설정 필요
+
+-  언어 변화 상태를 읽기위해 flutter_riverpod의 Widget ref의 watch 기능을 사용하고,
+   변경된 언어가 있을 경우 MaterialApp(앱자체) 재빌드가 되도록 함.
