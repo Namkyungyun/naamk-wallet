@@ -162,6 +162,7 @@ flutter_launcher_icons libarary를 이용
    -  512x512 로고+배경 이미지 (ic_launcher.png)
 
 -  설정 config파일 자동생성되게 cmd 실행
+
    -  flutter_launcher_icons.yaml 파일이 생성되는 명령어
 
 ```
@@ -174,7 +175,65 @@ dart run flutter_launcher_icons:generate
 dart run flutter_launcher_icons -f flutter_launcher_icons.yaml
 ```
 
--  riverpod, freezed 어노테이션을 붙였을 때, 구현체 파일 자동 생성 명령어
+## theme 설정
+
+**1. 의존 library**
+
+```
+* get_it
+* shared_preferences
+* freezed, freezed_annotation
+* riverpod, flutter_riverpod, riverpod_annotation, riverpod_generator, hooks_riverpod
+```
+
+**2. initialization injection**
+app initialization 시, local storage인 shared_preferences에 저장된 값을 가져와야하므로,
+get_it을 이용해 shared_preferences를 초기 injection 진행.
+
+-  injector.dart와 inject_local_module.dart에서 주입 확인가능
+
+**3. setting theme widget**
+app_theme.dart에서 lightTheme, darkTheme 케이스로 나누어 ThemeData를 정의
+
+-  ThemeData에서의 appBarTheme, listTileTheme, carTheme ... 와 같은 요소들을 등록할 경우, 앱 내에서
+   AppBar, Card, ListTile등의 widget에 자동으로 theme가 적용됨.
+
+**4. setting theme color**
+app_theme.dart에서 공통 widget내에 적용될 color를
+app_theme.dart에서 lightTheme, darkTheme 케이스로 나누어 정의
+
+**5. 상태관리 생성**
+사용자의 설정에 따라 변경되며, 앱 전역에 반영되어야 하므로 Riverpod를 이용한 상태관리 구조를 도입
+
+또한 shared_preferences를 활용해 사용자가 선택한 테마 모드를 디바이스 저장할 수 있도록 함.
+
+_(5-1) ui model 클래스 생성 ( 테마 객체로 사용될 모델 정의 )_
+freezed를 사용해 불변 객체 및 'copyWith', '==', 'hashCode' 자동 생성
+
+-  class에 freezed annotation
+-  ~.freezed.dart, ~.g.dart 파일이 생성되도록 해당 파일명을 part로 주입.
+
+```
+import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'app_theme_ui_model.freezed.dart';
+part 'app_theme_ui_model.g.dart';
+
+@freezed
+class AppThemeUiModel with _$AppThemeUiModel {
+  const factory AppThemeUiModel({
+    @Default(ThemeMode.system) ThemeMode themeMode,
+  }) = _AppThemeUiModel;
+
+  // freezed의 구현체를 이용해 json 데이터를 AppThemeUiModel 객체로 변환
+  factory AppThemeUiModel.fromJson(Map<String, dynamic> json) =>
+      _$AppThemeUiModelFromJson(json);
+}
+
+```
+
+-  freezed 구현체 파일 자동 생성 명령어
 
 ```
 dart run build_runner build --delete-conflicting-outputs
@@ -183,3 +242,150 @@ or
 
 dart run build_runner watch
 ```
+
+_(5-2) 상태관리 클래스 생성 ( 상태변경의 저장, 조회, 반영을 담당 )_
+riverpod, shared_preferences, ui 모델 이용
+타입 안전한 상태관리와 자동 생성된 provider를 어디서든 사용가능므로,
+riverpod, flutter_riverpod, riverpod_annotation, riverpod_generator를 이용
+
+-  class에 riverpod annotation을 붙이고, 구현체 자동생성명령어로 만들어진 구현체를 상속받아 사용할 수 있도록 extends \_${추상클래스} 처리
+-  ~.g.dart 파일이 생성되도록 해당 파일명을 part로 주입.
+
+   -  'riverpod_annotation'기반의 코드 생성 방식을 통해 보일러플레이트 코드를 줄이고, provider와 notifier를 자동 생성할 수 있음.
+   -  '\_$AppThemeState'는 build() 메서드를 포함한 추상클래스로부터 상속되며, 'riverpod_generator'가 처리함.
+
+```
+part 'app_theme_state.g.dart';
+
+AppThemeUiModel build() {
+  return const AppThemeUiModel(themeMode: ThemeMode.system);
+}
+
+```
+
+-  riverpod 구현체 파일 자동 생성 명령어
+
+```
+dart run build_runner build --delete-conflicting-outputs
+
+or
+
+dart run build_runner watch
+```
+
+_(5-3) 상태 값 가져오기 & 상태 값 변경하기_
+build메서드에서는 이전에 구현한 uiModel이 반환타입이되도록하며, 초기 shared_preferences를 앱 기동시 등록한 injector를 이용해 저장소를 부름.
+
+-  상태값 가져오기
+   -  injector를 이용한 호출방식 'final prefs = injector<SharedPreferences>();', key를 이용해 기기에 저장된 값을 가져옴.
+
+```
+  @override
+  AppThemeUiModel build() {
+    ThemeMode themeMode = ThemeMode.system;
+    final prefs = injector<SharedPreferences>();
+    final savedThemeMode = prefs.getString(THEME_MODE) ?? 'ThemeMode.system';
+
+    themeMode = findThemeMode(savedThemeMode);
+    return AppThemeUiModel(themeMode: themeMode);
+  }
+```
+
+-  상태값 변경하기
+   -  shared_preferences에 먼저 값을 저장 시킴 (위와 같이 injector를 이용해 sharedPreferences 객체를 정의)
+   -  자동 생성된 notifier의 구현체는 'state'는 ui model의 값이므로, freezed에서 만들어진 ui model구현체의 copyWith를 이용해 기존 고유값을 그대로 가져오고, 변경하고자 하는 값의 일부만 넣어 state를 갱신시켜 상태변화를 일으킴.
+
+```
+  void setThemeMode(ThemeMode mode) {
+    final prefs = injector<SharedPreferences>();
+    prefs.setString(THEME_MODE, mode.toString());
+
+    state = state.copyWith(themeMode: mode);
+  }
+
+```
+
+**6. 위젯 연결**
+flutter_riverpod library 사용 (ConsumerWidget, ConsumerStatefulWidget, WidgetRef 제공)
+flutter_hooks, hooks_riverpod 사용
+-> flutter_hooks의 경우
+React의 hooks 개념과 유사한 useXXX 함수형 훅들을 Flutter에 도입하기 위한 라이브러리입니다.
+useState, useEffect, useTextEditingController, useAnimationController 등 사용 가능.
+-> hooks_riverpod의 경우 flutter_hooks + flutter_riverpod을 결합해 HookConsumerWidget 등 커스텀 hook widget 지원
+
+**< 위젯별 사용 경향 비교 [위젯 사용 빈도 (일반적인 프로젝트 기준) 특징 권장 시점] >**
+
+-  ConsumerWidget ⭐⭐⭐⭐☆ (매우 자주 사용)
+
+   -  Flutter 생명주기 활용 x
+   -  StatelessWidget 기반의 가장 간단한 Riverpod 소비 위젯 대부분의 단순한 UI 구성
+
+---
+
+-  HookConsumerWidget ⭐⭐⭐⭐⭐ (가장 많이 사용됨)
+
+   -  flutter_hooks의 HookWidget + ConsumerWidget 결합형 TextEditingController, useEffect 등 hook 사용 시
+
+---
+
+-  ConsumerStatefulWidget, ConsumerState ⭐⭐☆☆☆ (특정 상황에만 사용)
+
+   -  flutter lifeCycle 사용 가능
+   -  StatefulWidget에서 ref 사용 가능
+   -  StatefulWidget + ref initState, dispose, 애니메이션 등 필요 시
+
+---
+
+**< Riverpod에서 위젯이 provider를 구독하고 조작하는 방법 >**
+WidgetRef ref는 Riverpod에서 위젯이 provider를 구독하고 조작하기 위한 핵심 객체
+ref는 ConsumerWidget, HookConsumerWidget, ConsumerStatefulWidget 등에서 사용되며, 상태 읽기, 상태 변경, 리스너 등록, 라이프사이클 접근 등에 사용.
+
+provider로부터 상태를 불러오고
+
+상태가 변경되면 위젯을 자동으로 갱신하며
+
+비동기 요청, 리스너 등록 등 라이프사이클 기반 로직 제어 가능.
+
+기능 설명
+
+-  ref.watch()
+   -  provider의 상태 구독 및 값 읽기 (상태 변경 시 위젯 자동 리빌드)
+-  ref.read()
+   -  provider의 현재 값 읽기 (구독 X)
+   -  버튼 클릭 시 등 이벤트 핸들러에 자주 사용
+   ```
+   ref.read(themeStateProvider.notifier).setTheme(ThemeMode.dark);
+   ```
+-  ref.listen()
+   -  provider 상태를 변화 감지하여 콜백 실행 (리빌드 없이)
+   -  비동기 작업 완료 시, 조건부 UI 로직 분리에 유용
+   ```
+   ref.listen(themeProvider, (previous, next) {
+      if (previous != next) {
+         showToast('Theme updated to ${next.themeMode}');
+      }
+   });
+   ```
+-  ref.invalidate()
+   -  provider를 강제 재실행 (초기화)
+   -  provider를 초기화하거나 새로고침할 때 사용
+-  ref.onDispose()
+   -  provider가 dispose될 때 실행할 clean-up 등록
+
+---
+
+_(6-1) 연관화면_
+
+root_screen.dart
+theme_toggle_switch_widget.dart
+
+-  root_screen.dart
+   -  MaterialApp의 themeMode 속성에 themeProvider로부터 구독한 값을 적용.
+   -  ConsumerWidget을 상속 + build 함수 내에서 WidgetRef로 theme provider의 themeMode값을 관찰하는 watch 추가
+   -  MaterialApp을 정의하는 파트의 themeMode에 현재의 themeMode 값을 넘겨줌.
+   -  앱 전역에서 테마 변경이 발생하면 최상위 MaterialApp이 자동으로 리빌드되어 전체 테마가 적용됨
+-  theme_toggle_switch_widget.dart
+   -  사용자의 테마 변경 요청을 ref.read().setThemeMode()를 통해 반영
+   -  ConsumerWidget을 상속
+   -  build 함수 내에서 WidgetRef로 theme provider의 themeMode값을 읽는 watch 추가
+   -  build 함수 내에서 WidgetRef로 theme 상태값을 변경해야하므로, WidgetRef의 read로 변경 로직 호출
