@@ -1,11 +1,11 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naamk_wallet/config/di/ui_common_module.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:naamk_wallet/app/setting/setting_page.dart';
 import 'package:naamk_wallet/common/widgets/bottom_navbar_widget/bottom_navbar_state.dart';
 import 'package:naamk_wallet/config/theme/app_color.dart';
 import 'package:persistent_bottom_nav_bar/persistent_bottom_nav_bar.dart';
 
-class BottomNavbarWidget extends HookConsumerWidget {
+class BottomNavbarWidget extends ConsumerWidget {
   const BottomNavbarWidget({super.key});
 
   @override

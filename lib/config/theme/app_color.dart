@@ -1,18 +1,5 @@
 import 'package:flutter/material.dart';
 
-//
-// val Colors.navigationBackIconColor: Color
-// @Composable get() = if (isLight) navigationBackIconLight else navigationBackIconDark
-//
-// val Colors.dividerColor: Color
-// @Composable get() = if (isLight) DividerLight else DividerDark
-//
-// val Colors.backgroundColor: Color
-// @Composable get() = if (isLight) BackgroundLight else BackgroundDark
-//
-// val Colors.cardBackgroundColor: Color
-// @Composable get() = if (isLight) CardLight else CardDark
-
 class AppColor {
   static Color brand10 = const Color(0xFFD7FEFC);
   static Color brand20 = const Color(0xFFB0FDF8);
