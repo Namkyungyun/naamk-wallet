@@ -1,35 +1,25 @@
 import 'package:naamk_wallet/app/setting/widgets/lanugae_list_switch_widget.dart';
 import 'package:naamk_wallet/app/setting/widgets/setting_push_listtile_widget.dart';
+import 'package:naamk_wallet/common/widgets/title_appbar_widget.dart';
 import 'package:naamk_wallet/config/di/ui_common_module.dart';
 import 'package:gap/gap.dart';
 import 'package:naamk_wallet/app/setting/widgets/theme_toggle_switch_widget.dart';
-import 'package:naamk_wallet/common/widgets/empty_appbar_widget.dart';
 
-class SettingPage extends StatelessWidget {
-  const SettingPage({super.key});
+class SettingScreen extends StatelessWidget {
+  const SettingScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const EmptyAppbarWidget(),
-      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+      appBar: TitleAppbarWidget(title: 'page_title.setting'.tr()),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 64.0, 8.0, 8.0),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'page_title.setting'.tr(),
-                  textAlign: TextAlign.start,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                const Gap(16),
                 const ThemeToggleSwitch(),
                 const Gap(8),
                 const LanguageListSwitchWidget(),

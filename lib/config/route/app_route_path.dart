@@ -4,6 +4,7 @@ enum AppRoute {
   notice,
   community,
   settings,
+  event,
   ;
 
   String get route => '/${toString().replaceAll('AppRoute.', '')}';

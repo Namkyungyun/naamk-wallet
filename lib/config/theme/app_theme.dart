@@ -14,10 +14,10 @@ class AppTheme {
             iconTheme: IconThemeData(color: AppColor.brand100),
             backgroundColor: AppColor.backgroundLight,
             titleTextStyle: TextStyle(
-                color: AppColor.black,
-                fontSize: 16,
-                fontFamily: 'Raleway',
-                fontWeight: FontWeight.w800),
+              color: AppColor.black,
+              fontSize: 24,
+              fontWeight: FontWeight.w800,
+            ),
             systemOverlayStyle: SystemUiOverlayStyle(
                 systemNavigationBarColor: AppColor.backgroundLight,
                 statusBarColor: AppColor.backgroundLight,
@@ -98,9 +98,10 @@ class AppTheme {
             iconTheme: IconThemeData(color: AppColor.brand30),
             backgroundColor: AppColor.backgroundDark,
             titleTextStyle: TextStyle(
-                color: AppColor.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w800),
+              color: AppColor.white,
+              fontSize: 24,
+              fontWeight: FontWeight.w800,
+            ),
             systemOverlayStyle: SystemUiOverlayStyle(
                 systemNavigationBarColor: AppColor.backgroundDark,
                 statusBarColor: AppColor.backgroundDark,

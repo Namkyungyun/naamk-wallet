@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'setting_page_ui_model.dart';
+part of 'setting_screen_ui_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

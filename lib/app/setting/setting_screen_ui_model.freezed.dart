@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'setting_page_ui_model.dart';
+part of 'setting_screen_ui_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,44 +14,45 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-SettingPageUiModel _$SettingPageUiModelFromJson(Map<String, dynamic> json) {
+SettingScreenUiModel _$SettingScreenUiModelFromJson(Map<String, dynamic> json) {
   return _SettingPageUiModel.fromJson(json);
 }
 
 /// @nodoc
-mixin _$SettingPageUiModel {
+mixin _$SettingScreenUiModel {
   bool get showLanguageCard => throw _privateConstructorUsedError;
 
-  /// Serializes this SettingPageUiModel to a JSON map.
+  /// Serializes this SettingScreenUiModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of SettingPageUiModel
+  /// Create a copy of SettingScreenUiModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $SettingPageUiModelCopyWith<SettingPageUiModel> get copyWith =>
+  $SettingScreenUiModelCopyWith<SettingScreenUiModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SettingPageUiModelCopyWith<$Res> {
-  factory $SettingPageUiModelCopyWith(
-          SettingPageUiModel value, $Res Function(SettingPageUiModel) then) =
-      _$SettingPageUiModelCopyWithImpl<$Res, SettingPageUiModel>;
+abstract class $SettingScreenUiModelCopyWith<$Res> {
+  factory $SettingScreenUiModelCopyWith(SettingScreenUiModel value,
+          $Res Function(SettingScreenUiModel) then) =
+      _$SettingScreenUiModelCopyWithImpl<$Res, SettingScreenUiModel>;
   @useResult
   $Res call({bool showLanguageCard});
 }
 
 /// @nodoc
-class _$SettingPageUiModelCopyWithImpl<$Res, $Val extends SettingPageUiModel>
-    implements $SettingPageUiModelCopyWith<$Res> {
-  _$SettingPageUiModelCopyWithImpl(this._value, this._then);
+class _$SettingScreenUiModelCopyWithImpl<$Res,
+        $Val extends SettingScreenUiModel>
+    implements $SettingScreenUiModelCopyWith<$Res> {
+  _$SettingScreenUiModelCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of SettingPageUiModel
+  /// Create a copy of SettingScreenUiModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -69,7 +70,7 @@ class _$SettingPageUiModelCopyWithImpl<$Res, $Val extends SettingPageUiModel>
 
 /// @nodoc
 abstract class _$$SettingPageUiModelImplCopyWith<$Res>
-    implements $SettingPageUiModelCopyWith<$Res> {
+    implements $SettingScreenUiModelCopyWith<$Res> {
   factory _$$SettingPageUiModelImplCopyWith(_$SettingPageUiModelImpl value,
           $Res Function(_$SettingPageUiModelImpl) then) =
       __$$SettingPageUiModelImplCopyWithImpl<$Res>;
@@ -80,13 +81,13 @@ abstract class _$$SettingPageUiModelImplCopyWith<$Res>
 
 /// @nodoc
 class __$$SettingPageUiModelImplCopyWithImpl<$Res>
-    extends _$SettingPageUiModelCopyWithImpl<$Res, _$SettingPageUiModelImpl>
+    extends _$SettingScreenUiModelCopyWithImpl<$Res, _$SettingPageUiModelImpl>
     implements _$$SettingPageUiModelImplCopyWith<$Res> {
   __$$SettingPageUiModelImplCopyWithImpl(_$SettingPageUiModelImpl _value,
       $Res Function(_$SettingPageUiModelImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SettingPageUiModel
+  /// Create a copy of SettingScreenUiModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -116,7 +117,7 @@ class _$SettingPageUiModelImpl implements _SettingPageUiModel {
 
   @override
   String toString() {
-    return 'SettingPageUiModel(showLanguageCard: $showLanguageCard)';
+    return 'SettingScreenUiModel(showLanguageCard: $showLanguageCard)';
   }
 
   @override
@@ -132,7 +133,7 @@ class _$SettingPageUiModelImpl implements _SettingPageUiModel {
   @override
   int get hashCode => Object.hash(runtimeType, showLanguageCard);
 
-  /// Create a copy of SettingPageUiModel
+  /// Create a copy of SettingScreenUiModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -149,7 +150,7 @@ class _$SettingPageUiModelImpl implements _SettingPageUiModel {
   }
 }
 
-abstract class _SettingPageUiModel implements SettingPageUiModel {
+abstract class _SettingPageUiModel implements SettingScreenUiModel {
   const factory _SettingPageUiModel({final bool showLanguageCard}) =
       _$SettingPageUiModelImpl;
 
@@ -159,7 +160,7 @@ abstract class _SettingPageUiModel implements SettingPageUiModel {
   @override
   bool get showLanguageCard;
 
-  /// Create a copy of SettingPageUiModel
+  /// Create a copy of SettingScreenUiModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:naamk_wallet/config/di/injector.dart';
-import 'package:naamk_wallet/app/root_screen.dart';
+import 'package:naamk_wallet/app/app_entry.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naamk_wallet/config/language/app_language.dart';
 
@@ -24,7 +24,7 @@ Future main() async {
       fallbackLocale: AppLanguage.getLocale(PlatformDispatcher
           .instance.locale.languageCode), // 초기 locale or device locale일 때 사용
       child: const ProviderScope(
-        child: RootScreen(),
+        child: Root(),
       ),
     ),
   );

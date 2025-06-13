@@ -8,8 +8,8 @@ import 'package:naamk_wallet/config/theme/app_theme_state.dart';
 import 'package:naamk_wallet/config/theme/app_theme_ui_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class RootScreen extends ConsumerWidget {
-  const RootScreen({
+class Root extends ConsumerWidget {
+  const Root({
     super.key,
   });
 
