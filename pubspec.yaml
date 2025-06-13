@@ -72,6 +72,7 @@ dependencies:
    ## env, device, app version tool
    device_info_plus: ^11.3.0
    package_info_plus: ^8.3.0
+   flutter_dotenv: ^5.2.1
 
    ## ui component & tool
    toggle_switch: ^2.3.0
@@ -83,9 +84,9 @@ dependencies:
    flutter_local_notifications: ^19.2.1
    url_launcher: ^6.3.1
    persistent_bottom_nav_bar: ^6.2.1
+   flutter_staggered_grid_view: ^0.7.0
 
    ## develop tools
-   flutter_dotenv: ^5.2.1
    mockito: ^5.4.4
    logger: ^2.5.0
    build_runner: ^2.4.13
@@ -117,6 +118,7 @@ flutter:
 
    # To add assets to your application, add an assets section, like this:
    assets:
+      - .env
       - assets/images/
       - assets/languages/
 
