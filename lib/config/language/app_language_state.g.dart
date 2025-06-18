@@ -6,12 +6,12 @@ part of 'app_language_state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appLanguageStateHash() => r'80202809cce35d9b7c75235d32340a86f374d7ec';
+String _$appLanguageStateHash() => r'dc7359824c3d369eece745e920e92593be86834d';
 
 /// See also [AppLanguageState].
 @ProviderFor(AppLanguageState)
 final appLanguageStateProvider =
-    AutoDisposeNotifierProvider<AppLanguageState, AppLanguageUiModel>.internal(
+    AutoDisposeNotifierProvider<AppLanguageState, AppLanguage>.internal(
   AppLanguageState.new,
   name: r'appLanguageStateProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,6 +21,6 @@ final appLanguageStateProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$AppLanguageState = AutoDisposeNotifier<AppLanguageUiModel>;
+typedef _$AppLanguageState = AutoDisposeNotifier<AppLanguage>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

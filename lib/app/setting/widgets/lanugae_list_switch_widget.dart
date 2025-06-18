@@ -13,8 +13,8 @@ class LanguageListSwitchWidget extends HookConsumerWidget {
     final ValueNotifier<bool> showLanguageCard = useState(false); // 지역 state 관리
 
     return Consumer(builder: (context, ref, _) {
-      final languageModeState =
-          ref.watch(appLanguageStateProvider).languageMode; // 전역 state관리
+      final AppLanguage languageModeState =
+          ref.watch(appLanguageStateProvider); // 전역 state관리
       final lanuguageNotifier = ref.read(appLanguageStateProvider.notifier);
 
       return Column(
