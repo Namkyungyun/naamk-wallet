@@ -6,13 +6,16 @@ class ImageWidget extends StatelessWidget {
   final String imageName;
   final ImageType type;
   final Size? size;
+  final Color? color;
+  final double? borderRadius;
 
-  const ImageWidget({
-    super.key,
-    required this.imageName,
-    required this.type,
-    this.size,
-  });
+  const ImageWidget(
+      {super.key,
+      required this.imageName,
+      required this.type,
+      this.size,
+      this.color,
+      this.borderRadius});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +25,7 @@ class ImageWidget extends StatelessWidget {
         width: size?.width,
         height: size?.height,
         fit: BoxFit.cover,
+        color: color,
       );
     }
 
@@ -32,7 +36,9 @@ class ImageWidget extends StatelessWidget {
       fit: BoxFit.cover,
       loadingBuilder: (context, child, loadingProgress) {
         if (loadingProgress == null) return child;
-        return const CircularProgressIndicator();
+        return CircularProgressIndicator(
+          color: Theme.of(context).primaryColor,
+        );
       },
     );
   }

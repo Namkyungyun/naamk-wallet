@@ -52,8 +52,8 @@ class AppColor {
   static Color backgroundLight = const Color(0xFFF5F2F5);
   static Color backgroundDark = const Color(0xFF24292E);
 
-  static Color dividerLight = grey40;
-  static Color dividerDark = grey60;
+  static Color dividerLight = grey20;
+  static Color dividerDark = grey70;
 
   static Color crayCircle = const Color(0xFF919191);
   static Color redCircle = const Color(0xFFD50000);
