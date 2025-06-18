@@ -19,7 +19,7 @@ class ThemeToggleSwitch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(appThemeStateProvider).themeMode;
+    final themeMode = ref.watch(appThemeStateProvider);
     final themeNotifier = ref.read(appThemeStateProvider.notifier);
 
     return ListTile(

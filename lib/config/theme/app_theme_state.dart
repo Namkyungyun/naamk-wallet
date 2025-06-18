@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:naamk_wallet/config/di/injector.dart';
-import 'package:naamk_wallet/config/theme/app_theme_ui_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,24 +10,24 @@ class AppThemeState extends _$AppThemeState {
   static const THEME_MODE = "themeMode";
 
   @override
-  AppThemeUiModel build() {
+  ThemeMode build() {
     ThemeMode themeMode = ThemeMode.system;
     final prefs = injector<SharedPreferences>();
     final savedThemeMode = prefs.getString(THEME_MODE) ?? 'ThemeMode.system';
 
     themeMode = findThemeMode(savedThemeMode);
-    return AppThemeUiModel(themeMode: themeMode);
+    return themeMode;
   }
 
   void setThemeMode(ThemeMode mode) {
     final prefs = injector<SharedPreferences>();
     prefs.setString(THEME_MODE, mode.toString());
 
-    state = state.copyWith(themeMode: mode);
+    state = mode;
   }
 
   void toggleTheme() {
-    if (state.themeMode == ThemeMode.dark) {
+    if (state == ThemeMode.dark) {
       setThemeMode(ThemeMode.light);
     } else {
       setThemeMode(ThemeMode.dark);

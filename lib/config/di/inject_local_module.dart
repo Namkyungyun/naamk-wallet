@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:naamk_wallet/config/route/app_router.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'injector.dart';
@@ -10,6 +11,7 @@ Future<void> registerLocalModule() async {
   await registerSharedPreferences();
   await registerFlutterHive();
   await registerPreferredOrientations();
+  registerRouter();
 }
 
 // 앱 orientation 조정
@@ -40,4 +42,10 @@ Future<void> registerFlutterHive() async {
   } catch (e) {
     // TODO logger 심기
   }
+}
+
+// go_router 등록
+void registerRouter() {
+  final router = AppRouter();
+  injector.registerSingleton<AppRouter>(router);
 }
