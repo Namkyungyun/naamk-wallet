@@ -18,9 +18,7 @@ class AppEntry extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = injector<AppRouter>();
     final ThemeMode currentTheme = ref.watch(appThemeStateProvider);
-
-    final String currentLanguage =
-        ref.watch(appLanguageStateProvider).languageMode.langCode;
+    final AppLanguage currentLanguage = ref.watch(appLanguageStateProvider);
 
     return MaterialApp.router(
       routerConfig: router.getGoRouter,
@@ -31,7 +29,7 @@ class AppEntry extends ConsumerWidget {
       themeMode: currentTheme,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
-      locale: AppLanguage.getLocale(currentLanguage),
+      locale: AppLanguage.getLocale(currentLanguage.langCode),
     );
   }
 }
