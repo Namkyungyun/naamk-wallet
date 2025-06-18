@@ -24,7 +24,7 @@ Future main() async {
       fallbackLocale: AppLanguage.getLocale(PlatformDispatcher
           .instance.locale.languageCode), // 초기 locale or device locale일 때 사용
       child: const ProviderScope(
-        child: Root(),
+        child: AppEntry(),
       ),
     ),
   );
