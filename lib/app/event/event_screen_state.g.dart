@@ -6,7 +6,7 @@ part of 'event_screen_state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$eventScreenStateHash() => r'03899f6ee35cc97f82c55713c37e6a841fa4e430';
+String _$eventScreenStateHash() => r'92588744f8fb961677a81cc0508c908f3c2978bf';
 
 /// See also [EventScreenState].
 @ProviderFor(EventScreenState)

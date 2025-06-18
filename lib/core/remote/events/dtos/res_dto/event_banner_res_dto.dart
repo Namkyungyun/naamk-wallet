@@ -10,6 +10,7 @@ class EventBannerResDto with _$EventBannerResDto {
     @Default('') String title,
     @Default('') String intro,
     @Default('') String imagePath,
+    @Default('') String linkUrl,
     @Default(false) bool participated,
   }) = _EventBannerResDto;
 

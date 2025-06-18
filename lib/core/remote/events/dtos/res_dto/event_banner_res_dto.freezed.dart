@@ -24,6 +24,7 @@ mixin _$EventBannerResDto {
   String get title => throw _privateConstructorUsedError;
   String get intro => throw _privateConstructorUsedError;
   String get imagePath => throw _privateConstructorUsedError;
+  String get linkUrl => throw _privateConstructorUsedError;
   bool get participated => throw _privateConstructorUsedError;
 
   /// Serializes this EventBannerResDto to a JSON map.
@@ -47,6 +48,7 @@ abstract class $EventBannerResDtoCopyWith<$Res> {
       String title,
       String intro,
       String imagePath,
+      String linkUrl,
       bool participated});
 }
 
@@ -69,6 +71,7 @@ class _$EventBannerResDtoCopyWithImpl<$Res, $Val extends EventBannerResDto>
     Object? title = null,
     Object? intro = null,
     Object? imagePath = null,
+    Object? linkUrl = null,
     Object? participated = null,
   }) {
     return _then(_value.copyWith(
@@ -87,6 +90,10 @@ class _$EventBannerResDtoCopyWithImpl<$Res, $Val extends EventBannerResDto>
       imagePath: null == imagePath
           ? _value.imagePath
           : imagePath // ignore: cast_nullable_to_non_nullable
+              as String,
+      linkUrl: null == linkUrl
+          ? _value.linkUrl
+          : linkUrl // ignore: cast_nullable_to_non_nullable
               as String,
       participated: null == participated
           ? _value.participated
@@ -109,6 +116,7 @@ abstract class _$$EventBannerResDtoImplCopyWith<$Res>
       String title,
       String intro,
       String imagePath,
+      String linkUrl,
       bool participated});
 }
 
@@ -129,6 +137,7 @@ class __$$EventBannerResDtoImplCopyWithImpl<$Res>
     Object? title = null,
     Object? intro = null,
     Object? imagePath = null,
+    Object? linkUrl = null,
     Object? participated = null,
   }) {
     return _then(_$EventBannerResDtoImpl(
@@ -148,6 +157,10 @@ class __$$EventBannerResDtoImplCopyWithImpl<$Res>
           ? _value.imagePath
           : imagePath // ignore: cast_nullable_to_non_nullable
               as String,
+      linkUrl: null == linkUrl
+          ? _value.linkUrl
+          : linkUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       participated: null == participated
           ? _value.participated
           : participated // ignore: cast_nullable_to_non_nullable
@@ -164,6 +177,7 @@ class _$EventBannerResDtoImpl implements _EventBannerResDto {
       this.title = '',
       this.intro = '',
       this.imagePath = '',
+      this.linkUrl = '',
       this.participated = false});
 
   factory _$EventBannerResDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -183,11 +197,14 @@ class _$EventBannerResDtoImpl implements _EventBannerResDto {
   final String imagePath;
   @override
   @JsonKey()
+  final String linkUrl;
+  @override
+  @JsonKey()
   final bool participated;
 
   @override
   String toString() {
-    return 'EventBannerResDto(id: $id, title: $title, intro: $intro, imagePath: $imagePath, participated: $participated)';
+    return 'EventBannerResDto(id: $id, title: $title, intro: $intro, imagePath: $imagePath, linkUrl: $linkUrl, participated: $participated)';
   }
 
   @override
@@ -200,14 +217,15 @@ class _$EventBannerResDtoImpl implements _EventBannerResDto {
             (identical(other.intro, intro) || other.intro == intro) &&
             (identical(other.imagePath, imagePath) ||
                 other.imagePath == imagePath) &&
+            (identical(other.linkUrl, linkUrl) || other.linkUrl == linkUrl) &&
             (identical(other.participated, participated) ||
                 other.participated == participated));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, title, intro, imagePath, participated);
+  int get hashCode => Object.hash(
+      runtimeType, id, title, intro, imagePath, linkUrl, participated);
 
   /// Create a copy of EventBannerResDto
   /// with the given fields replaced by the non-null parameter values.
@@ -232,6 +250,7 @@ abstract class _EventBannerResDto implements EventBannerResDto {
       final String title,
       final String intro,
       final String imagePath,
+      final String linkUrl,
       final bool participated}) = _$EventBannerResDtoImpl;
 
   factory _EventBannerResDto.fromJson(Map<String, dynamic> json) =
@@ -245,6 +264,8 @@ abstract class _EventBannerResDto implements EventBannerResDto {
   String get intro;
   @override
   String get imagePath;
+  @override
+  String get linkUrl;
   @override
   bool get participated;
 

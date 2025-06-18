@@ -13,6 +13,7 @@ _$EventBannerResDtoImpl _$$EventBannerResDtoImplFromJson(
       title: json['title'] as String? ?? '',
       intro: json['intro'] as String? ?? '',
       imagePath: json['imagePath'] as String? ?? '',
+      linkUrl: json['linkUrl'] as String? ?? '',
       participated: json['participated'] as bool? ?? false,
     );
 
@@ -23,5 +24,6 @@ Map<String, dynamic> _$$EventBannerResDtoImplToJson(
       'title': instance.title,
       'intro': instance.intro,
       'imagePath': instance.imagePath,
+      'linkUrl': instance.linkUrl,
       'participated': instance.participated,
     };

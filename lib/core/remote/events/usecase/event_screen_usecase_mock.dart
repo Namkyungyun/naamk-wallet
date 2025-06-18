@@ -14,26 +14,34 @@ class EventScreenUseCaseMock {
       EventBannerResDto.fromJson({
         'id': 1,
         'title': '이벤트 1',
-        'imageUrl': 'https://example.com/image1.png',
-        'linkUrl': 'https://example.com/event1',
+        'imagePath':
+            'https://github.com/user-attachments/assets/4439ac76-4eaf-43bb-8863-d214f1d42eb7',
+        'linkUrl': '/event/rullet',
+        'participated': false,
       }),
       EventBannerResDto.fromJson({
         'id': 2,
-        'title': '이벤트 2',
-        'imageUrl': 'https://example.com/image2.png',
+        'title': '이벤트-!!',
+        'imagePath':
+            'https://github.com/user-attachments/assets/e2a42060-9a42-456d-ae19-d36d8af57712',
         'linkUrl': 'https://example.com/event2',
+        'participated': false,
       }),
       EventBannerResDto.fromJson({
         'id': 3,
-        'title': '이벤트 3',
-        'imageUrl': 'https://example.com/image2.png',
+        'title': '이벤트-!!!',
+        'imagePath':
+            'https://github.com/user-attachments/assets/5ec59646-fe98-4010-8351-16bf3a06dc8a',
         'linkUrl': 'https://example.com/event2',
+        'participated': false,
       }),
       EventBannerResDto.fromJson({
         'id': 4,
-        'title': '이벤트 4',
-        'imageUrl': 'https://example.com/image2.png',
+        'title': '이벤트-!!!!',
+        'imagePath':
+            'https://github.com/user-attachments/assets/f6ce5aa2-418e-412c-8bc1-9edb7f43592b',
         'linkUrl': 'https://example.com/event2',
+        'participated': false,
       }),
     ];
 

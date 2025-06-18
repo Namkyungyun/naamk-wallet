@@ -6,6 +6,7 @@ class EventCardWidget extends StatelessWidget {
   final String title;
   final String intro;
   final String imagePath;
+  final VoidCallback onTap;
   final bool isMain;
 
   const EventCardWidget({
@@ -13,50 +14,75 @@ class EventCardWidget extends StatelessWidget {
     this.title = '',
     this.intro = '',
     required this.imagePath,
+    required this.onTap,
     this.isMain = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Row(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ImageWidget(
-              imageName: imagePath,
-              type: ImageType.asset,
-            ),
-          ),
-          if (isMain)
-            Expanded(
-              child: Padding(
+    if (isMain) {
+      return Card(
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: onTap,
+          child: Row(
+            children: [
+              Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Gap(5),
-                    Text(
-                      title,
-                      textAlign: TextAlign.start,
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                    ),
-                    const Gap(5),
-                    Text(
-                      intro,
-                      textAlign: TextAlign.start,
-                      overflow: TextOverflow.clip,
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                    const Gap(5),
-                  ],
+                child: ImageWidget(
+                  imageName: imagePath,
+                  type: ImageType.network,
                 ),
               ),
-            )
-        ],
+              if (isMain)
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Gap(5),
+                        Text(
+                          title,
+                          textAlign: TextAlign.start,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        const Gap(5),
+                        Text(
+                          intro,
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.clip,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        const Gap(5),
+                      ],
+                    ),
+                  ),
+                )
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Card(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ImageWidget(
+            imageName: imagePath,
+            type: ImageType.network,
+          ),
+        ),
       ),
     );
   }
