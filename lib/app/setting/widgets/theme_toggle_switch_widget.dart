@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:naamk_wallet/common/widgets/global_loading_widget/global_overay_loading.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:naamk_wallet/config/theme/app_theme_state.dart';
 
@@ -31,7 +32,7 @@ class ThemeToggleSwitch extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: ToggleSwitch(
           minWidth: 80.0,
-          initialLabelIndex: switch (themeMode) {
+          initialLabelIndex: switch (themeMode.value!) {
             ThemeMode.light => 0,
             ThemeMode.dark => 1,
             ThemeMode.system => 2,
@@ -47,14 +48,17 @@ class ThemeToggleSwitch extends ConsumerWidget {
           activeBgColor: toggleLabels
               .map<Color>((el) => Theme.of(context).primaryColor)
               .toList(),
-          onToggle: (index) {
+          onToggle: (index) async {
             if (index == null) return;
             final mode = switch (index) {
               0 => ThemeMode.light,
               1 => ThemeMode.dark,
               _ => ThemeMode.system,
             };
-            themeNotifier.setThemeMode(mode);
+
+            GlobalLoadingService.show();
+            await themeNotifier.setThemeMode(mode);
+            GlobalLoadingService.hide();
           },
         ),
       ),
