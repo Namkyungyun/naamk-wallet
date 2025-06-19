@@ -5,7 +5,7 @@ import 'package:naamk_wallet/common/widgets/global_loading_widget/global_loading
 import 'package:go_router/go_router.dart';
 
 class GlobalLoadingService {
-  static void show() {
+  static void showOverlayLoading() {
     final AppRouter router = injector<AppRouter>();
     final BuildContext? context = router.getCurrentContext;
 
@@ -25,7 +25,7 @@ class GlobalLoadingService {
     }
   }
 
-  static void hide() {
+  static void hideOverlayLoading() {
     final AppRouter router = injector<AppRouter>();
     final BuildContext? context = router.getCurrentContext;
 

@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:naamk_wallet/app/app_shell_state.dart';
 import 'package:naamk_wallet/common/widgets/bottom_navbar_widget/custom_bottom_navbar_widget.dart';
 import 'package:naamk_wallet/config/di/ui_common_module.dart';
 import 'package:naamk_wallet/config/theme/app_color.dart';
@@ -8,7 +9,9 @@ class AppShell extends StatelessWidget {
   AppShell({
     super.key,
     required this.navigationShell,
-  });
+  }) {
+    AppShellState.setShell(navigationShell);
+  }
 
   final List<IconData> _iconList = [
     Icons.notification_important,

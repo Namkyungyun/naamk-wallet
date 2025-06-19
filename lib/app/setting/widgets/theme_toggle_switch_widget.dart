@@ -56,9 +56,9 @@ class ThemeToggleSwitch extends ConsumerWidget {
               _ => ThemeMode.system,
             };
 
-            GlobalLoadingService.show();
+            GlobalLoadingService.showOverlayLoading();
             await themeNotifier.setThemeMode(mode);
-            GlobalLoadingService.hide();
+            GlobalLoadingService.hideOverlayLoading();
           },
         ),
       ),

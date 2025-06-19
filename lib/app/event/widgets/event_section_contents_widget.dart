@@ -17,7 +17,7 @@ class SectionContentsWidget extends StatelessWidget {
     } else {
       // 앱 내 상세 화면 연결
 
-      GoRouter.of(context).go('/event/rullet');
+      GoRouter.of(context).push('/event/rullet');
     }
   }
 
