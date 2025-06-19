@@ -16,9 +16,18 @@ class AppRouter {
   final GoRouter goRoute = GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: '/home',
+    redirect: (context, state) {
+      // 테마 변경 시 유지되도록
+
+      // 로그아웃 진행 시, 로그인 화면으로
+
+      // 네트워크 끊겼을 시 네트워크 오류 화면으로
+      return null;
+    },
     debugLogDiagnostics: true,
     routes: [
       StatefulShellRoute.indexedStack(
+        parentNavigatorKey: _rootNavigatorKey,
         builder: (context, state, navigationShell) => AppShell(
           navigationShell: navigationShell,
         ),
@@ -73,4 +82,5 @@ class AppRouter {
     ],
   );
   GoRouter get getGoRouter => goRoute;
+  BuildContext? get getCurrentContext => _rootNavigatorKey.currentContext;
 }

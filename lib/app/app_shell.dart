@@ -37,7 +37,6 @@ class AppShell extends StatelessWidget {
       bottomNavigationBar: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle(
           systemNavigationBarColor: bottomNavBackgroundColor, // 시스템 하단바 색상도 통일
-          systemNavigationBarIconBrightness: Brightness.light,
         ),
         child: CustomBottomNavbarWidget(
           selectedIndex: navigationShell.currentIndex,

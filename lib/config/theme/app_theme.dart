@@ -10,7 +10,8 @@ class AppTheme {
       primaryColorLight: AppColor.brand80,
       primaryColorDark: AppColor.brand90,
       focusColor: AppColor.grey20,
-      disabledColor: AppColor.grey50,
+      disabledColor: AppColor.grey30,
+      shadowColor: AppColor.grey80.withOpacity(0.3),
       appBarTheme: AppBarTheme(
           elevation: 2,
           iconTheme: IconThemeData(color: AppColor.brand100),
@@ -105,6 +106,7 @@ class AppTheme {
       primaryColorDark: AppColor.brand70,
       disabledColor: AppColor.grey60,
       focusColor: AppColor.grey70,
+      shadowColor: AppColor.black.withOpacity(0.4),
       appBarTheme: AppBarTheme(
           elevation: 2,
           iconTheme: IconThemeData(color: AppColor.brand30),

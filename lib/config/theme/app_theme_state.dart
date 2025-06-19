@@ -5,12 +5,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app_theme_state.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class AppThemeState extends _$AppThemeState {
   static const THEME_MODE = "themeMode";
 
   @override
-  ThemeMode build() {
+  Future<ThemeMode> build() async {
     ThemeMode themeMode = ThemeMode.system;
     final prefs = injector<SharedPreferences>();
     final savedThemeMode = prefs.getString(THEME_MODE) ?? 'ThemeMode.system';
@@ -19,19 +19,11 @@ class AppThemeState extends _$AppThemeState {
     return themeMode;
   }
 
-  void setThemeMode(ThemeMode mode) {
+  Future<void> setThemeMode(ThemeMode mode) async {
     final prefs = injector<SharedPreferences>();
-    prefs.setString(THEME_MODE, mode.toString());
-
-    state = mode;
-  }
-
-  void toggleTheme() {
-    if (state == ThemeMode.dark) {
-      setThemeMode(ThemeMode.light);
-    } else {
-      setThemeMode(ThemeMode.dark);
-    }
+    await prefs.setString(THEME_MODE, mode.toString());
+    await Future.delayed(const Duration(seconds: 5));
+    state = AsyncValue.data(mode);
   }
 
   ThemeMode findThemeMode(String mode) {
