@@ -5,6 +5,7 @@ import 'package:naamk_wallet/app/event/spining_wheel/spinning_wheel_page_state.d
 import 'package:naamk_wallet/app/event/spining_wheel/widgets/reverse_triangle_painter.dart';
 import 'package:naamk_wallet/app/event/spining_wheel/widgets/wheel_painter.dart';
 import 'package:naamk_wallet/common/widgets/empty_appbar_widget.dart';
+import 'package:naamk_wallet/common/widgets/global_loading_widget/global_overay_loading.dart';
 import 'package:naamk_wallet/config/di/ui_common_module.dart';
 
 class SpinningWheelPage extends HookConsumerWidget {
@@ -64,7 +65,13 @@ class SpinningWheelPage extends HookConsumerWidget {
               ),
               const Gap(16),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  // GlobalLoadingService.showOverlayLoading();
+                  // await Future.delayed(const Duration(seconds: 5));
+                  // GlobalLoadingService.hideOverlayLoading();
+
+                  await test(context);
+
                   // 리셋
                   ref.read(spinningWheelStateProvider.notifier).reset();
                   // 추첨
@@ -85,6 +92,35 @@ class SpinningWheelPage extends HookConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> test(BuildContext context) async {
+    await showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      useSafeArea: false,
+      useRootNavigator: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('AlertDialog Demo'),
+          content: Text("Select button you want"),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.pop(context, "OK");
+              },
+            ),
+            ElevatedButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.pop(context, "Cancel");
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () => AppRouterState.pushDetailPageWithShell(
                 context, '/event/rullet'),
-            child: Text('main'),
+            child: const Text('main'),
           ),
         ),
       ),

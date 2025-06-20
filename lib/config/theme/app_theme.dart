@@ -23,7 +23,9 @@ class AppTheme {
           ),
           systemOverlayStyle: SystemUiOverlayStyle(
               systemNavigationBarColor: AppColor.backgroundLight,
-              statusBarColor: AppColor.backgroundLight,
+              statusBarColor: Colors.transparent,
+              systemNavigationBarDividerColor: Colors.transparent,
+              systemNavigationBarIconBrightness: Brightness.light,
               statusBarBrightness: Brightness.light,
               statusBarIconBrightness: Brightness.dark)),
       scaffoldBackgroundColor: AppColor.backgroundLight,
@@ -118,7 +120,9 @@ class AppTheme {
           ),
           systemOverlayStyle: SystemUiOverlayStyle(
               systemNavigationBarColor: AppColor.backgroundDark,
-              statusBarColor: AppColor.backgroundDark,
+              statusBarColor: Colors.transparent,
+              systemNavigationBarDividerColor: Colors.transparent,
+              systemNavigationBarIconBrightness: Brightness.dark,
               statusBarBrightness: Brightness.dark,
               statusBarIconBrightness: Brightness.light)),
       scaffoldBackgroundColor: AppColor.backgroundDark,
