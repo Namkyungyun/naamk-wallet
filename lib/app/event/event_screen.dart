@@ -26,7 +26,7 @@ class EventScreen extends HookConsumerWidget {
       body: SafeArea(
         bottom: false,
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 70.0),
+          padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 0.0),
           child: ListView(
             children: [
               SectionTitleWidget(

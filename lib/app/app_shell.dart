@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:naamk_wallet/app/app_shell_state.dart';
 import 'package:naamk_wallet/common/widgets/bottom_navbar_widget/custom_bottom_navbar_widget.dart';
+import 'package:naamk_wallet/common/widgets/empty_appbar_widget.dart';
 import 'package:naamk_wallet/config/di/ui_common_module.dart';
 import 'package:naamk_wallet/config/theme/app_color.dart';
 
@@ -31,15 +32,14 @@ class AppShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottomNavBackgroundColor =
-        Theme.of(context).bottomNavigationBarTheme.backgroundColor ??
-            AppColor.grey10;
-
     return Scaffold(
-      body: SafeArea(bottom: false, top: false, child: navigationShell),
+      appBar: const EmptyAppbarWidget(),
+      body: SafeArea(top: true, child: navigationShell),
       bottomNavigationBar: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle(
-          systemNavigationBarColor: bottomNavBackgroundColor, // 시스템 하단바 색상도 통일
+          systemNavigationBarColor:
+              Theme.of(context).bottomNavigationBarTheme.backgroundColor ??
+                  AppColor.grey10, // 시스템 하단바 색상도 통일
           statusBarBrightness: Theme.of(context)
               .appBarTheme
               .systemOverlayStyle

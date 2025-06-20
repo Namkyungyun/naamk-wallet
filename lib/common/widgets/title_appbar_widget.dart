@@ -16,7 +16,7 @@ class TitleAppbarWidget extends StatelessWidget implements PreferredSizeWidget {
         title,
         textAlign: TextAlign.start,
       ),
-      excludeHeaderSemantics: true,
+      centerTitle: false,
       backgroundColor: Colors.transparent,
       shadowColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,

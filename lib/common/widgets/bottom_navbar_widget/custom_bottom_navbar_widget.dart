@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:naamk_wallet/common/widgets/bottom_navbar_widget/curve_highlight_painter.dart';
 import 'package:naamk_wallet/config/di/ui_common_module.dart';
 import 'package:naamk_wallet/config/theme/app_color.dart';
@@ -18,7 +20,7 @@ class CustomBottomNavbarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const bottomHeight = 85.0;
+    final bottomHeight = Platform.isIOS ? 110.0 : 95.0;
     final screenWidth = MediaQuery.of(context).size.width;
     final itemWidth = screenWidth / icons.length;
     final centerX = itemWidth * (selectedIndex + 0.5);
@@ -60,7 +62,7 @@ class CustomBottomNavbarWidget extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () => onTap(index),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       /// 🌀 커지는 원형 + 아이콘
                       AnimatedScale(
