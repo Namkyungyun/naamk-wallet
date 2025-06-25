@@ -7,11 +7,11 @@ import 'package:naamk_wallet/config/route/app_route_path.dart';
 
 class AppRouterState {
   static final shellUrl = [
-    AppRoute.notice.route,
-    AppRoute.wallet.route,
-    AppRoute.home.route,
-    AppRoute.event.route,
-    AppRoute.settings.route,
+    AppGnbRoute.notices.route,
+    AppGnbRoute.wallet.route,
+    AppGnbRoute.home.route,
+    AppGnbRoute.events.route,
+    AppGnbRoute.settings.route,
   ];
 
   static void pushDetailPageWithShell(BuildContext context, String url) {

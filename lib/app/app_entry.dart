@@ -1,37 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:naamk_wallet/config/di/injector.dart';
+import 'package:naamk_wallet/app/app_entry_state.dart';
 import 'package:naamk_wallet/config/language/app_language.dart';
 import 'package:naamk_wallet/config/language/app_language_state.dart';
-import 'package:naamk_wallet/config/route/app_router.dart';
 import 'package:naamk_wallet/config/theme/app_theme.dart';
 import 'package:naamk_wallet/config/theme/app_theme_state.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class AppEntry extends ConsumerWidget {
+class AppEntry extends ConsumerStatefulWidget {
   const AppEntry({super.key});
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final AppRouter router = injector<AppRouter>();
+  ConsumerState<AppEntry> createState() => _AppEntryState();
+}
 
+class _AppEntryState extends ConsumerState<AppEntry> {
+  late final AppEntryState state;
+
+  @override
+  void initState() {
+    super.initState();
+
+    state = AppEntryState();
+    state.onInit();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final AppLanguage currentLanguage = ref.watch(appLanguageStateProvider);
-
     final AsyncValue<ThemeMode> themeAsync = ref.watch(appThemeStateProvider);
-    final ThemeMode themeMode = themeAsync.maybeWhen(
-      data: (mode) => mode,
-      orElse: () => ThemeMode.system,
-    );
 
     return MaterialApp.router(
-      routerConfig: router.getGoRouter,
+      routerConfig: state.getRouter,
       title: 'Naamk Wallet',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: themeMode,
+      themeMode: themeAsync.maybeWhen(
+        data: (mode) => mode,
+        orElse: () => ThemeMode.system,
+      ),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: AppLanguage.getLocale(currentLanguage.langCode),

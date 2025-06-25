@@ -1,4 +1,4 @@
-package com.example.naamk_wallet
+package com.naamk.wallet
 
 import io.flutter.embedding.android.FlutterActivity
 

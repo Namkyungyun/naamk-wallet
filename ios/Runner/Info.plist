@@ -49,5 +49,15 @@
 		<true/>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<true/>
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>naamk</string> <!-- 이 부분이 scheme 입니다 -->
+				</array>
+			</dict>
+		</array>
+
 	</dict>
 </plist>
