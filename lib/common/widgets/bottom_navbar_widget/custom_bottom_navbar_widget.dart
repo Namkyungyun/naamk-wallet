@@ -31,6 +31,7 @@ class CustomBottomNavbarWidget extends StatelessWidget {
 
     // AppColor.grey60
     return Stack(
+      // 서울 자가에 대기업 다니는 김 부장 이야기
       clipBehavior: Clip.none,
       children: [
         /// 🎨 곡선 하이라이트

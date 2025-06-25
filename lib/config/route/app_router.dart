@@ -35,7 +35,7 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: AppRoute.notice.route,
+                path: AppGnbRoute.notices.route,
                 builder: (context, state) => const NoticeScreen(),
               ).fade(),
             ],
@@ -43,7 +43,7 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: AppRoute.wallet.route,
+                path: AppGnbRoute.wallet.route,
                 builder: (context, state) => const WalletScreen(),
               ).fade(),
             ],
@@ -51,7 +51,7 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: AppRoute.home.route,
+                path: AppGnbRoute.home.route,
                 builder: (context, state) => const HomeScreen(),
               ).fade(),
             ],
@@ -59,7 +59,7 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: AppRoute.event.route,
+                path: AppGnbRoute.events.route,
                 builder: (context, state) => const EventScreen(),
               ).fade(),
             ],
@@ -67,7 +67,7 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: AppRoute.settings.route,
+                path: AppGnbRoute.settings.route,
                 builder: (context, state) => const SettingScreen(),
               ).fade(),
             ],
@@ -75,7 +75,7 @@ class AppRouter {
         ],
       ),
       GoRoute(
-        path: '${AppRoute.event.route}/rullet',
+        path: '${AppGnbRoute.events.route}/rullet',
         parentNavigatorKey: _rootNavigatorKey, // 중요!
         builder: (context, state) => const SpinningWheelPage(),
       ).fade()

@@ -277,7 +277,7 @@ _(5-3) 상태 값 가져오기 & 상태 값 변경하기_
 build메서드에서는 이전에 구현한 uiModel이 반환타입이되도록하며, 초기 shared_preferences를 앱 기동시 등록한 injector를 이용해 저장소를 부름.
 
 -  상태값 가져오기
-   -  injector를 이용한 호출방식 'final prefs = injector<SharedPreferences>();', key를 이용해 기기에 저장된 값을 가져옴.
+   -  injector를 이용한 호출방식 'final prefs = injector`<SharedPreferences>`();', key를 이용해 기기에 저장된 값을 가져옴.
 
 ```
   @override
@@ -351,14 +351,19 @@ provider로부터 상태를 불러오고
 -  ref.watch()
    -  provider의 상태 구독 및 값 읽기 (상태 변경 시 위젯 자동 리빌드)
 -  ref.read()
+
    -  provider의 현재 값 읽기 (구독 X)
    -  버튼 클릭 시 등 이벤트 핸들러에 자주 사용
+
    ```
    ref.read(themeStateProvider.notifier).setTheme(ThemeMode.dark);
    ```
+
 -  ref.listen()
+
    -  provider 상태를 변화 감지하여 콜백 실행 (리빌드 없이)
    -  비동기 작업 완료 시, 조건부 UI 로직 분리에 유용
+
    ```
    ref.listen(themeProvider, (previous, next) {
       if (previous != next) {
@@ -366,6 +371,7 @@ provider로부터 상태를 불러오고
       }
    });
    ```
+
 -  ref.invalidate()
    -  provider를 강제 재실행 (초기화)
    -  provider를 초기화하거나 새로고침할 때 사용
@@ -557,3 +563,430 @@ MaterialApp에서 _localizationsDelegates, supportedLocales, locale_ 속성 설�
 
 -  언어 변화 상태를 읽기위해 flutter_riverpod의 Widget ref의 watch 기능을 사용하고,
    변경된 언어가 있을 경우 MaterialApp(앱자체) 재빌드가 되도록 함.
+
+## DeepLink 설정
+
+app_links 라이브러리를 이용.
+custom scheme으로 개발 테스트 적용 진행.
+
+```
+< iOS >
+Personal Team 계정의 경우 iOS의 Universion Links(https://) 사용이 어려움.
+따라서 커스텀 스킴을 적용.
+추후 배포 환경이 될 경우 Universal Link로 전환 필요
+```
+
+android 딥링크 테스트의 경우 adb cmd로 테스트 진행
+
+/// 참조 네이버 docs : https://developers.naver.com/docs/utils/mobileapp/
+/// "naamk://com.naamk.walletapp/notice?noticeId=test123\&version=11"
+/// {scheme}://{host}/{path}?{params}
+
+< 딥링크 요청 처리는 아래와 같이 진행 >
+기존 페이지 = 이벤트 룰렛페이지
+사용자 진입 경로 = 이벤트 메인 스크린 > 룰렛 페이지
+요청 페이지 = 설정의 하위 페이지인 '약관페이지'
+
+=> 딥링크 처리 = 이벤트룰렛페이지 닫힘 > 설정 메인스크린 이동 > 약관페이지 열기
+
+**작업 적용**
+
+1. Info.plist > iOS Native 설정
+
+```
+<key>CFBundleURLTypes</key>
+<array>
+   <dict>
+      <key>CFBundleURLSchemes</key>
+      <array>
+         <string>naamk</string> <!-- 이 부분이 scheme 입니다 -->
+      </array>
+   </dict>
+</array>
+
+```
+
+2. AndroidManifest.xml > Android Native 설정
+
+```
+<!-- 딥링크 처리용 -->
+<intent-filter>
+      <action android:name="android.intent.action.VIEW" />
+      <category android:name="android.intent.category.DEFAULT" />
+      <category android:name="android.intent.category.BROWSABLE" />
+
+      <!-- 이 부분이 핵심 -->
+      <data android:scheme="naamk" />
+</intent-filter>
+```
+
+3. 딥링크를 사용하기 위한 AppLink 초기화 진행.
+   ➡️ injector.dart, inject_listener_module.dart
+   딥링크의 경우 리스너를 등록하는 과정이므로, listener용 injector 모듈인 inject_listener_module.dart 내에 AppLink 초기화 및 싱글턴 등록 진행
+   ‼️ await EasyLocalization.ensureInitialized();가 완료되어진 후에 AppLink를 초기화 해야힘.
+   ‼️ await EasyLocalization.ensureInitialized(); 이후 && runApp이 실행되기 전에 AppLink가 등록 !
+
+```
+/// 👇 inject_listener_module.dart
+import 'package:app_links/app_links.dart';
+
+import 'injector.dart';
+
+Future<void> registerListenerModule() async {
+  await registerAppLinks();
+}
+
+Future<void> registerAppLinks() async {
+  try {
+    final appLinks = AppLinks();
+
+    injector.registerSingleton<AppLinks>(appLinks);
+  } catch (e) {
+    print('registerAppLinks ERROR : $e');
+  }
+}
+
+/// 👇 injector.dart
+import 'package:get_it/get_it.dart';
+import 'package:naamk_wallet/config/di/inject_listener_module.dart';
+import 'package:naamk_wallet/config/di/inject_local_module.dart';
+import 'package:naamk_wallet/config/di/inject_remote_module.dart';
+
+final injector = GetIt.instance;
+
+Future<void> initializeDependencies() async {
+  // data - local
+  await registerLocalModule();
+
+  // data - remote
+  await registerRemoteModule();
+
+  // listener
+  await registerListenerModule(); // <- ✅ 리스너 모듈 등록
+}
+
+
+/// 👇 main.dart
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await EasyLocalization.ensureInitialized();
+
+  // di할 객체 주입
+  await initializeDependencies(); // <- ✅ 리스너 모듈 등록
+
+  FlutterNativeSplash.remove();
+
+  runApp(
+   ...
+  );
+}
+```
+
+4. AppLink의 listener 등록
+   ➡️ app_entry.dart, app_entry_state.dart
+   (1) app_entry_state.dart
+   listener 등록, injector 객체 조회 등을 ui와 분리해 가져갈 수 있는 구조를 갖기 위한 class
+   위의 3번에서 injector singleton으로 등록한 AppLink를 사용할 수 있도록
+   injector에서 조회되는 로직과 DeeplinkHandler 연결 로직을 넣음.
+
+```
+class AppEntryState {
+  AppRouter? _appRouter;
+
+  // 앱 최초 열렸을 때에 체크
+  void onInit() {
+    _initAppRouter();
+    _initDeeplinkListener();
+  }
+
+  // background로 내려갈 경우 처리
+  void onBackgroundApp() {}
+
+  // foreground되어질 때마다 처리
+  void onForegroundApp() {}
+
+  /// router
+  void _initAppRouter() {
+    _appRouter = injector<AppRouter>();
+  }
+
+  GoRouter get getRouter => _appRouter!.getGoRouter;
+
+  /// deeplink
+  void _initDeeplinkListener() {
+    if (_appRouter != null) {
+      DeeplinkHandler.init(getRouter);
+    }
+  }
+}
+```
+
+(2) app_entry.dart
+ui 및 riverpod의 state(상태관리), context를 연결 짓는 로직만 다루는 class
+기존 StatelessWidget을 확장한 flutter_riverpod의 ConsumerWidget에서
+StatefulWidget을 확장한 ConsumerStatefulWidget으로 AppEntry에 적용 필요 (initState에서 정의 됨.)
+
+```
+class AppEntry extends ConsumerStatefulWidget {
+  const AppEntry({super.key});
+
+  @override
+  ConsumerState<AppEntry> createState() => _AppEntryState();
+}
+
+class _AppEntryState extends ConsumerState<AppEntry> {
+  late final AppEntryState state;
+
+  @override
+  void initState() {
+    super.initState();
+
+    state = AppEntryState();
+    state.onInit();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final AppLanguage currentLanguage = ref.watch(appLanguageStateProvider);
+    final AsyncValue<ThemeMode> themeAsync = ref.watch(appThemeStateProvider);
+
+    return MaterialApp.router(...);
+  }
+}
+
+```
+
+4. entry_handler.dart, (gnb 용 abstract 클래스) base_handler.dart, handler_factory.dart
+
+   -  entry_handler.dart : listener 등록, handle 구현체 연결
+      3번의 app_entry_state.dart 정의에서 listener를 등록하기 위한 함수 및 호출에 따른 처리를 정의.
+      gnb별 별도의 handle 클래스 연결
+
+```
+// ✅ init
+class DeeplinkEntryHandler {
+   static late GoRouter _router; // <- ‼️ injectot에 router가 먼저 등록되어져 있어야 함.
+
+   static void init(GoRouter router) { // <- ‼️ router를 인자로 받아 주입.
+      // go_router 등록
+      _router = router;
+
+      // deepLink lib di 조회
+      final appLinks = injector.get<AppLinks>();
+
+      appLinks.uriLinkStream.listen((uri) { // 👈 리스너 등록
+         handleUri(uri);
+      });
+
+      appLinks.getInitialLink().then((uri) {
+         if (uri != null) {
+         handleUri(uri);
+         }
+      });
+   }
+}
+```
+
+```
+// ✅ handle ( DeeplinkVersionHandler를 상속받은 DeeplinkNoticeHandler, ++ )
+class DeeplinkEntryHandler {
+
+   static late GoRouter _router;
+
+   static void handleUri(Uri uri) {
+      GlobalLogger.info('deeplink in : $uri');
+
+      const String scheme = 'naamk';
+      const String host = 'com.naamk.walletapp';
+
+      // scheme 체크
+      if (!(uri.hasScheme && uri.scheme == scheme)) {
+         showInvalidRequestMessage('scheme: ${uri.scheme}');
+         return;
+      }
+
+      // host 체크
+      if (!(uri.host == host)) {
+         showInvalidRequestMessage('host: ${uri.host}');
+         return;
+      }
+
+      // path 체크
+      final List<String> path = uri.pathSegments.toList();
+      if (path.isEmpty) {
+         showInvalidRequestMessage('path is empty');
+         return;
+      }
+
+      AppGnbRoute? gnbRoute =
+         AppGnbRoute.values.firstWhereOrNull((el) => el.name == path.first);
+      final Map<String, dynamic> params = uri.queryParameters;
+
+      // 👇 DeeplinkHandlerFactory 에서 정의된 구조로 구현체 분기처리 진행됨.
+      final handler =
+         DeeplinkHandlerFactory.create(gnbRoute, _router, path, params);
+      if (handler == null) {
+         showInvalidRequestMessage(
+            'not found requested gnb route : ${gnbRoute?.route}');
+         return;
+      }
+
+      handler.handle();
+  }
+
+  static showInvalidRequestMessage(String message) {
+    GlobalLogger.error('deeplink error : Invalid Request : $message');
+  }
+}
+```
+
+-  base_handler.dart : deeplink 버전 관리를 위한 abstract 클래스
+   타앱에서의 요청과 사용자 앱 버전이 딥링크 업데이트 건과 맞지 않을 수 있으므로, 안내 및 업데이트 유도를 위해서 버전관리가 필요하다가 여겨짐.
+   gnb별로 해당 클래스를 상속받아 버전별로 특정 로직이 들어가야한다면 재정의를 진행하면 됨.
+   (e.g. deeplink_notice_handler.dart, deeplink_wallet_handler.dart, ..)
+
+```
+abstract class DeeplinkBaseHandler {
+   final GoRouter router;
+   final List<String> path;
+   final Map<String, dynamic> params;
+
+   DeeplinkBaseHandler(this.router, this.path, this.params);
+
+   void handle() {
+      final String? versionRaw = params['version'];
+      final double? version = double.tryParse(versionRaw ?? '');
+
+      // 👇 버전 업데이트할 경우 아래의 case에 추가가 되어져야하며, 앱을 업데이트하지 않은 유저의 경우 default를 탐.
+      switch (version) {
+         case 1.0:
+            handleV1();
+            break;
+         default:
+            showUnsupportedVersionMesasge(versionRaw ?? 'null');
+            return;
+      }
+   }
+
+   void handleV1() {
+      GlobalLogger.info('deeplink processing in handleV1');
+
+      // gnb 탭 변경
+      final String gnbTabPath = '/${path.first}';
+      router.go(gnbTabPath);
+
+      // 상세 페이지가 있다면 열기
+      if (path.length > 1) {
+         final String fullPath = '/${path.join('/')}';
+
+         // Set캐싱
+         final Set<String> detailRoutes =
+            AppRoute.values.map<String>((el) => el.route).toSet();
+
+         if (detailRoutes.contains(fullPath)) {
+            router.push(fullPath);
+         } else {
+            showNotfoundMessage(fullPath);
+         }
+      }
+   }
+
+   // void handleV2() {
+      // ... 버전2를 진행할 경우 해당 파트에 기본 로직 추가
+   //}
+
+  void showUnsupportedVersionMesasge(String message) {
+      GlobalLogger.error('deeplink error : Unsupported Version : $message');
+      // 특정 ui 연결할지 이후 프로세스 연결할지는 상황에 맞게 정의
+  }
+
+  void showNotfoundMessage(String message) {
+      GlobalLogger.error('deeplink error : Not found page : $message');
+      // 특정 ui 연결할지 이후 프로세스 연결할지는 상황에 맞게 정의
+  }
+}
+
+
+/// 👇 base_handler의 구현체 클래스
+class DeeplinkNoticeHandler extends DeeplinkBaseHandler {
+  DeeplinkNoticeHandler(super.router, super.path, super.params);
+
+  @override
+  void handleV1() {
+    return super.handleV1();
+  }
+}
+
+```
+
+-  handler_factory.dart : 구현체를 연결하는 handler factory
+   Gnb 탭이 추가될 때 핸들러 클래스를 switch문 또는 if문등의 수정 없이 연결 가능.
+   OCP (Open-Closed Principle) 만족
+   테스트 시 핸들러 주입이 쉬워짐
+   구조가 명시적으로 정리되어 유지보수에 유리.
+
+```
+typedef DeeplinkHandlerBuilder = DeeplinkBaseHandler Function(
+  GoRouter router,
+  List<String> path,
+  Map<String, dynamic> params,
+);
+
+class DeeplinkHandlerFactory {
+  static final Map<AppGnbRoute, DeeplinkHandlerBuilder> _handler = {
+      AppGnbRoute.notices: (router, path, params) =>
+         DeeplinkNoticeHandler(router, path, params),
+      AppGnbRoute.wallet: (router, path, params) =>
+         DeeplinkWalletHandler(router, path, params),
+      AppGnbRoute.home: (router, path, params) =>
+         DeeplinkHomeHandler(router, path, params),
+      AppGnbRoute.events: (router, path, params) =>
+         DeeplinkEventHandler(router, path, params),
+      AppGnbRoute.settings: (router, path, params) =>
+         DeeplinkSettingHandler(router, path, params),
+  };
+
+  static DeeplinkBaseHandler? create(
+      AppGnbRoute? route,
+      GoRouter router,
+      List<String> path,
+      Map<String, dynamic> params,
+  ) {
+      if (route == null || !_handler.containsKey(route)) return null;
+      return _handler[route]!(router, path, params);
+  }
+}
+```
+
+**안드로이드 테스트**
+
+```
+  < notices >
+ adb shell am start -a android.intent.action.VIEW \
+-d "naamk://com.naamk.walletapp/notices?test=test123\&version=1" \
+com.naamk.wallet
+
+ < wallet >
+  adb shell am start -a android.intent.action.VIEW \
+-d "naamk://com.naamk.walletapp/wallet?test=test123\&version=1" \
+com.naamk.wallet
+
+
+  < home >
+  adb shell am start -a android.intent.action.VIEW \
+-d "naamk://com.naamk.walletapp/home?test=test123\&version=1" \
+com.naamk.wallet
+
+
+  < events >
+  adb shell am start -a android.intent.action.VIEW \
+-d "naamk://com.naamk.walletapp/events/rullet?test=test123\&version=1" \
+com.naamk.wallet
+
+  < settings >
+  adb shell am start -a android.intent.action.VIEW \
+-d "naamk://com.naamk.walletapp/settings?test=test123\&version=1" \
+com.naamk.wallet
+
+```

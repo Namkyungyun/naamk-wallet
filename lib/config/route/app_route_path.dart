@@ -1,12 +1,22 @@
-enum AppRoute {
+enum AppGnbRoute {
   home,
   wallet,
-  notice,
+  notices,
   community,
   settings,
-  event,
+  events,
   ;
 
-  String get route => '/${toString().replaceAll('AppRoute.', '')}';
-  String get name => toString().replaceAll('AppRoute.', '');
+  String get route => '/${toString().replaceAll('AppGnbRoute.', '')}';
+  String get name => toString().replaceAll('AppGnbRoute.', '');
+}
+
+enum AppRoute {
+  settingsTerm('/settings/term'),
+  settingsAbout('/settings/about'),
+
+  eventsRullet('/events/rullet');
+
+  final String route;
+  const AppRoute(this.route);
 }
