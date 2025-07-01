@@ -1,9 +1,9 @@
 import 'package:gap/gap.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:naamk_wallet/app/event/spining_wheel/spinning_wheel_page_state.dart';
-import 'package:naamk_wallet/app/event/spining_wheel/widgets/reverse_triangle_painter.dart';
-import 'package:naamk_wallet/app/event/spining_wheel/widgets/wheel_painter.dart';
+import 'package:naamk_wallet/app/event/pages/spining_wheel/spinning_wheel_page_state.dart';
+import 'package:naamk_wallet/app/event/pages/spining_wheel/widgets/reverse_triangle_painter.dart';
+import 'package:naamk_wallet/app/event/pages/spining_wheel/widgets/wheel_painter.dart';
 import 'package:naamk_wallet/common/widgets/empty_appbar_widget.dart';
 import 'package:naamk_wallet/common/widgets/global_loading_widget/global_overay_loading.dart';
 import 'package:naamk_wallet/config/di/ui_common_module.dart';

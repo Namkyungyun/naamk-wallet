@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:naamk_wallet/core/remote/config/dio_config.dart';
-import 'package:naamk_wallet/core/remote/domain/event_screen_domain.dart';
+import 'package:naamk_wallet/core/remote/usecases/event_usecases.dart';
 import 'package:naamk_wallet/core/remote/events/repository/event_screen_repository.dart';
-import 'package:naamk_wallet/core/remote/events/usecase/event_screen_usecase.dart';
-import 'package:naamk_wallet/core/remote/events/usecase/event_screen_usecase_mock.dart';
+import 'package:naamk_wallet/core/remote/events/repository/event_screen_repository_mock.dart';
 
 import 'injector.dart';
 
@@ -20,17 +19,16 @@ Future<void> registerNetworkConfig() async {
 }
 
 Future<void> registerEventAPI() async {
-  // event screen (repository > useCase > api > domain)
+  /// event screen (repository > useCase > api > domain)
+  ///
+  // service
   injector.registerSingleton<EventScreenRepository>(
-      EventScreenRepository(injector()));
+      EventScreenRepository(injector<Dio>()));
+  injector.registerSingleton<EventScreenRepositoryMock>(
+      EventScreenRepositoryMock());
 
-  injector.registerSingleton<EventScreenUseCase>(
-      EventScreenUseCase(injector<EventScreenRepository>()));
-  injector.registerSingleton<EventScreenUseCaseMock>(EventScreenUseCaseMock());
-
-  injector.registerSingleton<GetEventList>(GetEventList(
-      injector<EventScreenUseCase>(), injector<EventScreenUseCaseMock>()));
-
-  injector.registerSingleton<EventScreenDomain>(
-      EventScreenDomain(injector<GetEventList>()));
+  // usecase
+  injector.registerSingleton<EventUsecases>(EventUsecases(
+      injector<EventScreenRepository>(),
+      injector<EventScreenRepositoryMock>()));
 }

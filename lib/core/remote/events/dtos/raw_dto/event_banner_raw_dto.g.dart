@@ -1,14 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'event_banner_res_dto.dart';
+part of 'event_banner_raw_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$EventBannerResDtoImpl _$$EventBannerResDtoImplFromJson(
-        Map<String, dynamic> json) =>
-    _$EventBannerResDtoImpl(
+EventBannerRawDto _$EventBannerRawDtoFromJson(Map<String, dynamic> json) =>
+    EventBannerRawDto(
       id: (json['id'] as num?)?.toDouble() ?? 0,
       title: json['title'] as String? ?? '',
       intro: json['intro'] as String? ?? '',
@@ -17,8 +16,7 @@ _$EventBannerResDtoImpl _$$EventBannerResDtoImplFromJson(
       participated: json['participated'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$$EventBannerResDtoImplToJson(
-        _$EventBannerResDtoImpl instance) =>
+Map<String, dynamic> _$EventBannerRawDtoToJson(EventBannerRawDto instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
