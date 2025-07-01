@@ -110,6 +110,8 @@ logger
 
 ## APP 기본 프레임 설정
 
+### class diagram으로 구조 파악하기
+
 ### splash 설정
 
 flutter_native_splash libarary를 이용
@@ -990,3 +992,5 @@ com.naamk.wallet
 com.naamk.wallet
 
 ```
+
+## from 스크린 to API 데이터 통신

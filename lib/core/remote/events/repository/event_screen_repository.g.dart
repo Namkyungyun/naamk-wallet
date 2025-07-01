@@ -22,40 +22,34 @@ class _EventScreenRepository implements EventScreenRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<HttpResponse<List<EventBannerResDto>>> getEventList(
-    int page,
-    Map<String, String>? options,
-  ) async {
+  Future<HttpResponse<EventListState>> getEventList(
+      Map<String, String>? req) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'page': page};
-    queryParameters.addAll(options ?? <String, dynamic>{});
+    final queryParameters = <String, dynamic>{};
+    queryParameters.addAll(req ?? <String, dynamic>{});
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options =
-        _setStreamType<HttpResponse<List<EventBannerResDto>>>(Options(
+    final _options = _setStreamType<HttpResponse<EventListState>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-            .compose(
-              _dio.options,
-              '/events',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            )));
-    final _result = await _dio.fetch<List<dynamic>>(_options);
-    late List<EventBannerResDto> _value;
+        .compose(
+          _dio.options,
+          '/events',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late EventListState _value;
     try {
-      _value = _result.data!
-          .map((dynamic i) =>
-              EventBannerResDto.fromJson(i as Map<String, dynamic>))
-          .toList();
+      _value = EventListState.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

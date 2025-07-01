@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'event_screen_state.dart';
+part of 'screen_viewmodel.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$eventScreenStateHash() => r'92588744f8fb961677a81cc0508c908f3c2978bf';
+String _$eventScreenViewModelHash() =>
+    r'1801e9b75d0745c90540830f807d1403214364c1';
 
-/// See also [EventScreenState].
-@ProviderFor(EventScreenState)
-final eventScreenStateProvider =
-    AutoDisposeNotifierProvider<EventScreenState, EventScreenUiModel>.internal(
-  EventScreenState.new,
-  name: r'eventScreenStateProvider',
+/// See also [EventScreenViewModel].
+@ProviderFor(EventScreenViewModel)
+final eventScreenViewModelProvider = AutoDisposeNotifierProvider<
+    EventScreenViewModel, EventScreenState>.internal(
+  EventScreenViewModel.new,
+  name: r'eventScreenViewModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$eventScreenStateHash,
+      : _$eventScreenViewModelHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$EventScreenState = AutoDisposeNotifier<EventScreenUiModel>;
+typedef _$EventScreenViewModel = AutoDisposeNotifier<EventScreenState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

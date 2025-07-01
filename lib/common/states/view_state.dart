@@ -35,6 +35,7 @@ class ViewState<T> with _$ViewState {
 }
 
 extension ViewStateExt<T> on ViewState<T> {
+  ViewState<T> toEmpty(T emptyData) => ViewState<T>.empty(emptyData);
   ViewState<T> toLoading() => ViewState<T>.loading(data);
   ViewState<T> toComplete(T newData) => ViewState<T>.complete(newData);
   ViewState<T> toError(String message) => ViewState<T>.error(data, message);

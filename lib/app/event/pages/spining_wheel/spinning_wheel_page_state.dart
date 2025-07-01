@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
-import 'package:naamk_wallet/app/event/spining_wheel/spinning_wheel_page_ui_model.dart';
+import 'package:naamk_wallet/app/event/pages/spining_wheel/spinning_wheel_page_ui_model.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'spinning_wheel_page_state.g.dart';

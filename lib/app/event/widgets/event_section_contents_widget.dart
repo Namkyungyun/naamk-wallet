@@ -2,10 +2,10 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:naamk_wallet/app/event/widgets/event_card_widget.dart';
 import 'package:naamk_wallet/common/widgets/image_widget.dart';
 import 'package:naamk_wallet/config/di/ui_common_module.dart';
-import 'package:naamk_wallet/core/remote/events/dtos/res_dto/event_banner_res_dto.dart';
+import 'package:naamk_wallet/core/remote/events/dtos/raw_dto/event_banner_raw_dto.dart';
 
 class SectionContentsWidget extends StatelessWidget {
-  final List<EventBannerResDto> contents;
+  final List<EventBannerRawDto> contents;
   const SectionContentsWidget({
     super.key,
     required this.contents,
@@ -17,7 +17,7 @@ class SectionContentsWidget extends StatelessWidget {
     } else {
       // 앱 내 상세 화면 연결
 
-      GoRouter.of(context).push('/event/rullet');
+      GoRouter.of(context).push('/events/rullet');
     }
   }
 
@@ -47,7 +47,7 @@ class SectionContentsWidget extends StatelessWidget {
         mainAxisSpacing: 4,
         crossAxisSpacing: 4,
         children: List.generate(contentsCount, (i) {
-          final EventBannerResDto item = contents[i];
+          final EventBannerRawDto item = contents[i];
           if (i == 0) {
             return StaggeredGridTile.count(
                 crossAxisCellCount: 4,
