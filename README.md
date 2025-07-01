@@ -994,3 +994,6 @@ com.naamk.wallet
 ```
 
 ## from 스크린 to API 데이터 통신
+![스크린샷 2025-07-01 오후 4 48 06](https://github.com/user-attachments/assets/14a55f3b-0cab-4778-a7b7-96c193400457)
+
+
