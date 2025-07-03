@@ -5,8 +5,7 @@ import 'package:naamk_wallet/app/event/pages/spining_wheel/spinning_wheel_page_s
 import 'package:naamk_wallet/app/event/pages/spining_wheel/widgets/reverse_triangle_painter.dart';
 import 'package:naamk_wallet/app/event/pages/spining_wheel/widgets/wheel_painter.dart';
 import 'package:naamk_wallet/common/widgets/empty_appbar_widget.dart';
-import 'package:naamk_wallet/common/widgets/global_loading_widget/global_overay_loading.dart';
-import 'package:naamk_wallet/config/di/ui_common_module.dart';
+import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
 
 class SpinningWheelPage extends HookConsumerWidget {
   const SpinningWheelPage({super.key});

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naamk_wallet/common/widgets/global_loading_widget/global_overay_loading.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import 'package:naamk_wallet/config/theme/app_theme_state.dart';
+import 'package:naamk_wallet/config/presentation/theme/app_theme_state.dart';
 
 final List<String> toggleLabels = [
   'Light',

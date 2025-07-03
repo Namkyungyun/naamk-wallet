@@ -1,11 +1,11 @@
-import 'package:naamk_wallet/core/remote/events/dtos/feature_state/daily_list_state.dart';
+import 'package:naamk_wallet/remote/events/dtos/feature_state/daily_list_state.dart';
 import 'package:naamk_wallet/common/states/data_state.dart';
 import 'package:naamk_wallet/common/states/view_state.dart';
-import 'package:naamk_wallet/config/di/injector.dart';
-import 'package:naamk_wallet/core/remote/usecases/event_usecases.dart';
-import 'package:naamk_wallet/core/remote/events/dtos/req_dto/event_banner_req_dto.dart';
-import 'package:naamk_wallet/core/remote/events/dtos/raw_dto/event_banner_raw_dto.dart';
-import 'package:naamk_wallet/app/event/screen_state.dart';
+import 'package:naamk_wallet/config/core/di/injector.dart';
+import 'package:naamk_wallet/remote/usecases/event_usecases.dart';
+import 'package:naamk_wallet/remote/events/dtos/req_dto/event_banner_req_dto.dart';
+import 'package:naamk_wallet/remote/events/dtos/raw_dto/event_banner_raw_dto.dart';
+import 'package:naamk_wallet/remote/events/screen_states/event_screen_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'screen_viewmodel.g.dart';

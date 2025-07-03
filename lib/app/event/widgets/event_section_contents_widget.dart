@@ -1,8 +1,8 @@
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:naamk_wallet/app/event/widgets/event_card_widget.dart';
 import 'package:naamk_wallet/common/widgets/image_widget.dart';
-import 'package:naamk_wallet/config/di/ui_common_module.dart';
-import 'package:naamk_wallet/core/remote/events/dtos/raw_dto/event_banner_raw_dto.dart';
+import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
+import 'package:naamk_wallet/remote/events/dtos/raw_dto/event_banner_raw_dto.dart';
 
 class SectionContentsWidget extends StatelessWidget {
   final List<EventBannerRawDto> contents;
