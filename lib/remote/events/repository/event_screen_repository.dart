@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:naamk_wallet/remote/events/dtos/feature_state/daily_list_state.dart';
+import 'package:naamk_wallet/remote/events/states/feature_state/list_state.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'event_screen_repository.g.dart';

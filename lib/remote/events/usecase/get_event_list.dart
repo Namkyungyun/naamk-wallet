@@ -6,7 +6,7 @@ import 'package:naamk_wallet/common/states/data_state.dart';
 import 'package:naamk_wallet/common/utils/logger.dart';
 import 'package:naamk_wallet/config/core/remote/base_usecase.dart';
 import 'package:naamk_wallet/config/core/remote/dio_exception.dart';
-import 'package:naamk_wallet/remote/events/dtos/feature_state/daily_list_state.dart';
+import 'package:naamk_wallet/remote/events/states/feature_state/list_state.dart';
 import 'package:naamk_wallet/remote/events/dtos/req_dto/event_banner_req_dto.dart';
 import 'package:naamk_wallet/remote/events/repository/event_screen_repository.dart';
 import 'package:naamk_wallet/remote/events/repository/event_screen_repository_mock.dart';

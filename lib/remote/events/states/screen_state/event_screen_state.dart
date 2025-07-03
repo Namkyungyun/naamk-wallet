@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:naamk_wallet/remote/events/dtos/feature_state/daily_list_state.dart';
+import 'package:naamk_wallet/remote/events/states/feature_state/list_state.dart';
 import 'package:naamk_wallet/common/states/view_state.dart';
 import 'package:naamk_wallet/remote/events/dtos/req_dto/event_banner_req_dto.dart';
 

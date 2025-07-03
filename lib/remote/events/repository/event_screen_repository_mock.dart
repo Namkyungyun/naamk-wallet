@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:naamk_wallet/common/utils/logger.dart';
-import 'package:naamk_wallet/remote/events/dtos/feature_state/daily_list_state.dart';
+import 'package:naamk_wallet/remote/events/states/feature_state/list_state.dart';
 import 'package:retrofit/retrofit.dart';
 
 // repository 호출단

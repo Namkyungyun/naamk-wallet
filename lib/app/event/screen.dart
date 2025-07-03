@@ -1,6 +1,6 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:naamk_wallet/remote/events/dtos/feature_state/daily_list_state.dart';
+import 'package:naamk_wallet/remote/events/states/feature_state/list_state.dart';
 import 'package:naamk_wallet/app/event/screen_viewmodel.dart';
 import 'package:naamk_wallet/app/event/widgets/event_section_contents_widget.dart';
 import 'package:naamk_wallet/app/event/widgets/event_section_title_widget.dart';
