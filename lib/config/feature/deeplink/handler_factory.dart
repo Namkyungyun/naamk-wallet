@@ -1,9 +1,9 @@
-import 'package:naamk_wallet/config/feature/%08deeplink/handler/event_handler.dart';
-import 'package:naamk_wallet/config/feature/%08deeplink/handler/home_handler.dart';
-import 'package:naamk_wallet/config/feature/%08deeplink/handler/notice_handler.dart';
-import 'package:naamk_wallet/config/feature/%08deeplink/handler/setting_handler.dart';
-import 'package:naamk_wallet/config/feature/%08deeplink/base_handler.dart';
-import 'package:naamk_wallet/config/feature/%08deeplink/handler/wallet_handler.dart';
+import 'package:naamk_wallet/config/feature/deeplink/handler/event_handler.dart';
+import 'package:naamk_wallet/config/feature/deeplink/handler/home_handler.dart';
+import 'package:naamk_wallet/config/feature/deeplink/handler/notice_handler.dart';
+import 'package:naamk_wallet/config/feature/deeplink/handler/setting_handler.dart';
+import 'package:naamk_wallet/config/feature/deeplink/base_handler.dart';
+import 'package:naamk_wallet/config/feature/deeplink/handler/wallet_handler.dart';
 import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
 import 'package:naamk_wallet/config/presentation/route/app_route_path.dart';
 

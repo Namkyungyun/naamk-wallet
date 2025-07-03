@@ -9,7 +9,8 @@ part 'app_language_state.g.dart';
 
 @riverpod
 class AppLanguageState extends _$AppLanguageState {
-  static const LANG_MODE = 'languageMode';
+  final LANG_MODE = 'languageMode';
+  final prefs = injector<SharedPreferences>();
 
   @override
   AppLanguage build() {

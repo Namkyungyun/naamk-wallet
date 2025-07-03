@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_theme_state.dart';
+part of 'app_lock_state_manager.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appThemeStateHash() => r'2c445d3b98c8df464db4425aa31437dc1a6fc07a';
+String _$appLockStateManagerHash() =>
+    r'ec70b968d3eb76a79f0f47affa6b625434447a22';
 
-/// See also [AppThemeState].
-@ProviderFor(AppThemeState)
-final appThemeStateProvider =
-    AsyncNotifierProvider<AppThemeState, ThemeMode>.internal(
-  AppThemeState.new,
-  name: r'appThemeStateProvider',
+/// See also [AppLockStateManager].
+@ProviderFor(AppLockStateManager)
+final appLockStateManagerProvider =
+    AutoDisposeNotifierProvider<AppLockStateManager, AppLock>.internal(
+  AppLockStateManager.new,
+  name: r'appLockStateManagerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$appThemeStateHash,
+      : _$appLockStateManagerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AppThemeState = AsyncNotifier<ThemeMode>;
+typedef _$AppLockStateManager = AutoDisposeNotifier<AppLock>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

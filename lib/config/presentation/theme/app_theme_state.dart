@@ -13,7 +13,8 @@ class AppThemeState extends _$AppThemeState {
   Future<ThemeMode> build() async {
     ThemeMode themeMode = ThemeMode.system;
     final prefs = injector<SharedPreferences>();
-    final savedThemeMode = prefs.getString(THEME_MODE) ?? 'ThemeMode.system';
+    final savedThemeMode =
+        prefs.getString(THEME_MODE) ?? ThemeMode.system.toString();
 
     themeMode = findThemeMode(savedThemeMode);
     return themeMode;
