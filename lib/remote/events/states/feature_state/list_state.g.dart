@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'daily_list_state.dart';
+part of 'list_state.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
