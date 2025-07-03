@@ -1,4 +1,4 @@
-import 'package:naamk_wallet/config/di/ui_common_module.dart';
+import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
 
 class SectionTitleWidget extends StatelessWidget {
   final String title;

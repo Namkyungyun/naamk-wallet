@@ -1,9 +1,9 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:naamk_wallet/config/di/ui_common_module.dart';
+import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:naamk_wallet/app/setting/widgets/setting_info_listtile_widget.dart';
-import 'package:naamk_wallet/config/language/app_language.dart';
-import 'package:naamk_wallet/config/language/app_language_state.dart';
+import 'package:naamk_wallet/config/presentation/language/app_language.dart';
+import 'package:naamk_wallet/config/presentation/language/app_language_state.dart';
 
 class LanguageListSwitchWidget extends HookConsumerWidget {
   const LanguageListSwitchWidget({super.key});

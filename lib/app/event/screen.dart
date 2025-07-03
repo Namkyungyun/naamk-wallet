@@ -1,12 +1,12 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:naamk_wallet/core/remote/events/dtos/feature_state/daily_list_state.dart';
+import 'package:naamk_wallet/remote/events/dtos/feature_state/daily_list_state.dart';
 import 'package:naamk_wallet/app/event/screen_viewmodel.dart';
 import 'package:naamk_wallet/app/event/widgets/event_section_contents_widget.dart';
 import 'package:naamk_wallet/app/event/widgets/event_section_title_widget.dart';
 import 'package:naamk_wallet/common/states/view_state.dart';
 import 'package:naamk_wallet/common/widgets/title_appbar_widget.dart';
-import 'package:naamk_wallet/config/di/ui_common_module.dart';
+import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
 import 'package:gap/gap.dart';
 
 class EventScreen extends HookConsumerWidget {

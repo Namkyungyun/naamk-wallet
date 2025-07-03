@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:naamk_wallet/config/di/injector.dart';
-import 'package:naamk_wallet/config/route/app_router.dart';
+import 'package:naamk_wallet/config/core/di/injector.dart';
+import 'package:naamk_wallet/config/presentation/route/app_router.dart';
 import 'package:naamk_wallet/common/widgets/global_loading_widget/global_loading_dot_widget.dart';
 import 'package:go_router/go_router.dart';
 

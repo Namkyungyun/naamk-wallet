@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:naamk_wallet/common/widgets/bottom_navbar_widget/curve_highlight_painter.dart';
-import 'package:naamk_wallet/config/di/ui_common_module.dart';
-import 'package:naamk_wallet/config/theme/app_color.dart';
+import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
+import 'package:naamk_wallet/config/presentation/theme/app_color.dart';
 
 class CustomBottomNavbarWidget extends StatelessWidget {
   final int selectedIndex;
