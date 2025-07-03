@@ -15,7 +15,11 @@ enum AppRoute {
   settingsTerm('/settings/term'),
   settingsAbout('/settings/about'),
 
-  eventsRullet('/events/rullet');
+  eventsRullet('/events/rullet'),
+
+  authConfirm('/auth/confirm'),
+  authSetupPincode('/auth/setup/pincode'),
+  authSetupBiometric('/auth/setup/biometric');
 
   final String route;
   const AppRoute(this.route);

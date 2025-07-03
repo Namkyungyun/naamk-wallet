@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:naamk_wallet/common/states/data_state.dart';
+import 'package:naamk_wallet/remote/common/states/data_state.dart';
 import 'package:naamk_wallet/common/utils/logger.dart';
 import 'package:naamk_wallet/config/core/remote/base_usecase.dart';
 import 'package:naamk_wallet/config/core/remote/dio_exception.dart';

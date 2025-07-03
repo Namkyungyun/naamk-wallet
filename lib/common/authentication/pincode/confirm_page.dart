@@ -12,7 +12,7 @@ class _PincodeConfirmPageState extends State<PincodeConfirmPage> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('핀락 확인'),
+        child: Text('핀코드 확인'),
       ),
     );
   }

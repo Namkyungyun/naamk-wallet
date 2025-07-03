@@ -12,7 +12,7 @@ class _PincodeSetupPageState extends State<PincodeSetupPage> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('핀락 설정'),
+        child: Text('핀코드 설정'),
       ),
     );
   }

@@ -1,5 +1,5 @@
 import 'package:app_links/app_links.dart';
-import 'package:naamk_wallet/config/feature/%08deeplink/handler_factory.dart';
+import 'package:naamk_wallet/config/feature/deeplink/handler_factory.dart';
 import 'package:naamk_wallet/common/utils/logger.dart';
 import 'package:naamk_wallet/config/core/di/injector.dart';
 import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
