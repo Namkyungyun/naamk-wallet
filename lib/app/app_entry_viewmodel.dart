@@ -2,7 +2,7 @@ import 'package:naamk_wallet/common/utils/logger.dart';
 import 'package:naamk_wallet/config/core/local_storage/shared_preferences_manipulator.dart';
 import 'package:naamk_wallet/config/feature/deeplink/entry_handler.dart';
 import 'package:naamk_wallet/config/core/di/injector.dart';
-import 'package:naamk_wallet/config/feature/lock/app_lock_type.dart';
+import 'package:naamk_wallet/config/feature/auth/app_auth_type.dart';
 import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
 import 'package:naamk_wallet/config/presentation/route/app_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -99,13 +99,13 @@ class AppEntryViewModel extends _$AppEntryViewModel {
     GlobalLogger.info('[checkAppLock] Start');
 
     final String savedLockMode =
-        SharedPreferencesManipulator.currentAppLockMode ??
-            AppLockMode.pinOnly.name;
+        SharedPreferencesManipulator.currentAppAuthMethod ??
+            AppAuthMethod.pinOnly.name;
 
-    final AppLockMode lockMode = AppLockMode.getAppLockMode(savedLockMode);
+    final AppAuthMethod method = AppAuthMethod.getAppAuthMethod(savedLockMode);
 
     GlobalLogger.info('[checkAppLock] Complete');
 
-    return (lockMode != AppLockMode.none) ? AppEntryCheckStatus.applock : null;
+    return (method != AppAuthMethod.none) ? AppEntryCheckStatus.applock : null;
   }
 }

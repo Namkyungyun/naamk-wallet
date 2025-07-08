@@ -4,9 +4,9 @@ import 'package:naamk_wallet/app/app_entry_listener_ui.dart';
 import 'package:naamk_wallet/app/app_entry_viewmodel.dart';
 import 'package:naamk_wallet/common/utils/logger.dart';
 import 'package:naamk_wallet/config/core/observer/app_lifecyle_observer.dart';
-import 'package:naamk_wallet/config/feature/lock/app_lock_state.dart';
-import 'package:naamk_wallet/config/feature/lock/app_lock_state_manager.dart';
-import 'package:naamk_wallet/config/feature/lock/app_lock_type.dart';
+import 'package:naamk_wallet/config/feature/auth/app_auth_state.dart';
+import 'package:naamk_wallet/config/feature/auth/app_auth_state_manager.dart';
+import 'package:naamk_wallet/config/feature/auth/app_auth_type.dart';
 
 class AppEntryStatusListener extends ConsumerStatefulWidget {
   const AppEntryStatusListener({super.key});
@@ -31,8 +31,8 @@ class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener>
   AppEntryViewModel get _appEntryLogic =>
       ref.watch<AppEntryViewModel>(appEntryViewModelProvider.notifier);
 
-  AppLock get _appLockState => ref.watch(appLockStateManagerProvider);
-  AppLockStateManager get _appLockLogic => ref.watch<AppLockStateManager>(
+  AppAuth get _appLockState => ref.watch(appLockStateManagerProvider);
+  AppAuthStateManager get _appLockLogic => ref.watch<AppAuthStateManager>(
       appLockStateManagerProvider.notifier); // 최신 상태를 읽기위해서는 read를 사용해야 함.
 
   @override
@@ -56,7 +56,7 @@ class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener>
         // Background 모드
         if (state == AppLifecycleState.paused) {
           // 앱잠김 설정된 경우 앱잠김 설정으로 변경되게 하기
-          if (_appLockState.lockMode != AppLockMode.none) {
+          if (_appLockState.method != AppAuthMethod.none) {
             if (_initialized) {
               _lastPausedTime = DateTime.now();
             }
@@ -108,21 +108,21 @@ class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener>
 
             // 다른 상태 처리도 동일하게
             if (next == AppEntryCheckStatus.applock) {
-              final AppLockStatus status =
+              final AppAuthStatus status =
                   await _isLockRequiredAfterResume(prev);
 
-              if (status == AppLockStatus.lockedRequired && mounted) {
+              if (status == AppAuthStatus.required && mounted) {
                 await showAppAuth();
 
                 // 앱락 해제
-                _appLockLogic.setAppLockStatus(AppLockStatus.unlocked);
+                _appLockLogic.setAppAuthStatus(AppAuthStatus.idle);
 
                 // entry status 변경
                 _appEntryLogic
                     .setEntryCheckStatus(AppEntryCheckStatus.handlingDeeplink);
               }
 
-              if (status == AppLockStatus.unlocked) {
+              if (status == AppAuthStatus.idle) {
                 //완료후 deeplink 처리되도록 상태변경
                 _appEntryLogic
                     .setEntryCheckStatus(AppEntryCheckStatus.handlingDeeplink);
@@ -141,17 +141,17 @@ class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener>
     }
   }
 
-  Future<AppLockStatus> _isLockRequiredAfterResume(
+  Future<AppAuthStatus> _isLockRequiredAfterResume(
       AppEntryCheckStatus? prevEntryStatus) async {
-    if (_appLockState.lockMode != AppLockMode.none) {
+    if (_appLockState.method != AppAuthMethod.none) {
       // 이미 잠금화면이 켜져있는 상태
-      if (_appLockState.lockStatus == AppLockStatus.locking) {
-        return AppLockStatus.locking;
+      if (_appLockState.status == AppAuthStatus.verifying) {
+        return AppAuthStatus.verifying;
       }
 
       // 앱 첫 기동
       if (prevEntryStatus == AppEntryCheckStatus.initial) {
-        return AppLockStatus.lockedRequired;
+        return AppAuthStatus.required;
       }
 
       // 앱잠금 상태 변경
@@ -163,12 +163,12 @@ class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener>
       _lastResumeTime = null;
 
       // 일정 시간 내에 다시 포그라운드 모드될 경우 앱잠금 안됨.
-      _appLockLogic.setAppLockStatus(
-          shouldLock ? AppLockStatus.lockedRequired : AppLockStatus.unlocked);
+      _appLockLogic.setAppAuthStatus(
+          shouldLock ? AppAuthStatus.required : AppAuthStatus.idle);
 
-      return _appLockState.lockStatus;
+      return _appLockState.status;
     }
 
-    return AppLockStatus.unlocked;
+    return AppAuthStatus.idle;
   }
 }

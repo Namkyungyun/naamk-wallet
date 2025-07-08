@@ -17,8 +17,8 @@ class SharedPreferencesManipulator {
       prefs.setString(LANG_MODE, newValue);
 
   // applock
-  static const String LOCK_MODE = 'lockMode';
-  static String? get currentAppLockMode => prefs.getString(LOCK_MODE);
-  static Future<void> setAppLockMode(String newValue) =>
-      prefs.setString(LOCK_MODE, newValue);
+  static const String AUTH_METHOD = 'authMethod';
+  static String? get currentAppAuthMethod => prefs.getString(AUTH_METHOD);
+  static Future<void> setAppAuthStatus(String newValue) =>
+      prefs.setString(AUTH_METHOD, newValue);
 }
