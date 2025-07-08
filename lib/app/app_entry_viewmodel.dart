@@ -1,5 +1,5 @@
 import 'package:naamk_wallet/common/utils/logger.dart';
-import 'package:naamk_wallet/config/core/local_storage/shared_preferences_manipulator.dart';
+import 'package:naamk_wallet/config/core/local/shared_preferences_manipulator.dart';
 import 'package:naamk_wallet/config/feature/deeplink/entry_handler.dart';
 import 'package:naamk_wallet/config/core/di/injector.dart';
 import 'package:naamk_wallet/config/feature/auth/app_auth_type.dart';

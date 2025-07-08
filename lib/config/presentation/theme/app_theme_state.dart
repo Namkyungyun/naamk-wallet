@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:naamk_wallet/config/core/local_storage/shared_preferences_manipulator.dart';
+import 'package:naamk_wallet/config/core/local/shared_preferences_manipulator.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_theme_state.g.dart';

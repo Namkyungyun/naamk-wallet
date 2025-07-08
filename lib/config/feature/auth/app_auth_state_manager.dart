@@ -1,4 +1,4 @@
-import 'package:naamk_wallet/config/core/local_storage/shared_preferences_manipulator.dart';
+import 'package:naamk_wallet/config/core/local/shared_preferences_manipulator.dart';
 import 'package:naamk_wallet/config/feature/auth/app_auth_state.dart';
 import 'package:naamk_wallet/config/feature/auth/app_auth_type.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

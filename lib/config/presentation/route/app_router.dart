@@ -7,7 +7,7 @@ import 'package:naamk_wallet/app/home/home_screen.dart';
 import 'package:naamk_wallet/app/notice/notice_screen.dart';
 import 'package:naamk_wallet/app/setting/setting_screen.dart';
 import 'package:naamk_wallet/app/wallet/wallet_screen.dart';
-import 'package:naamk_wallet/common/authentication/pincode/confirm_page.dart';
+import 'package:naamk_wallet/config/presentation/auth_ui/pincode/confirm_page.dart';
 import 'package:naamk_wallet/config/presentation/route/app_route_path.dart';
 import 'package:naamk_wallet/config/presentation/route/fade_extension.dart';
 

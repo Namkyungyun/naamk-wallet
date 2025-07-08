@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:naamk_wallet/config/core/local_storage/shared_preferences_manipulator.dart';
+import 'package:naamk_wallet/config/core/local/shared_preferences_manipulator.dart';
 import 'package:naamk_wallet/config/presentation/language/app_language.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
