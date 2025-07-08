@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_lock_state_manager.dart';
+part of 'app_entry_viewmodel.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appLockStateManagerHash() =>
-    r'454f2df3c1acfee797168fe29a63cfb266c251a2';
+String _$appEntryViewModelHash() => r'707cec94d9bb938b6637c068c1fcf5ef84841a2e';
 
-/// See also [AppLockStateManager].
-@ProviderFor(AppLockStateManager)
-final appLockStateManagerProvider =
-    AutoDisposeNotifierProvider<AppLockStateManager, AppLock>.internal(
-  AppLockStateManager.new,
-  name: r'appLockStateManagerProvider',
+/// See also [AppEntryViewModel].
+@ProviderFor(AppEntryViewModel)
+final appEntryViewModelProvider = AutoDisposeNotifierProvider<AppEntryViewModel,
+    AppEntryCheckStatus>.internal(
+  AppEntryViewModel.new,
+  name: r'appEntryViewModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$appLockStateManagerHash,
+      : _$appEntryViewModelHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AppLockStateManager = AutoDisposeNotifier<AppLock>;
+typedef _$AppEntryViewModel = AutoDisposeNotifier<AppEntryCheckStatus>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

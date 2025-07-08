@@ -1,34 +1,44 @@
+import 'package:naamk_wallet/common/utils/logger.dart';
+import 'package:naamk_wallet/config/core/local_storage/shared_preferences_manipulator.dart';
 import 'package:naamk_wallet/config/feature/deeplink/entry_handler.dart';
 import 'package:naamk_wallet/config/core/di/injector.dart';
+import 'package:naamk_wallet/config/feature/lock/app_lock_type.dart';
 import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
 import 'package:naamk_wallet/config/presentation/route/app_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class AppEntryViewModel {
-  late final AppRouter _appRouter;
+part 'app_entry_viewmodel.g.dart';
+
+enum AppEntryCheckStatus {
+  initial,
+  checkingMaintenance,
+  checkingUpdate,
+  checkingAppLock,
+  applock,
+  handlingDeeplink,
+  completed,
+}
+
+@riverpod
+class AppEntryViewModel extends _$AppEntryViewModel {
+  /// router
+  final AppRouter _appRouter = injector<AppRouter>();
+  GoRouter get getRouter => _appRouter.getGoRouter;
+
+  @override
+  AppEntryCheckStatus build() {
+    return AppEntryCheckStatus.initial;
+  }
+
+  void setEntryCheckStatus(AppEntryCheckStatus status) {
+    state = status;
+  }
+
   // 앱 최초 열렸을 때에 체크
   void onInit() {
-    _initAppRouter();
     _initDeeplinkListener();
+    runAppEntryCheckList();
   }
-
-  // background로 내려갈 경우 처리
-  void onBackground() {
-    // 앱 잠김이 설정되어져 있는 경우에서 flag update필요
-    // 동작하고 있던 이벤트 로직 멈추게 하기?
-  }
-
-  // foreground되어질 때마다 처리
-  void onForeground() {
-    // 앱 잠김이 설정되어져 있는 경우에서의 flag 감지로 앱잠김 화면 보여지도록 동작.
-    // 멈춰있는 이벤트 로직 동작되게 하기?
-  }
-
-  /// router
-  void _initAppRouter() {
-    _appRouter = injector<AppRouter>();
-  }
-
-  GoRouter get getRouter => _appRouter.getGoRouter;
 
   /// deeplink
   void _initDeeplinkListener() {
@@ -39,5 +49,63 @@ class AppEntryViewModel {
     DeeplinkEntryHandler.consumePendingDeeplink();
   }
 
-  // 버전 체크 및 앱 점검 체크 진행
+  /// 앱 리스트
+  Future<void> runAppEntryCheckList() async {
+    AppEntryCheckStatus? showStatus;
+
+    showStatus ??= await checkAppMaintenance();
+
+    showStatus ??= await checkAppVersionUpdate();
+
+    // 앱잠김 확인
+    showStatus ??= await checkAppLock();
+
+    // 딥링크 재개
+    if (showStatus == null) {
+      runPendingDeeplink();
+    }
+
+    state = (showStatus != null) ? showStatus : AppEntryCheckStatus.completed;
+
+    GlobalLogger.info('[runAppEntryCheckList] showStatus: $showStatus');
+  }
+
+  // 1. 앱 점검 중 확인
+  Future<AppEntryCheckStatus?> checkAppMaintenance() async {
+    GlobalLogger.info("[checkAppMaintenance] Start ");
+    final result = await Future.delayed(const Duration(seconds: 2), () {
+      // return AppEntryCheckStatus.checkingMaintenance;
+      return null;
+    });
+    GlobalLogger.info("[checkAppMaintenance] Complete");
+
+    return result;
+  }
+
+  // 2. 앱 강제 업데이트 여부 확인
+  Future<AppEntryCheckStatus?> checkAppVersionUpdate() async {
+    GlobalLogger.info("[checkAppVersion] Start ");
+    final result = await Future.delayed(const Duration(seconds: 2), () {
+      // return AppEntryCheckStatus.checkingUpdate;
+      return null;
+    });
+    GlobalLogger.info("[checkAppVersion] Complete");
+
+    return result;
+  }
+
+  // 3. app 잠김상태 확인
+  Future<AppEntryCheckStatus?> checkAppLock() async {
+    GlobalLogger.info('[checkAppLock] Start');
+
+    final String savedLockMode =
+        SharedPreferencesManipulator.currentAppLockMode ??
+            AppLockMode.pinOnly.name;
+
+    final AppLockMode lockMode = AppLockMode.getAppLockMode(savedLockMode);
+
+    GlobalLogger.info('[checkAppLock] Complete');
+
+    return (lockMode != AppLockMode.none) ? AppEntryCheckStatus.applock : null;
+  }
 }

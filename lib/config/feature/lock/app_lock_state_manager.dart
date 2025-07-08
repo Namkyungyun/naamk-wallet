@@ -1,35 +1,32 @@
-import 'package:naamk_wallet/config/core/di/injector.dart';
+import 'package:naamk_wallet/config/core/local_storage/shared_preferences_manipulator.dart';
 import 'package:naamk_wallet/config/feature/lock/app_lock_state.dart';
 import 'package:naamk_wallet/config/feature/lock/app_lock_type.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app_lock_state_manager.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class AppLockStateManager extends _$AppLockStateManager {
-  final LOCK_MODE = 'lockMode';
-  final prefs = injector<SharedPreferences>();
-
   @override
   AppLock build() {
     final String savedLockMode =
-        prefs.getString(LOCK_MODE) ?? AppLockMode.pinOnly.name;
+        SharedPreferencesManipulator.currentAppLockMode ??
+            AppLockMode.pinOnly.name;
 
     final AppLockMode lockMode = AppLockMode.getAppLockMode(savedLockMode);
 
-    // late final AppLockStatus status;
-    // if (lockMode != AppLockMode.none) {
-    //   status = AppLockStatus.lockedRequired;
-    // }
+    AppLockStatus status = AppLockStatus.unlocked;
+    if (lockMode != AppLockMode.none) {
+      status = AppLockStatus.lockedRequired;
+    }
 
-    return AppLock(lockMode: lockMode);
+    return AppLock(lockMode: lockMode, lockStatus: status);
   }
 
   // lock mode 변경하기
   void setAppLockMode(String modeName) {
     final AppLockMode currentLockMode = AppLockMode.getAppLockMode(modeName);
-    prefs.setString(LOCK_MODE, currentLockMode.toString());
+    SharedPreferencesManipulator.setAppLockMode(currentLockMode.toString());
 
     state = state.copyWith(lockMode: currentLockMode);
   }
