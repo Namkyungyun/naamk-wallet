@@ -1,7 +1,7 @@
 // 이동을 일관되게 하기위해 해당 클래스 사용 (딥링크 / 직업 이동)
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naamk_wallet/app/app_shell_state.dart';
+import 'package:naamk_wallet/app/app_shell.dart';
 import 'package:naamk_wallet/config/presentation/route/app_route_path.dart';
 // import 'package:collection/collection.dart';
 

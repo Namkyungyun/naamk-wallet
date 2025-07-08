@@ -81,7 +81,7 @@ class AppRouter {
         builder: (context, state) => const PincodeConfirmPage(),
       ).fade(),
       GoRoute(
-        path: '${AppGnbRoute.events.route}/rullet',
+        path: AppRoute.eventsRullet.route,
         parentNavigatorKey: _rootNavigatorKey, // 중요!
         builder: (context, state) => const SpinningWheelPage(),
       ).fade()

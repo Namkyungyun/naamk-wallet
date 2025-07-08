@@ -1,9 +1,15 @@
 import 'package:flutter/services.dart';
-import 'package:naamk_wallet/app/app_shell_state.dart';
 import 'package:naamk_wallet/common/widgets/bottom_navbar_widget/custom_bottom_navbar_widget.dart';
 import 'package:naamk_wallet/common/widgets/empty_appbar_widget.dart';
 import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
 import 'package:naamk_wallet/config/presentation/theme/app_color.dart';
+
+class AppShellState {
+  static StatefulNavigationShell? _shell;
+
+  static StatefulNavigationShell? get getShell => _shell;
+  static void setShell(StatefulNavigationShell shell) => _shell = shell;
+}
 
 class AppShell extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
