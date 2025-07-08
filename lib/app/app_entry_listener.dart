@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:naamk_wallet/app/app_entry_listener_ui.dart';
 import 'package:naamk_wallet/app/app_entry_viewmodel.dart';
 import 'package:naamk_wallet/common/utils/logger.dart';
-import 'package:naamk_wallet/config/core/di/injector.dart';
 import 'package:naamk_wallet/config/core/observer/app_lifecyle_observer.dart';
 import 'package:naamk_wallet/config/feature/lock/app_lock_state.dart';
 import 'package:naamk_wallet/config/feature/lock/app_lock_state_manager.dart';
 import 'package:naamk_wallet/config/feature/lock/app_lock_type.dart';
-import 'package:naamk_wallet/config/presentation/route/app_route_path.dart';
-import 'package:naamk_wallet/config/presentation/route/app_router.dart';
 
 class AppEntryStatusListener extends ConsumerStatefulWidget {
   const AppEntryStatusListener({super.key});
@@ -19,11 +16,11 @@ class AppEntryStatusListener extends ConsumerStatefulWidget {
       _AppEntryStatusListener();
 }
 
-class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener> {
+class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener>
+    with AppEntryListenerUI {
   late final ProviderSubscription<AppEntryCheckStatus>? _appEntrySubscription;
   late final AppLifecycleObserver? _appLifeCycleObserver;
 
-  final _currentcontext = injector<AppRouter>().getCurrentContext;
   final _lockThreshold = const Duration(seconds: 5);
   bool _initialized = false;
 
@@ -38,8 +35,18 @@ class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener> {
   AppLockStateManager get _appLockLogic => ref.watch<AppLockStateManager>(
       appLockStateManagerProvider.notifier); // 최신 상태를 읽기위해서는 read를 사용해야 함.
 
-  /// appLifecycle observer 등록 /////////////// /////////////// ///////////////
-  ///
+  @override
+  void dispose() {
+    _appEntrySubscription?.close();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox.shrink(); // UI 없음
+  }
+
+  /// appLifecycle observer 등록 ///////////////
   @override
   void initState() {
     super.initState();
@@ -74,6 +81,66 @@ class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener> {
     });
   }
 
+  /// app entry check listener 등록 ///////////////
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    if (!_initialized) {
+      _initialized = true;
+
+      // Frame 이후 안전하게 context 사용
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _appEntrySubscription = ref.listenManual<AppEntryCheckStatus>(
+          appEntryViewModelProvider,
+          (prev, next) async {
+            GlobalLogger.info('[listenManual] $prev → $next');
+
+            if (next == AppEntryCheckStatus.checkingMaintenance) {
+              await showAppMaintenance();
+              return;
+            }
+
+            if (next == AppEntryCheckStatus.checkingUpdate) {
+              await showAppForceUpdate();
+              return;
+            }
+
+            // 다른 상태 처리도 동일하게
+            if (next == AppEntryCheckStatus.applock) {
+              final AppLockStatus status =
+                  await _isLockRequiredAfterResume(prev);
+
+              if (status == AppLockStatus.lockedRequired && mounted) {
+                await showAppAuth();
+
+                // 앱락 해제
+                _appLockLogic.setAppLockStatus(AppLockStatus.unlocked);
+
+                // entry status 변경
+                _appEntryLogic
+                    .setEntryCheckStatus(AppEntryCheckStatus.handlingDeeplink);
+              }
+
+              if (status == AppLockStatus.unlocked) {
+                //완료후 deeplink 처리되도록 상태변경
+                _appEntryLogic
+                    .setEntryCheckStatus(AppEntryCheckStatus.handlingDeeplink);
+              }
+              return;
+            }
+
+            if (next == AppEntryCheckStatus.handlingDeeplink) {
+              _appEntryLogic.runPendingDeeplink();
+              _appEntryLogic.setEntryCheckStatus(AppEntryCheckStatus.completed);
+              return;
+            }
+          },
+        );
+      });
+    }
+  }
+
   Future<AppLockStatus> _isLockRequiredAfterResume(
       AppEntryCheckStatus? prevEntryStatus) async {
     if (_appLockState.lockMode != AppLockMode.none) {
@@ -103,105 +170,5 @@ class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener> {
     }
 
     return AppLockStatus.unlocked;
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    if (!_initialized) {
-      _initialized = true;
-
-      // Frame 이후 안전하게 context 사용
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _appEntrySubscription = ref.listenManual<AppEntryCheckStatus>(
-          appEntryViewModelProvider,
-          (prev, next) async {
-            GlobalLogger.info('[listenManual] $prev → $next');
-
-            if (next == AppEntryCheckStatus.checkingMaintenance) {
-              await _showAppMaintenance();
-              return;
-            }
-
-            if (next == AppEntryCheckStatus.checkingUpdate) {
-              await _showAppForceUpdate();
-              return;
-            }
-
-            // 다른 상태 처리도 동일하게
-            if (next == AppEntryCheckStatus.applock) {
-              final AppLockStatus status =
-                  await _isLockRequiredAfterResume(prev);
-
-              if (status == AppLockStatus.lockedRequired && mounted) {
-                await _showAppAuth();
-
-                // 앱락 해제
-                _appLockLogic.setAppLockStatus(AppLockStatus.unlocked);
-
-                // entry status 변경
-                _appEntryLogic
-                    .setEntryCheckStatus(AppEntryCheckStatus.handlingDeeplink);
-              }
-
-              if (status == AppLockStatus.unlocked) {
-                //완료후 deeplink 처리되도록 상태변경
-                _appEntryLogic
-                    .setEntryCheckStatus(AppEntryCheckStatus.handlingDeeplink);
-              }
-              return;
-            }
-
-            if (next == AppEntryCheckStatus.handlingDeeplink) {
-              _appEntryLogic.runPendingDeeplink();
-              _appEntryLogic.setEntryCheckStatus(AppEntryCheckStatus.completed);
-              return;
-            }
-          },
-        );
-      });
-    }
-  }
-
-  Future<void> _showAppMaintenance() async {
-    if (_currentcontext != null) {
-      await showDialog(
-        context: _currentcontext,
-        builder: (_) => const AlertDialog(
-          title: Text("점검 중"),
-          content: Text("현재 점검 중입니다."),
-        ),
-      );
-    }
-  }
-
-  Future<void> _showAppForceUpdate() async {
-    if (_currentcontext != null) {
-      await showDialog(
-        context: _currentcontext,
-        builder: (_) => const AlertDialog(
-          title: Text("버전 업데이트 필요"),
-          content: Text("업데이트 후 사용가능합니다."),
-        ),
-      );
-    }
-  }
-
-  Future<void> _showAppAuth() async {
-    if (_currentcontext != null) {
-      await _currentcontext.push(AppRoute.authConfirm.route);
-    }
-  }
-
-  @override
-  void dispose() {
-    _appEntrySubscription?.close();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox.shrink(); // UI 없음
   }
 }
