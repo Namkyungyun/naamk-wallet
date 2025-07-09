@@ -17,12 +17,21 @@ class LanguageListSwitchWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         LanguageSwitchWidget(
+          isShowing: _showLanguageCard,
           onTab: () => _showLanguageCard.value = !_showLanguageCard.value,
         ),
         ValueListenableBuilder<bool>(
           valueListenable: _showLanguageCard,
           builder: (context, show, _) {
-            return show ? const LanguageListWidget() : const SizedBox.shrink();
+            return AnimatedSize(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              alignment: Alignment.topCenter,
+              child: ClipRect(
+                child:
+                    show ? const LanguageListWidget() : const SizedBox.shrink(),
+              ),
+            );
           },
         )
       ],
@@ -31,9 +40,14 @@ class LanguageListSwitchWidget extends StatelessWidget {
 }
 
 class LanguageSwitchWidget extends StatelessWidget {
+  final ValueNotifier<bool> isShowing;
   final VoidCallback onTab;
 
-  const LanguageSwitchWidget({super.key, required this.onTab});
+  const LanguageSwitchWidget({
+    super.key,
+    required this.isShowing,
+    required this.onTab,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,24 +55,48 @@ class LanguageSwitchWidget extends StatelessWidget {
       leadingIcon: Icons.language,
       title: 'setting_page.list.language',
       onTap: onTab,
-      trailingWidget: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: Theme.of(context).primaryColor),
-        child: Consumer(
-          builder: (context, ref, _) {
-            final AppLanguage languageModeState =
-                ref.watch(appLanguageStateProvider); // 전역 state관리
+      trailingWidget: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Theme.of(context).primaryColor),
+            child: Consumer(
+              builder: (context, ref, _) {
+                final AppLanguage languageModeState =
+                    ref.watch(appLanguageStateProvider); // 전역 state관리
 
-            return Text(
-              languageModeState.langCode,
-              style: TextStyle(
-                color: Theme.of(context).listTileTheme.selectedColor,
-              ),
-            );
-          },
-        ),
+                return Text(
+                  languageModeState.langCode,
+                  style: TextStyle(
+                    color: Theme.of(context).listTileTheme.selectedColor,
+                  ),
+                );
+              },
+            ),
+          ),
+          const Gap(4),
+          ValueListenableBuilder<bool>(
+            valueListenable: isShowing,
+            builder: (context, show, _) {
+              return AnimatedSize(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                alignment: Alignment.topCenter,
+                child: ClipRect(
+                  child: Icon(
+                    show ? Icons.arrow_drop_up : Icons.arrow_drop_down,
+                    size: 28,
+                    color: Colors.grey,
+                  ),
+                ),
+              );
+            },
+          )
+        ],
       ),
     );
   }
@@ -92,7 +130,9 @@ class LanguageListWidget extends StatelessWidget {
                             : null,
                         onTap: () {
                           lanuguageNotifier.setLanguageMode(
-                              context, item.langCode);
+                            context,
+                            item.langCode,
+                          );
                         },
                       ),
                     )

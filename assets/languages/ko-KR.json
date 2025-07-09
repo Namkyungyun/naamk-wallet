@@ -17,7 +17,13 @@
          "language": "언어",
          "about": "앱 소개",
          "logout": "로그아웃",
-         "theme": "테마"
+         "theme": "테마",
+         "auth": "보안"
+      },
+      "auth": {
+         "appLock": "앱잠김",
+         "biometricAuth": "생체인증",
+         "changePincode": "핀코드변경"
       }
    }
 }

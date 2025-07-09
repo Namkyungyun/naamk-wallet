@@ -17,7 +17,13 @@
          "language": "Language",
          "about": "About",
          "logout": "Logout",
-         "theme": "Theme"
+         "theme": "Theme",
+         "auth": "Security"
+      },
+      "auth": {
+         "appLock": "App Lock",
+         "biometricAuth": "Biometric Auth",
+         "changePincode": "Change Pincode"
       }
    }
 }

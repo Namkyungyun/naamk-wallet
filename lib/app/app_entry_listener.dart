@@ -31,9 +31,9 @@ class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener>
   AppEntryViewModel get _appEntryLogic =>
       ref.watch<AppEntryViewModel>(appEntryViewModelProvider.notifier);
 
-  AppAuth get _appLockState => ref.watch(appLockStateManagerProvider);
-  AppAuthStateManager get _appLockLogic => ref.watch<AppAuthStateManager>(
-      appLockStateManagerProvider.notifier); // 최신 상태를 읽기위해서는 read를 사용해야 함.
+  AppAuth get _appAuthState => ref.watch(appAuthStateManagerProvider);
+  AppAuthStateManager get _appAuthLogic => ref.watch<AppAuthStateManager>(
+      appAuthStateManagerProvider.notifier); // 최신 상태를 읽기위해서는 read를 사용해야 함.
 
   @override
   void dispose() {
@@ -56,7 +56,7 @@ class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener>
         // Background 모드
         if (state == AppLifecycleState.paused) {
           // 앱잠김 설정된 경우 앱잠김 설정으로 변경되게 하기
-          if (_appLockState.method != AppAuthMethod.none) {
+          if (_appAuthState.useLock) {
             if (_initialized) {
               _lastPausedTime = DateTime.now();
             }
@@ -66,10 +66,12 @@ class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener>
         // Foreground 모드
         if (state == AppLifecycleState.resumed) {
           // 포그라운드마다 check
-          if (_initialized) {
-            _lastResumeTime = DateTime.now();
-            _appEntryLogic.runAppEntryCheckList();
+          if (_appAuthState.useLock) {
+            if (_initialized) {
+              _lastResumeTime = DateTime.now();
+            }
           }
+          _appEntryLogic.runAppEntryCheckList();
         }
       },
     );
@@ -115,7 +117,7 @@ class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener>
                 await showAppAuth();
 
                 // 앱락 해제
-                _appLockLogic.setAppAuthStatus(AppAuthStatus.idle);
+                _appAuthLogic.setAppAuthStatus(AppAuthStatus.idle);
 
                 // entry status 변경
                 _appEntryLogic
@@ -143,9 +145,9 @@ class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener>
 
   Future<AppAuthStatus> _isLockRequiredAfterResume(
       AppEntryCheckStatus? prevEntryStatus) async {
-    if (_appLockState.method != AppAuthMethod.none) {
+    if (_appAuthState.useLock) {
       // 이미 잠금화면이 켜져있는 상태
-      if (_appLockState.status == AppAuthStatus.verifying) {
+      if (_appAuthState.status == AppAuthStatus.verifying) {
         return AppAuthStatus.verifying;
       }
 
@@ -163,10 +165,10 @@ class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener>
       _lastResumeTime = null;
 
       // 일정 시간 내에 다시 포그라운드 모드될 경우 앱잠금 안됨.
-      _appLockLogic.setAppAuthStatus(
+      _appAuthLogic.setAppAuthStatus(
           shouldLock ? AppAuthStatus.required : AppAuthStatus.idle);
 
-      return _appLockState.status;
+      return _appAuthState.status;
     }
 
     return AppAuthStatus.idle;

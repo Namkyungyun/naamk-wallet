@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AppAuth {
+  dynamic get useLock => throw _privateConstructorUsedError;
   dynamic get method => throw _privateConstructorUsedError;
   dynamic get status => throw _privateConstructorUsedError;
 
@@ -30,7 +31,7 @@ abstract class $AppAuthCopyWith<$Res> {
   factory $AppAuthCopyWith(AppAuth value, $Res Function(AppAuth) then) =
       _$AppAuthCopyWithImpl<$Res, AppAuth>;
   @useResult
-  $Res call({dynamic method, dynamic status});
+  $Res call({dynamic useLock, dynamic method, dynamic status});
 }
 
 /// @nodoc
@@ -48,10 +49,15 @@ class _$AppAuthCopyWithImpl<$Res, $Val extends AppAuth>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? useLock = freezed,
     Object? method = freezed,
     Object? status = freezed,
   }) {
     return _then(_value.copyWith(
+      useLock: freezed == useLock
+          ? _value.useLock
+          : useLock // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       method: freezed == method
           ? _value.method
           : method // ignore: cast_nullable_to_non_nullable
@@ -71,7 +77,7 @@ abstract class _$$AppLockImplCopyWith<$Res> implements $AppAuthCopyWith<$Res> {
       __$$AppLockImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({dynamic method, dynamic status});
+  $Res call({dynamic useLock, dynamic method, dynamic status});
 }
 
 /// @nodoc
@@ -87,10 +93,12 @@ class __$$AppLockImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? useLock = freezed,
     Object? method = freezed,
     Object? status = freezed,
   }) {
     return _then(_$AppLockImpl(
+      useLock: freezed == useLock ? _value.useLock! : useLock,
       method: freezed == method ? _value.method! : method,
       status: freezed == status ? _value.status! : status,
     ));
@@ -101,8 +109,13 @@ class __$$AppLockImplCopyWithImpl<$Res>
 
 class _$AppLockImpl implements _AppLock {
   const _$AppLockImpl(
-      {this.method = AppAuthMethod.none, this.status = AppAuthStatus.idle});
+      {this.useLock = false,
+      this.method = AppAuthMethod.none,
+      this.status = AppAuthStatus.idle});
 
+  @override
+  @JsonKey()
+  final dynamic useLock;
   @override
   @JsonKey()
   final dynamic method;
@@ -112,7 +125,7 @@ class _$AppLockImpl implements _AppLock {
 
   @override
   String toString() {
-    return 'AppAuth(method: $method, status: $status)';
+    return 'AppAuth(useLock: $useLock, method: $method, status: $status)';
   }
 
   @override
@@ -120,6 +133,7 @@ class _$AppLockImpl implements _AppLock {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AppLockImpl &&
+            const DeepCollectionEquality().equals(other.useLock, useLock) &&
             const DeepCollectionEquality().equals(other.method, method) &&
             const DeepCollectionEquality().equals(other.status, status));
   }
@@ -127,6 +141,7 @@ class _$AppLockImpl implements _AppLock {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(useLock),
       const DeepCollectionEquality().hash(method),
       const DeepCollectionEquality().hash(status));
 
@@ -140,9 +155,13 @@ class _$AppLockImpl implements _AppLock {
 }
 
 abstract class _AppLock implements AppAuth {
-  const factory _AppLock({final dynamic method, final dynamic status}) =
-      _$AppLockImpl;
+  const factory _AppLock(
+      {final dynamic useLock,
+      final dynamic method,
+      final dynamic status}) = _$AppLockImpl;
 
+  @override
+  dynamic get useLock;
   @override
   dynamic get method;
   @override

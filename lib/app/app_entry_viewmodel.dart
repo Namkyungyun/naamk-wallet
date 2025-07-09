@@ -98,14 +98,10 @@ class AppEntryViewModel extends _$AppEntryViewModel {
   Future<AppEntryCheckStatus?> checkAppLock() async {
     GlobalLogger.info('[checkAppLock] Start');
 
-    final String savedLockMode =
-        SharedPreferencesManipulator.currentAppAuthMethod ??
-            AppAuthMethod.pinOnly.name;
-
-    final AppAuthMethod method = AppAuthMethod.getAppAuthMethod(savedLockMode);
+    final bool savedUseAppLock = SharedPreferencesManipulator.useAppLock;
 
     GlobalLogger.info('[checkAppLock] Complete');
 
-    return (method != AppAuthMethod.none) ? AppEntryCheckStatus.applock : null;
+    return savedUseAppLock ? AppEntryCheckStatus.applock : null;
   }
 }

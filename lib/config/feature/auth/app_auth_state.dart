@@ -6,6 +6,7 @@ part 'app_auth_state.freezed.dart';
 @freezed
 class AppAuth with _$AppAuth {
   const factory AppAuth({
+    @Default(false) useLock,
     @Default(AppAuthMethod.none) method,
     @Default(AppAuthStatus.idle) status,
   }) = _AppLock;

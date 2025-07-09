@@ -1,8 +1,8 @@
+import 'package:naamk_wallet/app/setting/widgets/auth_toggle_switch_widget.dart';
 import 'package:naamk_wallet/app/setting/widgets/lanugae_list_switch_widget.dart';
 import 'package:naamk_wallet/app/setting/widgets/setting_push_listtile_widget.dart';
 import 'package:naamk_wallet/common/widgets/title_appbar_widget.dart';
 import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
-import 'package:gap/gap.dart';
 import 'package:naamk_wallet/app/setting/widgets/theme_toggle_switch_widget.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -21,6 +21,8 @@ class SettingScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const ThemeToggleSwitch(),
+                const Gap(8),
+                AuthSettingWidget(),
                 const Gap(8),
                 LanguageListSwitchWidget(),
                 const Gap(8),
