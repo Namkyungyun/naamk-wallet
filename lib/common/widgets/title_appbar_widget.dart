@@ -13,7 +13,8 @@ class TitleAppbarWidget extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
-        title,
+        key: ValueKey(context.locale.languageCode),
+        title.tr(),
         textAlign: TextAlign.start,
       ),
       centerTitle: false,

@@ -22,7 +22,7 @@ class EventScreen extends HookConsumerWidget {
     }, []);
 
     return Scaffold(
-      appBar: const TitleAppbarWidget(title: '이벤트'),
+      appBar: const TitleAppbarWidget(title: 'page_title.event'),
       body: SafeArea(
         bottom: false,
         child: Padding(

@@ -11,7 +11,7 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TitleAppbarWidget(title: 'page_title.setting'.tr()),
+      appBar: const TitleAppbarWidget(title: 'page_title.setting'),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -22,17 +22,17 @@ class SettingScreen extends StatelessWidget {
               children: [
                 const ThemeToggleSwitch(),
                 const Gap(8),
-                const LanguageListSwitchWidget(),
+                LanguageListSwitchWidget(),
                 const Gap(8),
                 SettigPushListTileWidget(
                   icon: Icons.person,
-                  title: 'setting_page.list.about'.tr(),
+                  title: 'setting_page.list.about',
                   onTap: () {},
                 ),
                 const Gap(8),
                 SettigPushListTileWidget(
                   icon: Icons.logout,
-                  title: 'setting_page.list.logout'.tr(),
+                  title: 'setting_page.list.logout',
                   onTap: () {},
                 ),
               ],

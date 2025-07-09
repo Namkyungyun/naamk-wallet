@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
 
 class SettigInfoListTileWidget extends StatelessWidget {
   final IconData leadingIcon;
@@ -24,7 +24,8 @@ class SettigInfoListTileWidget extends StatelessWidget {
       title: Padding(
         padding: const EdgeInsets.only(left: 4.0), // 아이콘과 텍스트 간격
         child: Text(
-          title,
+          key: ValueKey(context.locale.languageCode),
+          title.tr(),
           style: const TextStyle(fontSize: 16),
         ),
       ),
