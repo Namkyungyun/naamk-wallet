@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naamk_wallet/app/app_shell.dart';
+import 'package:naamk_wallet/app/main_screen_shell.dart';
 import 'package:naamk_wallet/app/event/screen.dart';
 import 'package:naamk_wallet/app/event/pages/spining_wheel/spinning_wheel_page.dart';
 import 'package:naamk_wallet/app/home/home_screen.dart';
@@ -29,7 +29,7 @@ class AppRouter {
     routes: [
       StatefulShellRoute.indexedStack(
         parentNavigatorKey: _rootNavigatorKey,
-        builder: (context, state, navigationShell) => AppShell(
+        builder: (context, state, navigationShell) => MainScreenShell(
           navigationShell: navigationShell,
         ),
         branches: <StatefulShellBranch>[

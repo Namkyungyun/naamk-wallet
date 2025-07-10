@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naamk_wallet/app/app_entry_listener_ui.dart';
+import 'package:naamk_wallet/app/app_precondition_listener_ui.dart';
 import 'package:naamk_wallet/app/app_entry_viewmodel.dart';
 import 'package:naamk_wallet/common/utils/logger.dart';
 import 'package:naamk_wallet/config/core/applifecycle/app_lifecyle_observer.dart';
@@ -8,16 +8,16 @@ import 'package:naamk_wallet/config/feature/auth/app_auth_state.dart';
 import 'package:naamk_wallet/config/feature/auth/app_auth_state_manager.dart';
 import 'package:naamk_wallet/config/feature/auth/app_auth_type.dart';
 
-class AppEntryStatusListener extends ConsumerStatefulWidget {
-  const AppEntryStatusListener({super.key});
+class AppPreconditionListener extends ConsumerStatefulWidget {
+  const AppPreconditionListener({super.key});
 
   @override
-  ConsumerState<AppEntryStatusListener> createState() =>
+  ConsumerState<AppPreconditionListener> createState() =>
       _AppEntryStatusListener();
 }
 
-class _AppEntryStatusListener extends ConsumerState<AppEntryStatusListener>
-    with AppEntryListenerUI {
+class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
+    with AppPreconditionListenerUI {
   late final ProviderSubscription<AppEntryCheckStatus>? _appEntrySubscription;
   late final AppLifecycleObserver? _appLifeCycleObserver;
 

@@ -4,37 +4,37 @@ import 'package:naamk_wallet/common/widgets/empty_appbar_widget.dart';
 import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
 import 'package:naamk_wallet/config/presentation/theme/app_color.dart';
 
-class AppShellState {
-  static StatefulNavigationShell? _shell;
+final List<IconData> _iconList = [
+  Icons.notification_important,
+  Icons.account_balance_wallet,
+  Icons.home,
+  Icons.grid_view,
+  Icons.settings,
+];
 
+final List<String> _labelList = [
+  'bottom_nav.notice',
+  'bottom_nav.wallet',
+  'bottom_nav.home',
+  'bottom_nav.event',
+  'bottom_nav.settings',
+];
+
+class MainNavigationShellHolder {
+  static StatefulNavigationShell? _shell;
   static StatefulNavigationShell? get getShell => _shell;
   static void setShell(StatefulNavigationShell shell) => _shell = shell;
 }
 
-class AppShell extends StatelessWidget {
+class MainScreenShell extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
-  AppShell({
+
+  MainScreenShell({
     super.key,
     required this.navigationShell,
   }) {
-    AppShellState.setShell(navigationShell);
+    MainNavigationShellHolder.setShell(navigationShell);
   }
-
-  final List<IconData> _iconList = [
-    Icons.notification_important,
-    Icons.account_balance_wallet,
-    Icons.home,
-    Icons.grid_view,
-    Icons.settings,
-  ];
-
-  final List<String> _labelList = [
-    'bottom_nav.notice',
-    'bottom_nav.wallet',
-    'bottom_nav.home',
-    'bottom_nav.event',
-    'bottom_nav.settings',
-  ];
 
   @override
   Widget build(BuildContext context) {

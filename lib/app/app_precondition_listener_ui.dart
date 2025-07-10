@@ -5,7 +5,8 @@ import 'package:naamk_wallet/config/core/di/injector.dart';
 import 'package:naamk_wallet/config/presentation/route/app_route_path.dart';
 import 'package:naamk_wallet/config/presentation/route/app_router.dart';
 
-mixin AppEntryListenerUI<T extends ConsumerStatefulWidget> on ConsumerState<T> {
+mixin AppPreconditionListenerUI<T extends ConsumerStatefulWidget>
+    on ConsumerState<T> {
   final _currentcontext = injector<AppRouter>().getCurrentContext;
 
   Future<void> showAppMaintenance() async {

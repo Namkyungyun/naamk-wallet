@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naamk_wallet/app/app_shell.dart';
+import 'package:naamk_wallet/app/app_mainscreen_shell.dart';
 import 'package:naamk_wallet/config/presentation/route/app_route_path.dart';
 
 class AppRouterState {
@@ -13,7 +13,7 @@ class AppRouterState {
   ];
 
   static void pushDetailPageWithShell(BuildContext context, String url) {
-    final shell = AppShellState.getShell;
+    final shell = MainNavigationShellHolder.getShell;
 
     if (shell != null) {
       final String currentPath =

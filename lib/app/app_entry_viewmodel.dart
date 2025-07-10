@@ -2,7 +2,6 @@ import 'package:naamk_wallet/common/utils/logger.dart';
 import 'package:naamk_wallet/config/core/local/shared_preferences_manipulator.dart';
 import 'package:naamk_wallet/config/feature/deeplink/entry_handler.dart';
 import 'package:naamk_wallet/config/core/di/injector.dart';
-import 'package:naamk_wallet/config/feature/auth/app_auth_type.dart';
 import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
 import 'package:naamk_wallet/config/presentation/route/app_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -49,7 +48,7 @@ class AppEntryViewModel extends _$AppEntryViewModel {
     DeeplinkEntryHandler.consumePendingDeeplink();
   }
 
-  /// 앱 리스트
+  /// 앱 점검 리스트
   Future<void> runAppEntryCheckList() async {
     AppEntryCheckStatus? showStatus;
 
