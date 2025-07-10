@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:naamk_wallet/app/app_mainscreen_shell.dart';
+import 'package:naamk_wallet/app/main_screen_shell.dart';
 import 'package:naamk_wallet/config/presentation/route/app_route_path.dart';
 
 class AppRouterState {
