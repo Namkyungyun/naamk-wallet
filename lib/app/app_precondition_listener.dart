@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naamk_wallet/app/app_precondition_listener_ui.dart';
+import 'package:naamk_wallet/app/app_precondition_router.dart';
 import 'package:naamk_wallet/app/app_entry_viewmodel.dart';
 import 'package:naamk_wallet/common/utils/logger.dart';
+import 'package:naamk_wallet/common/widgets/empty_appbar_widget.dart';
+import 'package:naamk_wallet/common/widgets/global_loading_widget/global_loading_dot_widget.dart';
+import 'package:naamk_wallet/common/widgets/image_widget.dart';
 import 'package:naamk_wallet/config/core/applifecycle/app_lifecyle_observer.dart';
 import 'package:naamk_wallet/config/feature/auth/app_auth_state.dart';
 import 'package:naamk_wallet/config/feature/auth/app_auth_state_manager.dart';
@@ -17,12 +20,13 @@ class AppPreconditionListener extends ConsumerStatefulWidget {
 }
 
 class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
-    with AppPreconditionListenerUI {
+    with AppPreconditionRouter {
   late final ProviderSubscription<AppEntryCheckStatus>? _appEntrySubscription;
   late final AppLifecycleObserver? _appLifeCycleObserver;
 
   final _lockThreshold = const Duration(seconds: 5);
   bool _initialized = false;
+  bool _showInitUi = true;
 
   DateTime? _lastPausedTime;
   DateTime? _lastResumeTime;
@@ -41,11 +45,6 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox.shrink(); // UI 없음
-  }
-
   /// appLifecycle observer 등록 ///////////////
   @override
   void initState() {
@@ -56,8 +55,8 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
         // Background 모드
         if (state == AppLifecycleState.paused) {
           // 앱잠김 설정된 경우 앱잠김 설정으로 변경되게 하기
-          if (_appAuthState.useLock) {
-            if (_initialized) {
+          if (_initialized) {
+            if (_appAuthState.useLock) {
               _lastPausedTime = DateTime.now();
             }
           }
@@ -66,10 +65,12 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
         // Foreground 모드
         if (state == AppLifecycleState.resumed) {
           // 포그라운드마다 check
-          if (_appAuthState.useLock) {
-            if (_initialized) {
+          if (_initialized) {
+            if (_appAuthState.useLock) {
               _lastResumeTime = DateTime.now();
             }
+            _showInitUi = false;
+            _appEntryLogic.setEntryCheckStatus(AppEntryCheckStatus.none);
           }
           _appEntryLogic.runAppEntryCheckList();
         }
@@ -96,7 +97,7 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
         _appEntrySubscription = ref.listenManual<AppEntryCheckStatus>(
           appEntryViewModelProvider,
           (prev, next) async {
-            GlobalLogger.info('[listenManual] $prev → $next');
+            GlobalLogger.info('[precondition state] $prev → $next');
 
             if (next == AppEntryCheckStatus.checkingMaintenance) {
               await showAppMaintenance();
@@ -152,7 +153,7 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
       }
 
       // 앱 첫 기동
-      if (prevEntryStatus == AppEntryCheckStatus.initial) {
+      if (prevEntryStatus == AppEntryCheckStatus.none) {
         return AppAuthStatus.required;
       }
 
@@ -172,5 +173,52 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
     }
 
     return AppAuthStatus.idle;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // 1차 분기 :: initial > 스플래시 화면과 같이 진행 ?
+    // !initial && checkMaintenanace, checkAppversion, ... > loading 화면
+    // completed :: SizedBox.shrink()
+
+    final AppEntryCheckStatus status =
+        ref.watch<AppEntryCheckStatus>(appEntryViewModelProvider);
+
+    GlobalLogger.info('[!!!!!!!!!!!!!!!!!!!!!!!!] $_showInitUi $status');
+
+    if (_showInitUi) {
+      if (status == AppEntryCheckStatus.applock ||
+          status == AppEntryCheckStatus.completed) {
+        return const SizedBox.shrink(); // UI 없음
+      }
+
+      return const Scaffold(
+        appBar: EmptyAppbarWidget(),
+        backgroundColor: Colors.white,
+        body: Center(
+          child: ImageWidget(
+            imageName: 'init_icon.gif',
+            type: ImageType.asset,
+            size: Size(120, 120),
+          ),
+        ),
+      );
+    } else {
+      if (status == AppEntryCheckStatus.applock ||
+          status == AppEntryCheckStatus.completed) {
+        return const SizedBox.shrink(); // UI 없음
+      }
+
+      return Scaffold(
+        appBar: const EmptyAppbarWidget(),
+        backgroundColor: Theme.of(context).shadowColor,
+        body: Center(
+          child: GlobalLoadingDotWidget(
+            size: Size(MediaQuery.of(context).size.width,
+                MediaQuery.of(context).size.height),
+          ),
+        ),
+      );
+    }
   }
 }
