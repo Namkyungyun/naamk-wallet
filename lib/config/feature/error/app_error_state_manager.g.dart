@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'app_auth_state_manager.dart';
+part of 'app_error_state_manager.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appAuthStateManagerHash() =>
-    r'642b04eea4eeda56c0512eabaa03a6eafba21f76';
+String _$appErrorStateManagerHash() =>
+    r'1d7e525cf9c788fb82140cb51c7507741f994482';
 
-/// See also [AppAuthStateManager].
-@ProviderFor(AppAuthStateManager)
-final appAuthStateManagerProvider =
-    NotifierProvider<AppAuthStateManager, AppAuth>.internal(
-  AppAuthStateManager.new,
-  name: r'appAuthStateManagerProvider',
+/// See also [AppErrorStateManager].
+@ProviderFor(AppErrorStateManager)
+final appErrorStateManagerProvider =
+    NotifierProvider<AppErrorStateManager, AppError>.internal(
+  AppErrorStateManager.new,
+  name: r'appErrorStateManagerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$appAuthStateManagerHash,
+      : _$appErrorStateManagerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AppAuthStateManager = Notifier<AppAuth>;
+typedef _$AppErrorStateManager = Notifier<AppError>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

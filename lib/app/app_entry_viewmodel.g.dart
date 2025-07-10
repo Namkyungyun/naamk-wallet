@@ -6,7 +6,7 @@ part of 'app_entry_viewmodel.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appEntryViewModelHash() => r'c61af67ac3118842375fb5f6b6fd0421a215fecd';
+String _$appEntryViewModelHash() => r'6a752155cc9afb1ce5934e71a078ae586e178240';
 
 /// See also [AppEntryViewModel].
 @ProviderFor(AppEntryViewModel)

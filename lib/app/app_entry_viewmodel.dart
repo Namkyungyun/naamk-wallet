@@ -9,7 +9,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'app_entry_viewmodel.g.dart';
 
 enum AppEntryCheckStatus {
-  initial,
+  none,
   checkingMaintenance,
   checkingUpdate,
   checkingAppLock,
@@ -26,7 +26,7 @@ class AppEntryViewModel extends _$AppEntryViewModel {
 
   @override
   AppEntryCheckStatus build() {
-    return AppEntryCheckStatus.initial;
+    return AppEntryCheckStatus.none;
   }
 
   void setEntryCheckStatus(AppEntryCheckStatus status) {
