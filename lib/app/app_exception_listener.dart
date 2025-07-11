@@ -1,20 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:naamk_wallet/app/app_error_router.dart';
 import 'package:naamk_wallet/common/utils/logger.dart';
-import 'package:naamk_wallet/config/feature/error/app_error_state.dart';
-import 'package:naamk_wallet/config/feature/error/app_error_state_manager.dart';
+import 'package:naamk_wallet/config/feature/exception/app_exception_state.dart';
+import 'package:naamk_wallet/config/feature/exception/app_exception_state_manager.dart';
 import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
 
-class AppErrorListener extends ConsumerStatefulWidget {
-  const AppErrorListener({super.key});
+class AppExceptionListener extends ConsumerStatefulWidget {
+  const AppExceptionListener({super.key});
 
   @override
-  ConsumerState<AppErrorListener> createState() => _AppErrorListenerState();
+  ConsumerState<AppExceptionListener> createState() => _AppErrorListenerState();
 }
 
-class _AppErrorListenerState extends ConsumerState<AppErrorListener>
+class _AppErrorListenerState extends ConsumerState<AppExceptionListener>
     with AppErrorRouter {
-  late final ProviderSubscription<AppError>? _appErrorSubscription;
+  late final ProviderSubscription<AppException>? _appErrorSubscription;
 
   bool _initialized = false;
 
@@ -37,12 +37,12 @@ class _AppErrorListenerState extends ConsumerState<AppErrorListener>
       _initialized = true;
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _appErrorSubscription = ref.listenManual<AppError>(
+        _appErrorSubscription = ref.listenManual<AppException>(
             appErrorStateManagerProvider, (prev, next) async {
           GlobalLogger.info('[appError state] $prev → $next');
 
           if (!prev?.show && next.show) {
-            await showError(next.message);
+            await showError(next);
 
             ref
                 .read<AppErrorStateManager>(
@@ -57,7 +57,6 @@ class _AppErrorListenerState extends ConsumerState<AppErrorListener>
   @override
   Widget build(BuildContext context) {
     // 네트워크 에러 화면
-    //
     return const SizedBox.shrink(); // UI 없음
   }
 }

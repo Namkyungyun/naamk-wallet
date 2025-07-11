@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ViewState<T> {
   ResponseState get state => throw _privateConstructorUsedError;
   T? get data => throw _privateConstructorUsedError;
-  String? get exception => throw _privateConstructorUsedError;
+  AppException? get exception => throw _privateConstructorUsedError;
 
   /// Create a copy of ViewState
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +33,9 @@ abstract class $ViewStateCopyWith<T, $Res> {
           ViewState<T> value, $Res Function(ViewState<T>) then) =
       _$ViewStateCopyWithImpl<T, $Res, ViewState<T>>;
   @useResult
-  $Res call({ResponseState state, T? data, String? exception});
+  $Res call({ResponseState state, T? data, AppException? exception});
+
+  $AppExceptionCopyWith<$Res>? get exception;
 }
 
 /// @nodoc
@@ -67,8 +69,22 @@ class _$ViewStateCopyWithImpl<T, $Res, $Val extends ViewState<T>>
       exception: freezed == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as AppException?,
     ) as $Val);
+  }
+
+  /// Create a copy of ViewState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AppExceptionCopyWith<$Res>? get exception {
+    if (_value.exception == null) {
+      return null;
+    }
+
+    return $AppExceptionCopyWith<$Res>(_value.exception!, (value) {
+      return _then(_value.copyWith(exception: value) as $Val);
+    });
   }
 }
 
@@ -80,7 +96,10 @@ abstract class _$$ViewStateImplCopyWith<T, $Res>
       __$$ViewStateImplCopyWithImpl<T, $Res>;
   @override
   @useResult
-  $Res call({ResponseState state, T? data, String? exception});
+  $Res call({ResponseState state, T? data, AppException? exception});
+
+  @override
+  $AppExceptionCopyWith<$Res>? get exception;
 }
 
 /// @nodoc
@@ -112,7 +131,7 @@ class __$$ViewStateImplCopyWithImpl<T, $Res>
       exception: freezed == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as AppException?,
     ));
   }
 }
@@ -133,7 +152,7 @@ class _$ViewStateImpl<T> implements _ViewState<T> {
   final T? data;
   @override
   @JsonKey()
-  final String? exception;
+  final AppException? exception;
 
   @override
   String toString() {
@@ -168,14 +187,14 @@ abstract class _ViewState<T> implements ViewState<T> {
   const factory _ViewState(
       {final ResponseState state,
       final T? data,
-      final String? exception}) = _$ViewStateImpl<T>;
+      final AppException? exception}) = _$ViewStateImpl<T>;
 
   @override
   ResponseState get state;
   @override
   T? get data;
   @override
-  String? get exception;
+  AppException? get exception;
 
   /// Create a copy of ViewState
   /// with the given fields replaced by the non-null parameter values.

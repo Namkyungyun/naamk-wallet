@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:naamk_wallet/app/app_error_listener.dart';
+import 'package:naamk_wallet/app/app_exception_listener.dart';
 import 'package:naamk_wallet/app/app_precondition_listener.dart';
 import 'package:naamk_wallet/app/app_entry_viewmodel.dart';
 import 'package:naamk_wallet/config/presentation/language/app_language.dart';
@@ -35,7 +35,7 @@ class AppEntry extends ConsumerWidget {
           children: [
             child!,
             const AppPreconditionListener(),
-            const AppErrorListener(),
+            const AppExceptionListener(),
           ],
         );
       },

@@ -1,12 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'app_error_state.freezed.dart';
+part 'app_exception_state.freezed.dart';
 
 @freezed
-class AppError with _$AppError {
-  const factory AppError({
+class AppException with _$AppException {
+  const factory AppException({
     @Default(false) show,
     @Default('') code,
     @Default('') message,
+    @Default('') detailMessage,
   }) = _AppError;
 }
