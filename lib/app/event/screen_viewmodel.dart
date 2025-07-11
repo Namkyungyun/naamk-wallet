@@ -1,5 +1,5 @@
+import 'package:naamk_wallet/common/utils/api_handler_mixin.dart';
 import 'package:naamk_wallet/remote/events/states/feature_state/list_state.dart';
-import 'package:naamk_wallet/remote/common/states/data_state.dart';
 import 'package:naamk_wallet/remote/common/states/view_state.dart';
 import 'package:naamk_wallet/config/core/di/injector.dart';
 import 'package:naamk_wallet/remote/usecases/event_usecases.dart';
@@ -11,7 +11,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'screen_viewmodel.g.dart';
 
 @riverpod
-class EventScreenViewModel extends _$EventScreenViewModel {
+class EventScreenViewModel extends _$EventScreenViewModel with ApiHandlerMixin {
   late final EventUsecases _domain = injector<EventUsecases>();
 
   EventBannerReqDto get dailyListReq => state.dailyEventReq;
@@ -23,113 +23,89 @@ class EventScreenViewModel extends _$EventScreenViewModel {
   EventScreenState build() => EventScreenState.initial();
 
   void loadInit() async {
-    await loadDailyEventList();
-    await loadWeeklyEventList();
+    loadDailyEventList();
+    loadWeeklyEventList();
   }
 
-  Future<void> loadDailyEventList() async {
-    // loading
-    state = state.copyWith(
-      dailyEventsRes: dailyListState.toLoading(),
-    );
-
-    try {
-      final DataState<EventListState> dataStateResult =
-          await _domain.getEventList.call(req: dailyListReq);
-
-      // API DataSuccess
-      if (dataStateResult is DataSuccess) {
-        final EventListState? newFeatureState = dataStateResult.data;
-
-        if (newFeatureState != null) {
-          final List<EventBannerRawDto> newContents = newFeatureState.contents;
-
-          // 이전 데이터 + 새로운 데이터
-          final EventListState prevState = dailyListState.data;
-          final List<EventBannerRawDto> prevContents = prevState.contents;
-          final List<EventBannerRawDto> mergedContents = [
-            ...prevContents,
-            ...newContents
-          ];
-
-          state = state.copyWith(
-            dailyEventsRes: (mergedContents.isEmpty)
-                ? dailyListState.toEmpty(
-                    newFeatureState.copyWith(contents: mergedContents),
-                  )
-                : dailyListState.toComplete(
-                    newFeatureState.copyWith(contents: mergedContents),
-                  ),
-          );
-        } else {
-          // Error && 에러 반영
-          const String errorMessage = 'Data of EventListState is Null.';
-          throw errorMessage;
-        }
-      }
-
-      // DataFailed
-      if (dataStateResult is DataFailed) {
-        final String errorMessage = dataStateResult.error.toString();
-        throw errorMessage;
-      }
-    } catch (e) {
-      state =
-          state.copyWith(dailyEventsRes: dailyListState.toError(e.toString()));
-    }
-  }
-
-  Future<void> loadWeeklyEventList() async {
-    // loading
-    state = state.copyWith(weeklyEventsRes: weeklyListState.toLoading());
-
-    try {
-      // call usecase
-      final DataState<EventListState> dataStateResult =
-          await _domain.getEventList.call(req: weeklyListReq); // type이 weekly
-
-      // extract feature state
-      if (dataStateResult is DataSuccess) {
-        final EventListState? newFeatureState = dataStateResult.data;
-
+  void loadDailyEventList() async {
+    await executeApiCall<EventListState>(
+      request: _domain.getEventList.call(req: dailyListReq),
+      onLoading: () {
+        state = state.copyWith(
+          weeklyEventsRes: dailyListState.toLoading(),
+        );
+      },
+      onSuccess: (featureState) {
         // extract data of feature state
-        if (newFeatureState != null) {
-          final List<EventBannerRawDto> newContents = newFeatureState.contents;
+        final List<EventBannerRawDto> newContents = featureState.contents;
 
-          // 이전 데이터 + 새로운 데이터
-          final EventListState prevFeatureState = weeklyListState.data;
-          final List<EventBannerRawDto> prevContents =
-              prevFeatureState.contents;
-          final List<EventBannerRawDto> mergedContents = [
-            ...prevContents,
-            ...newContents
-          ];
+        // 이전 데이터 + 새로운 데이터
+        final EventListState prevFeatureState = dailyListState.data;
+        final List<EventBannerRawDto> prevContents = prevFeatureState.contents;
+        final List<EventBannerRawDto> mergedContents = [
+          ...prevContents,
+          ...newContents
+        ];
 
-          // complete & data 반영
-          state = state.copyWith(
-            weeklyEventsRes: (mergedContents.isEmpty)
-                ? dailyListState.toEmpty(
-                    newFeatureState.copyWith(contents: mergedContents),
-                  )
-                : dailyListState.toComplete(
-                    newFeatureState.copyWith(contents: mergedContents),
-                  ),
-          );
-          // no feature state
-        } else {
-          // Error && 에러 반영
-          const String errorMessage = 'Data of EventListState is Null.';
-          throw errorMessage;
-        }
-      }
+        // complete & data 반영
+        state = state.copyWith(
+          dailyEventsRes: (mergedContents.isEmpty)
+              ? dailyListState.toEmpty(
+                  featureState.copyWith(contents: mergedContents),
+                )
+              : dailyListState.toComplete(
+                  featureState.copyWith(contents: mergedContents),
+                ),
+        );
+      },
+      onError: (exception) {
+        state = state.copyWith(
+          dailyEventsRes: dailyListState.toError(
+            exception,
+          ),
+        );
+      },
+    );
+  }
 
-      if (dataStateResult is DataFailed) {
-        final String errorMessage = dataStateResult.error.toString();
-        throw errorMessage;
-      }
-    } catch (e) {
-      state =
-          state.copyWith(dailyEventsRes: dailyListState.toError(e.toString()));
-    }
+  void loadWeeklyEventList() async {
+    await executeApiCall<EventListState>(
+      request: _domain.getEventList.call(req: weeklyListReq),
+      onLoading: () {
+        state = state.copyWith(
+          weeklyEventsRes: weeklyListState.toLoading(),
+        );
+      },
+      onSuccess: (featureState) {
+        // extract data of feature state
+        final List<EventBannerRawDto> newContents = featureState.contents;
+
+        // 이전 데이터 + 새로운 데이터
+        final EventListState prevFeatureState = weeklyListState.data;
+        final List<EventBannerRawDto> prevContents = prevFeatureState.contents;
+        final List<EventBannerRawDto> mergedContents = [
+          ...prevContents,
+          ...newContents
+        ];
+
+        // complete & data 반영
+        state = state.copyWith(
+          weeklyEventsRes: (mergedContents.isEmpty)
+              ? weeklyListState.toEmpty(
+                  featureState.copyWith(contents: mergedContents),
+                )
+              : weeklyListState.toComplete(
+                  featureState.copyWith(contents: mergedContents),
+                ),
+        );
+      },
+      onError: (exception) {
+        state = state.copyWith(
+          weeklyEventsRes: weeklyListState.toError(
+            exception,
+          ),
+        );
+      },
+    );
   }
 }
