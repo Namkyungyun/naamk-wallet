@@ -15,40 +15,40 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$AppException {
+mixin _$AppExceptionState {
   dynamic get show => throw _privateConstructorUsedError;
   dynamic get code => throw _privateConstructorUsedError;
   dynamic get message => throw _privateConstructorUsedError;
   dynamic get detailMessage => throw _privateConstructorUsedError;
 
-  /// Create a copy of AppException
+  /// Create a copy of AppExceptionState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $AppExceptionCopyWith<AppException> get copyWith =>
+  $AppExceptionStateCopyWith<AppExceptionState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AppExceptionCopyWith<$Res> {
-  factory $AppExceptionCopyWith(
-          AppException value, $Res Function(AppException) then) =
-      _$AppExceptionCopyWithImpl<$Res, AppException>;
+abstract class $AppExceptionStateCopyWith<$Res> {
+  factory $AppExceptionStateCopyWith(
+          AppExceptionState value, $Res Function(AppExceptionState) then) =
+      _$AppExceptionStateCopyWithImpl<$Res, AppExceptionState>;
   @useResult
   $Res call(
       {dynamic show, dynamic code, dynamic message, dynamic detailMessage});
 }
 
 /// @nodoc
-class _$AppExceptionCopyWithImpl<$Res, $Val extends AppException>
-    implements $AppExceptionCopyWith<$Res> {
-  _$AppExceptionCopyWithImpl(this._value, this._then);
+class _$AppExceptionStateCopyWithImpl<$Res, $Val extends AppExceptionState>
+    implements $AppExceptionStateCopyWith<$Res> {
+  _$AppExceptionStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of AppException
+  /// Create a copy of AppExceptionState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -80,11 +80,11 @@ class _$AppExceptionCopyWithImpl<$Res, $Val extends AppException>
 }
 
 /// @nodoc
-abstract class _$$AppErrorImplCopyWith<$Res>
-    implements $AppExceptionCopyWith<$Res> {
-  factory _$$AppErrorImplCopyWith(
-          _$AppErrorImpl value, $Res Function(_$AppErrorImpl) then) =
-      __$$AppErrorImplCopyWithImpl<$Res>;
+abstract class _$$AppExceptionStateImplCopyWith<$Res>
+    implements $AppExceptionStateCopyWith<$Res> {
+  factory _$$AppExceptionStateImplCopyWith(_$AppExceptionStateImpl value,
+          $Res Function(_$AppExceptionStateImpl) then) =
+      __$$AppExceptionStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -92,14 +92,14 @@ abstract class _$$AppErrorImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$AppErrorImplCopyWithImpl<$Res>
-    extends _$AppExceptionCopyWithImpl<$Res, _$AppErrorImpl>
-    implements _$$AppErrorImplCopyWith<$Res> {
-  __$$AppErrorImplCopyWithImpl(
-      _$AppErrorImpl _value, $Res Function(_$AppErrorImpl) _then)
+class __$$AppExceptionStateImplCopyWithImpl<$Res>
+    extends _$AppExceptionStateCopyWithImpl<$Res, _$AppExceptionStateImpl>
+    implements _$$AppExceptionStateImplCopyWith<$Res> {
+  __$$AppExceptionStateImplCopyWithImpl(_$AppExceptionStateImpl _value,
+      $Res Function(_$AppExceptionStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of AppException
+  /// Create a copy of AppExceptionState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -109,7 +109,7 @@ class __$$AppErrorImplCopyWithImpl<$Res>
     Object? message = freezed,
     Object? detailMessage = freezed,
   }) {
-    return _then(_$AppErrorImpl(
+    return _then(_$AppExceptionStateImpl(
       show: freezed == show ? _value.show! : show,
       code: freezed == code ? _value.code! : code,
       message: freezed == message ? _value.message! : message,
@@ -121,8 +121,8 @@ class __$$AppErrorImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AppErrorImpl implements _AppError {
-  const _$AppErrorImpl(
+class _$AppExceptionStateImpl implements _AppExceptionState {
+  const _$AppExceptionStateImpl(
       {this.show = false,
       this.code = '',
       this.message = '',
@@ -143,14 +143,14 @@ class _$AppErrorImpl implements _AppError {
 
   @override
   String toString() {
-    return 'AppException(show: $show, code: $code, message: $message, detailMessage: $detailMessage)';
+    return 'AppExceptionState(show: $show, code: $code, message: $message, detailMessage: $detailMessage)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AppErrorImpl &&
+            other is _$AppExceptionStateImpl &&
             const DeepCollectionEquality().equals(other.show, show) &&
             const DeepCollectionEquality().equals(other.code, code) &&
             const DeepCollectionEquality().equals(other.message, message) &&
@@ -166,21 +166,22 @@ class _$AppErrorImpl implements _AppError {
       const DeepCollectionEquality().hash(message),
       const DeepCollectionEquality().hash(detailMessage));
 
-  /// Create a copy of AppException
+  /// Create a copy of AppExceptionState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$AppErrorImplCopyWith<_$AppErrorImpl> get copyWith =>
-      __$$AppErrorImplCopyWithImpl<_$AppErrorImpl>(this, _$identity);
+  _$$AppExceptionStateImplCopyWith<_$AppExceptionStateImpl> get copyWith =>
+      __$$AppExceptionStateImplCopyWithImpl<_$AppExceptionStateImpl>(
+          this, _$identity);
 }
 
-abstract class _AppError implements AppException {
-  const factory _AppError(
+abstract class _AppExceptionState implements AppExceptionState {
+  const factory _AppExceptionState(
       {final dynamic show,
       final dynamic code,
       final dynamic message,
-      final dynamic detailMessage}) = _$AppErrorImpl;
+      final dynamic detailMessage}) = _$AppExceptionStateImpl;
 
   @override
   dynamic get show;
@@ -191,10 +192,10 @@ abstract class _AppError implements AppException {
   @override
   dynamic get detailMessage;
 
-  /// Create a copy of AppException
+  /// Create a copy of AppExceptionState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AppErrorImplCopyWith<_$AppErrorImpl> get copyWith =>
+  _$$AppExceptionStateImplCopyWith<_$AppExceptionStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -15,36 +15,38 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$AppAuth {
+mixin _$AppAuthState {
   dynamic get useLock => throw _privateConstructorUsedError;
   dynamic get method => throw _privateConstructorUsedError;
   dynamic get status => throw _privateConstructorUsedError;
 
-  /// Create a copy of AppAuth
+  /// Create a copy of AppAuthState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $AppAuthCopyWith<AppAuth> get copyWith => throw _privateConstructorUsedError;
+  $AppAuthStateCopyWith<AppAuthState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $AppAuthCopyWith<$Res> {
-  factory $AppAuthCopyWith(AppAuth value, $Res Function(AppAuth) then) =
-      _$AppAuthCopyWithImpl<$Res, AppAuth>;
+abstract class $AppAuthStateCopyWith<$Res> {
+  factory $AppAuthStateCopyWith(
+          AppAuthState value, $Res Function(AppAuthState) then) =
+      _$AppAuthStateCopyWithImpl<$Res, AppAuthState>;
   @useResult
   $Res call({dynamic useLock, dynamic method, dynamic status});
 }
 
 /// @nodoc
-class _$AppAuthCopyWithImpl<$Res, $Val extends AppAuth>
-    implements $AppAuthCopyWith<$Res> {
-  _$AppAuthCopyWithImpl(this._value, this._then);
+class _$AppAuthStateCopyWithImpl<$Res, $Val extends AppAuthState>
+    implements $AppAuthStateCopyWith<$Res> {
+  _$AppAuthStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of AppAuth
+  /// Create a copy of AppAuthState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -71,24 +73,25 @@ class _$AppAuthCopyWithImpl<$Res, $Val extends AppAuth>
 }
 
 /// @nodoc
-abstract class _$$AppLockImplCopyWith<$Res> implements $AppAuthCopyWith<$Res> {
-  factory _$$AppLockImplCopyWith(
-          _$AppLockImpl value, $Res Function(_$AppLockImpl) then) =
-      __$$AppLockImplCopyWithImpl<$Res>;
+abstract class _$$AppAuthStateImplCopyWith<$Res>
+    implements $AppAuthStateCopyWith<$Res> {
+  factory _$$AppAuthStateImplCopyWith(
+          _$AppAuthStateImpl value, $Res Function(_$AppAuthStateImpl) then) =
+      __$$AppAuthStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({dynamic useLock, dynamic method, dynamic status});
 }
 
 /// @nodoc
-class __$$AppLockImplCopyWithImpl<$Res>
-    extends _$AppAuthCopyWithImpl<$Res, _$AppLockImpl>
-    implements _$$AppLockImplCopyWith<$Res> {
-  __$$AppLockImplCopyWithImpl(
-      _$AppLockImpl _value, $Res Function(_$AppLockImpl) _then)
+class __$$AppAuthStateImplCopyWithImpl<$Res>
+    extends _$AppAuthStateCopyWithImpl<$Res, _$AppAuthStateImpl>
+    implements _$$AppAuthStateImplCopyWith<$Res> {
+  __$$AppAuthStateImplCopyWithImpl(
+      _$AppAuthStateImpl _value, $Res Function(_$AppAuthStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of AppAuth
+  /// Create a copy of AppAuthState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -97,7 +100,7 @@ class __$$AppLockImplCopyWithImpl<$Res>
     Object? method = freezed,
     Object? status = freezed,
   }) {
-    return _then(_$AppLockImpl(
+    return _then(_$AppAuthStateImpl(
       useLock: freezed == useLock ? _value.useLock! : useLock,
       method: freezed == method ? _value.method! : method,
       status: freezed == status ? _value.status! : status,
@@ -107,8 +110,8 @@ class __$$AppLockImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$AppLockImpl implements _AppLock {
-  const _$AppLockImpl(
+class _$AppAuthStateImpl implements _AppAuthState {
+  const _$AppAuthStateImpl(
       {this.useLock = false,
       this.method = AppAuthMethod.none,
       this.status = AppAuthStatus.idle});
@@ -125,14 +128,14 @@ class _$AppLockImpl implements _AppLock {
 
   @override
   String toString() {
-    return 'AppAuth(useLock: $useLock, method: $method, status: $status)';
+    return 'AppAuthState(useLock: $useLock, method: $method, status: $status)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AppLockImpl &&
+            other is _$AppAuthStateImpl &&
             const DeepCollectionEquality().equals(other.useLock, useLock) &&
             const DeepCollectionEquality().equals(other.method, method) &&
             const DeepCollectionEquality().equals(other.status, status));
@@ -145,20 +148,20 @@ class _$AppLockImpl implements _AppLock {
       const DeepCollectionEquality().hash(method),
       const DeepCollectionEquality().hash(status));
 
-  /// Create a copy of AppAuth
+  /// Create a copy of AppAuthState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$AppLockImplCopyWith<_$AppLockImpl> get copyWith =>
-      __$$AppLockImplCopyWithImpl<_$AppLockImpl>(this, _$identity);
+  _$$AppAuthStateImplCopyWith<_$AppAuthStateImpl> get copyWith =>
+      __$$AppAuthStateImplCopyWithImpl<_$AppAuthStateImpl>(this, _$identity);
 }
 
-abstract class _AppLock implements AppAuth {
-  const factory _AppLock(
+abstract class _AppAuthState implements AppAuthState {
+  const factory _AppAuthState(
       {final dynamic useLock,
       final dynamic method,
-      final dynamic status}) = _$AppLockImpl;
+      final dynamic status}) = _$AppAuthStateImpl;
 
   @override
   dynamic get useLock;
@@ -167,10 +170,10 @@ abstract class _AppLock implements AppAuth {
   @override
   dynamic get status;
 
-  /// Create a copy of AppAuth
+  /// Create a copy of AppAuthState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$AppLockImplCopyWith<_$AppLockImpl> get copyWith =>
+  _$$AppAuthStateImplCopyWith<_$AppAuthStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

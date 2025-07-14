@@ -58,17 +58,17 @@ class DailyEventSecionWidget extends ConsumerWidget {
       final ViewState<EventListState> viewState =
           ref.watch(eventScreenViewModelProvider).dailyEventsRes;
 
-      final ResponseState state = viewState.state;
+      final ResponseStatus state = viewState.state;
       final EventListState data = viewState.data;
 
       switch (state) {
-        case ResponseState.EMPTY:
+        case ResponseStatus.EMPTY:
           return SectionContentsWidget(contents: data.contents);
-        case ResponseState.LOADING:
+        case ResponseStatus.LOADING:
           return SectionContentsWidget(contents: data.contents);
-        case ResponseState.COMPLETE:
+        case ResponseStatus.COMPLETE:
           return SectionContentsWidget(contents: data.contents);
-        case ResponseState.ERROR:
+        case ResponseStatus.ERROR:
           Future.microtask(() {
             ref
                 .read(appErrorStateManagerProvider.notifier)
@@ -90,17 +90,17 @@ class WeeklyEventSectionWidget extends ConsumerWidget {
       final ViewState<EventListState> viewState =
           ref.watch(eventScreenViewModelProvider).weeklyEventsRes;
 
-      final ResponseState state = viewState.state;
+      final ResponseStatus state = viewState.state;
       final EventListState data = viewState.data;
 
       switch (state) {
-        case ResponseState.EMPTY:
+        case ResponseStatus.EMPTY:
           return SectionContentsWidget(contents: data.contents);
-        case ResponseState.LOADING:
+        case ResponseStatus.LOADING:
           return SectionContentsWidget(contents: data.contents);
-        case ResponseState.COMPLETE:
+        case ResponseStatus.COMPLETE:
           return SectionContentsWidget(contents: data.contents);
-        case ResponseState.ERROR:
+        case ResponseStatus.ERROR:
           Future.microtask(() {
             ref
                 .read(appErrorStateManagerProvider.notifier)

@@ -114,7 +114,7 @@ class AppAuthLockSwitchWidget extends StatelessWidget {
         builder: (context, ref, _) {
           final List<String> labels = ['off', 'on'];
           final bool useAppLock =
-              ref.watch<AppAuth>(appAuthStateManagerProvider).useLock;
+              ref.watch<AppAuthState>(appAuthStateManagerProvider).useLock;
           final appAuthStateNotifier = ref
               .read<AppAuthStateManager>(appAuthStateManagerProvider.notifier);
 
@@ -162,7 +162,7 @@ class AppBiometricAuthSwitchWidget extends StatelessWidget {
         builder: (context, ref, _) {
           final List<String> labels = ['off', 'on'];
           final bool useBiometric =
-              ref.watch<AppAuth>(appAuthStateManagerProvider).method ==
+              ref.watch<AppAuthState>(appAuthStateManagerProvider).method ==
                   AppAuthMethod.biometric;
 
           final appAuthStateNotifier = ref

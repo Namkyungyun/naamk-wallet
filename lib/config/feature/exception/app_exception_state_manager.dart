@@ -6,11 +6,11 @@ part 'app_exception_state_manager.g.dart';
 @Riverpod(keepAlive: true)
 class AppErrorStateManager extends _$AppErrorStateManager {
   @override
-  AppException build() {
-    return const AppException();
+  AppExceptionState build() {
+    return const AppExceptionState();
   }
 
-  void showError(AppException? exception) {
+  void showError(AppExceptionState? exception) {
     if (exception != null) {
       state = state.copyWith(
         show: true,

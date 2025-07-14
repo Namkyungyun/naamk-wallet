@@ -1,4 +1,4 @@
-import 'package:naamk_wallet/common/utils/api_handler_mixin.dart';
+import 'package:naamk_wallet/config/core/remote/viewmodel_base_apihandler.dart';
 import 'package:naamk_wallet/remote/events/states/feature_state/list_state.dart';
 import 'package:naamk_wallet/remote/common/states/view_state.dart';
 import 'package:naamk_wallet/config/core/di/injector.dart';
@@ -11,7 +11,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'screen_viewmodel.g.dart';
 
 @riverpod
-class EventScreenViewModel extends _$EventScreenViewModel with ApiHandlerMixin {
+class EventScreenViewModel extends _$EventScreenViewModel
+    with ViewModelBaseApiHandler {
   late final EventUsecases _domain = injector<EventUsecases>();
 
   EventBannerReqDto get dailyListReq => state.dailyEventReq;

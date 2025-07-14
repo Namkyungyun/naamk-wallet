@@ -8,7 +8,7 @@ part 'app_auth_state_manager.g.dart';
 @Riverpod(keepAlive: true)
 class AppAuthStateManager extends _$AppAuthStateManager {
   @override
-  AppAuth build() {
+  AppAuthState build() {
     final bool savedAuthLockStatus = SharedPreferencesManipulator.useAppLock;
 
     final String savedAuthMethod =
@@ -23,7 +23,7 @@ class AppAuthStateManager extends _$AppAuthStateManager {
       status = AppAuthStatus.required;
     }
 
-    return AppAuth(
+    return AppAuthState(
         useLock: savedAuthLockStatus, method: method, status: status);
   }
 

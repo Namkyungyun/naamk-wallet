@@ -1,12 +1,12 @@
 import 'package:naamk_wallet/config/feature/exception/app_exception_state.dart';
 import 'package:naamk_wallet/remote/common/states/data_state.dart';
 
-mixin ApiHandlerMixin {
+mixin ViewModelBaseApiHandler {
   Future<void> executeApiCall<T>({
     required Future<DataState<T>> request,
     required void Function() onLoading,
     required void Function(T data) onSuccess,
-    required void Function(AppException exception) onError,
+    required void Function(AppExceptionState exception) onError,
   }) async {
     try {
       final result = await request;
@@ -17,11 +17,12 @@ mixin ApiHandlerMixin {
         onError(result.error!);
       } else {
         onError(
-          const AppException(code: 'NULL_STATE', message: 'No data returned'),
+          const AppExceptionState(
+              code: 'NULL_STATE', message: 'No data returned'),
         );
       }
     } catch (e) {
-      onError(AppException(code: 'EXCEPTION', message: e.toString()));
+      onError(AppExceptionState(code: 'EXCEPTION', message: e.toString()));
     }
   }
 }

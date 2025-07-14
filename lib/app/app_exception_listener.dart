@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:naamk_wallet/app/app_error_router.dart';
+import 'package:naamk_wallet/app/app_exception_router.dart';
 import 'package:naamk_wallet/common/utils/logger.dart';
 import 'package:naamk_wallet/config/feature/exception/app_exception_state.dart';
 import 'package:naamk_wallet/config/feature/exception/app_exception_state_manager.dart';
@@ -13,8 +13,8 @@ class AppExceptionListener extends ConsumerStatefulWidget {
 }
 
 class _AppErrorListenerState extends ConsumerState<AppExceptionListener>
-    with AppErrorRouter {
-  late final ProviderSubscription<AppException>? _appErrorSubscription;
+    with AppExceptionRouter {
+  late final ProviderSubscription<AppExceptionState>? _appErrorSubscription;
 
   bool _initialized = false;
 
@@ -37,7 +37,7 @@ class _AppErrorListenerState extends ConsumerState<AppExceptionListener>
       _initialized = true;
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _appErrorSubscription = ref.listenManual<AppException>(
+        _appErrorSubscription = ref.listenManual<AppExceptionState>(
             appErrorStateManagerProvider, (prev, next) async {
           GlobalLogger.info('[appError state] $prev → $next');
 

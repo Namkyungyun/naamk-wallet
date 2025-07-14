@@ -35,7 +35,7 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
   AppEntryViewModel get _appEntryLogic =>
       ref.watch<AppEntryViewModel>(appEntryViewModelProvider.notifier);
 
-  AppAuth get _appAuthState => ref.watch(appAuthStateManagerProvider);
+  AppAuthState get _appAuthState => ref.watch(appAuthStateManagerProvider);
   AppAuthStateManager get _appAuthLogic => ref.watch<AppAuthStateManager>(
       appAuthStateManagerProvider.notifier); // 최신 상태를 읽기위해서는 read를 사용해야 함.
 

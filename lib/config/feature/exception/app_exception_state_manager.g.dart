@@ -7,12 +7,12 @@ part of 'app_exception_state_manager.dart';
 // **************************************************************************
 
 String _$appErrorStateManagerHash() =>
-    r'3c0054683e73b012f7e23969261a1418a7a9a795';
+    r'0e27ee1a6966e8da18fc01c9dbee192254d3e201';
 
 /// See also [AppErrorStateManager].
 @ProviderFor(AppErrorStateManager)
 final appErrorStateManagerProvider =
-    NotifierProvider<AppErrorStateManager, AppException>.internal(
+    NotifierProvider<AppErrorStateManager, AppExceptionState>.internal(
   AppErrorStateManager.new,
   name: r'appErrorStateManagerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,6 @@ final appErrorStateManagerProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$AppErrorStateManager = Notifier<AppException>;
+typedef _$AppErrorStateManager = Notifier<AppExceptionState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
