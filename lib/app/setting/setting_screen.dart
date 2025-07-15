@@ -1,8 +1,8 @@
+import 'package:naamk_wallet/app/setting/widgets/auth_toggle_switch_widget.dart';
 import 'package:naamk_wallet/app/setting/widgets/lanugae_list_switch_widget.dart';
 import 'package:naamk_wallet/app/setting/widgets/setting_push_listtile_widget.dart';
 import 'package:naamk_wallet/common/widgets/title_appbar_widget.dart';
 import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
-import 'package:gap/gap.dart';
 import 'package:naamk_wallet/app/setting/widgets/theme_toggle_switch_widget.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -11,7 +11,7 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TitleAppbarWidget(title: 'page_title.setting'.tr()),
+      appBar: const TitleAppbarWidget(title: 'page_title.setting'),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -22,17 +22,19 @@ class SettingScreen extends StatelessWidget {
               children: [
                 const ThemeToggleSwitch(),
                 const Gap(8),
-                const LanguageListSwitchWidget(),
+                AuthSettingWidget(),
+                const Gap(8),
+                LanguageListSwitchWidget(),
                 const Gap(8),
                 SettigPushListTileWidget(
                   icon: Icons.person,
-                  title: 'setting_page.list.about'.tr(),
+                  title: 'setting_page.list.about',
                   onTap: () {},
                 ),
                 const Gap(8),
                 SettigPushListTileWidget(
                   icon: Icons.logout,
-                  title: 'setting_page.list.logout'.tr(),
+                  title: 'setting_page.list.logout',
                   onTap: () {},
                 ),
               ],

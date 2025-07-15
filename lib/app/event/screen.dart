@@ -1,5 +1,6 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:naamk_wallet/config/feature/exception/app_exception_state_manager.dart';
 import 'package:naamk_wallet/remote/events/states/feature_state/list_state.dart';
 import 'package:naamk_wallet/app/event/screen_viewmodel.dart';
 import 'package:naamk_wallet/app/event/widgets/event_section_contents_widget.dart';
@@ -7,7 +8,6 @@ import 'package:naamk_wallet/app/event/widgets/event_section_title_widget.dart';
 import 'package:naamk_wallet/remote/common/states/view_state.dart';
 import 'package:naamk_wallet/common/widgets/title_appbar_widget.dart';
 import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
-import 'package:gap/gap.dart';
 
 class EventScreen extends HookConsumerWidget {
   const EventScreen({super.key});
@@ -22,7 +22,7 @@ class EventScreen extends HookConsumerWidget {
     }, []);
 
     return Scaffold(
-      appBar: const TitleAppbarWidget(title: '이벤트'),
+      appBar: const TitleAppbarWidget(title: 'page_title.event'),
       body: SafeArea(
         bottom: false,
         child: Padding(
@@ -58,16 +58,25 @@ class DailyEventSecionWidget extends ConsumerWidget {
       final ViewState<EventListState> viewState =
           ref.watch(eventScreenViewModelProvider).dailyEventsRes;
 
-      final ResponseState state = viewState.state;
+      final ResponseStatus state = viewState.state;
       final EventListState data = viewState.data;
 
-      return switch (state) {
-        ResponseState.EMPTY => SectionContentsWidget(contents: data.contents),
-        ResponseState.LOADING => SectionContentsWidget(contents: data.contents),
-        ResponseState.COMPLETE =>
-          SectionContentsWidget(contents: data.contents),
-        _ => Container(),
-      };
+      switch (state) {
+        case ResponseStatus.EMPTY:
+          return SectionContentsWidget(contents: data.contents);
+        case ResponseStatus.LOADING:
+          return SectionContentsWidget(contents: data.contents);
+        case ResponseStatus.COMPLETE:
+          return SectionContentsWidget(contents: data.contents);
+        case ResponseStatus.ERROR:
+          Future.microtask(() {
+            ref
+                .read(appErrorStateManagerProvider.notifier)
+                .showError(viewState.exception);
+          });
+
+          return Container();
+      }
     });
   }
 }
@@ -81,16 +90,25 @@ class WeeklyEventSectionWidget extends ConsumerWidget {
       final ViewState<EventListState> viewState =
           ref.watch(eventScreenViewModelProvider).weeklyEventsRes;
 
-      final ResponseState state = viewState.state;
+      final ResponseStatus state = viewState.state;
       final EventListState data = viewState.data;
 
-      return switch (state) {
-        ResponseState.EMPTY => SectionContentsWidget(contents: data.contents),
-        ResponseState.LOADING => SectionContentsWidget(contents: data.contents),
-        ResponseState.COMPLETE =>
-          SectionContentsWidget(contents: data.contents),
-        _ => Container(),
-      };
+      switch (state) {
+        case ResponseStatus.EMPTY:
+          return SectionContentsWidget(contents: data.contents);
+        case ResponseStatus.LOADING:
+          return SectionContentsWidget(contents: data.contents);
+        case ResponseStatus.COMPLETE:
+          return SectionContentsWidget(contents: data.contents);
+        case ResponseStatus.ERROR:
+          Future.microtask(() {
+            ref
+                .read(appErrorStateManagerProvider.notifier)
+                .showError(viewState.exception);
+          });
+
+          return Container();
+      }
     });
   }
 }

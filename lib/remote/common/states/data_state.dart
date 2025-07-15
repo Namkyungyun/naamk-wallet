@@ -1,6 +1,8 @@
+import 'package:naamk_wallet/config/feature/exception/app_exception_state.dart';
+
 abstract class DataState<T> {
   final T? data;
-  final String? error;
+  final AppExceptionState? error;
 
   const DataState({this.data, this.error});
 }
@@ -10,5 +12,5 @@ class DataSuccess<T> extends DataState<T> {
 }
 
 class DataFailed<T> extends DataState<T> {
-  const DataFailed(String? error) : super(error: error);
+  const DataFailed(AppExceptionState? error) : super(error: error);
 }

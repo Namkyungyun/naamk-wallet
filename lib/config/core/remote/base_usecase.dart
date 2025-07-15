@@ -1,3 +1,3 @@
 abstract class BaseUseCase<T, P> {
-  Future<T> call({required P req});
+  Future<T> call({P req});
 }

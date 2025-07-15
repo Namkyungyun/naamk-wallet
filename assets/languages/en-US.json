@@ -8,6 +8,7 @@
    },
 
    "page_title": {
+      "event": "Event",
       "setting": "Setting"
    },
 
@@ -15,7 +16,14 @@
       "list": {
          "language": "Language",
          "about": "About",
-         "logout": "Logout"
+         "logout": "Logout",
+         "theme": "Theme",
+         "auth": "Security"
+      },
+      "auth": {
+         "appLock": "App Lock",
+         "biometricAuth": "Biometric Auth",
+         "changePincode": "Change Pincode"
       }
    }
 }

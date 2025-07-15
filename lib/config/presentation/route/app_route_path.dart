@@ -12,6 +12,10 @@ enum AppGnbRoute {
 }
 
 enum AppRoute {
+  splash('/splash'),
+
+  login('/login'),
+
   settingsTerm('/settings/term'),
   settingsAbout('/settings/about'),
 

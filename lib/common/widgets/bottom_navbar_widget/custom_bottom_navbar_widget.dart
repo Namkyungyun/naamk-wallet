@@ -97,7 +97,10 @@ class CustomBottomNavbarWidget extends StatelessWidget {
                               isActive ? FontWeight.w700 : FontWeight.w400,
                           color: iconColor,
                         ),
-                        child: Text(labels[index].tr()),
+                        child: Text(
+                          key: ValueKey(context.locale.languageCode),
+                          labels[index].tr(),
+                        ),
                       ),
                     ],
                   ),

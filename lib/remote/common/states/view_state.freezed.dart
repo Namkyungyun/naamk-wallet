@@ -16,9 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ViewState<T> {
-  ResponseState get state => throw _privateConstructorUsedError;
+  ResponseStatus get state => throw _privateConstructorUsedError;
   T? get data => throw _privateConstructorUsedError;
-  String? get exception => throw _privateConstructorUsedError;
+  AppExceptionState? get exception => throw _privateConstructorUsedError;
 
   /// Create a copy of ViewState
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +33,9 @@ abstract class $ViewStateCopyWith<T, $Res> {
           ViewState<T> value, $Res Function(ViewState<T>) then) =
       _$ViewStateCopyWithImpl<T, $Res, ViewState<T>>;
   @useResult
-  $Res call({ResponseState state, T? data, String? exception});
+  $Res call({ResponseStatus state, T? data, AppExceptionState? exception});
+
+  $AppExceptionStateCopyWith<$Res>? get exception;
 }
 
 /// @nodoc
@@ -59,7 +61,7 @@ class _$ViewStateCopyWithImpl<T, $Res, $Val extends ViewState<T>>
       state: null == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
-              as ResponseState,
+              as ResponseStatus,
       data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -67,8 +69,22 @@ class _$ViewStateCopyWithImpl<T, $Res, $Val extends ViewState<T>>
       exception: freezed == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as AppExceptionState?,
     ) as $Val);
+  }
+
+  /// Create a copy of ViewState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AppExceptionStateCopyWith<$Res>? get exception {
+    if (_value.exception == null) {
+      return null;
+    }
+
+    return $AppExceptionStateCopyWith<$Res>(_value.exception!, (value) {
+      return _then(_value.copyWith(exception: value) as $Val);
+    });
   }
 }
 
@@ -80,7 +96,10 @@ abstract class _$$ViewStateImplCopyWith<T, $Res>
       __$$ViewStateImplCopyWithImpl<T, $Res>;
   @override
   @useResult
-  $Res call({ResponseState state, T? data, String? exception});
+  $Res call({ResponseStatus state, T? data, AppExceptionState? exception});
+
+  @override
+  $AppExceptionStateCopyWith<$Res>? get exception;
 }
 
 /// @nodoc
@@ -104,7 +123,7 @@ class __$$ViewStateImplCopyWithImpl<T, $Res>
       state: null == state
           ? _value.state
           : state // ignore: cast_nullable_to_non_nullable
-              as ResponseState,
+              as ResponseStatus,
       data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -112,7 +131,7 @@ class __$$ViewStateImplCopyWithImpl<T, $Res>
       exception: freezed == exception
           ? _value.exception
           : exception // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as AppExceptionState?,
     ));
   }
 }
@@ -121,19 +140,19 @@ class __$$ViewStateImplCopyWithImpl<T, $Res>
 
 class _$ViewStateImpl<T> implements _ViewState<T> {
   const _$ViewStateImpl(
-      {this.state = ResponseState.EMPTY,
+      {this.state = ResponseStatus.EMPTY,
       this.data = null,
       this.exception = null});
 
   @override
   @JsonKey()
-  final ResponseState state;
+  final ResponseStatus state;
   @override
   @JsonKey()
   final T? data;
   @override
   @JsonKey()
-  final String? exception;
+  final AppExceptionState? exception;
 
   @override
   String toString() {
@@ -166,16 +185,16 @@ class _$ViewStateImpl<T> implements _ViewState<T> {
 
 abstract class _ViewState<T> implements ViewState<T> {
   const factory _ViewState(
-      {final ResponseState state,
+      {final ResponseStatus state,
       final T? data,
-      final String? exception}) = _$ViewStateImpl<T>;
+      final AppExceptionState? exception}) = _$ViewStateImpl<T>;
 
   @override
-  ResponseState get state;
+  ResponseStatus get state;
   @override
   T? get data;
   @override
-  String? get exception;
+  AppExceptionState? get exception;
 
   /// Create a copy of ViewState
   /// with the given fields replaced by the non-null parameter values.

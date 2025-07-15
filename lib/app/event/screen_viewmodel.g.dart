@@ -7,7 +7,7 @@ part of 'screen_viewmodel.dart';
 // **************************************************************************
 
 String _$eventScreenViewModelHash() =>
-    r'1b126cd5940d75cddccac695624b3b998d74b314';
+    r'8869797858c96a6ce6c756a3e9d05509f7ade19b';
 
 /// See also [EventScreenViewModel].
 @ProviderFor(EventScreenViewModel)

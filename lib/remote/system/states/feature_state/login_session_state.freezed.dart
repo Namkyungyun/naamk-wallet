@@ -1,0 +1,187 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
+part of 'login_session_state.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+
+LoginSessionState _$LoginSessionStateFromJson(Map<String, dynamic> json) {
+  return _LoginSessionState.fromJson(json);
+}
+
+/// @nodoc
+mixin _$LoginSessionState {
+  String get userId => throw _privateConstructorUsedError;
+  bool get sessionExpired => throw _privateConstructorUsedError;
+
+  /// Serializes this LoginSessionState to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of LoginSessionState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LoginSessionStateCopyWith<LoginSessionState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LoginSessionStateCopyWith<$Res> {
+  factory $LoginSessionStateCopyWith(
+          LoginSessionState value, $Res Function(LoginSessionState) then) =
+      _$LoginSessionStateCopyWithImpl<$Res, LoginSessionState>;
+  @useResult
+  $Res call({String userId, bool sessionExpired});
+}
+
+/// @nodoc
+class _$LoginSessionStateCopyWithImpl<$Res, $Val extends LoginSessionState>
+    implements $LoginSessionStateCopyWith<$Res> {
+  _$LoginSessionStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LoginSessionState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = null,
+    Object? sessionExpired = null,
+  }) {
+    return _then(_value.copyWith(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      sessionExpired: null == sessionExpired
+          ? _value.sessionExpired
+          : sessionExpired // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$LoginSessionStateImplCopyWith<$Res>
+    implements $LoginSessionStateCopyWith<$Res> {
+  factory _$$LoginSessionStateImplCopyWith(_$LoginSessionStateImpl value,
+          $Res Function(_$LoginSessionStateImpl) then) =
+      __$$LoginSessionStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String userId, bool sessionExpired});
+}
+
+/// @nodoc
+class __$$LoginSessionStateImplCopyWithImpl<$Res>
+    extends _$LoginSessionStateCopyWithImpl<$Res, _$LoginSessionStateImpl>
+    implements _$$LoginSessionStateImplCopyWith<$Res> {
+  __$$LoginSessionStateImplCopyWithImpl(_$LoginSessionStateImpl _value,
+      $Res Function(_$LoginSessionStateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LoginSessionState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = null,
+    Object? sessionExpired = null,
+  }) {
+    return _then(_$LoginSessionStateImpl(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      sessionExpired: null == sessionExpired
+          ? _value.sessionExpired
+          : sessionExpired // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$LoginSessionStateImpl implements _LoginSessionState {
+  const _$LoginSessionStateImpl(
+      {this.userId = '', this.sessionExpired = false});
+
+  factory _$LoginSessionStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LoginSessionStateImplFromJson(json);
+
+  @override
+  @JsonKey()
+  final String userId;
+  @override
+  @JsonKey()
+  final bool sessionExpired;
+
+  @override
+  String toString() {
+    return 'LoginSessionState(userId: $userId, sessionExpired: $sessionExpired)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LoginSessionStateImpl &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.sessionExpired, sessionExpired) ||
+                other.sessionExpired == sessionExpired));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, userId, sessionExpired);
+
+  /// Create a copy of LoginSessionState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LoginSessionStateImplCopyWith<_$LoginSessionStateImpl> get copyWith =>
+      __$$LoginSessionStateImplCopyWithImpl<_$LoginSessionStateImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LoginSessionStateImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _LoginSessionState implements LoginSessionState {
+  const factory _LoginSessionState(
+      {final String userId,
+      final bool sessionExpired}) = _$LoginSessionStateImpl;
+
+  factory _LoginSessionState.fromJson(Map<String, dynamic> json) =
+      _$LoginSessionStateImpl.fromJson;
+
+  @override
+  String get userId;
+  @override
+  bool get sessionExpired;
+
+  /// Create a copy of LoginSessionState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LoginSessionStateImplCopyWith<_$LoginSessionStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

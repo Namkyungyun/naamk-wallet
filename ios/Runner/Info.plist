@@ -48,16 +48,16 @@
 		<key>UIStatusBarHidden</key>
 		<true/>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
-		<true/>
+		<false/>
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>naamk</string> <!-- 이 부분이 scheme 입니다 -->
+					<string>naamk</string>
+					<!-- 이 부분이 scheme 입니다 -->
 				</array>
 			</dict>
 		</array>
-
 	</dict>
 </plist>
