@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:naamk_wallet/app/login/screen.dart';
 import 'package:naamk_wallet/app/main_screen_shell.dart';
 import 'package:naamk_wallet/app/event/screen.dart';
 import 'package:naamk_wallet/app/event/pages/spining_wheel/spinning_wheel_page.dart';
 import 'package:naamk_wallet/app/home/home_screen.dart';
 import 'package:naamk_wallet/app/notice/notice_screen.dart';
 import 'package:naamk_wallet/app/setting/setting_screen.dart';
+import 'package:naamk_wallet/app/splash/screen.dart';
 import 'package:naamk_wallet/app/wallet/wallet_screen.dart';
 import 'package:naamk_wallet/config/presentation/auth_ui/pincode/confirm_page.dart';
 import 'package:naamk_wallet/config/presentation/route/app_route_path.dart';
@@ -16,7 +18,7 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   final GoRouter goRoute = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/home',
+    initialLocation: '/splash',
     redirect: (context, state) {
       // 테마 변경 시 유지되도록
 
@@ -76,10 +78,20 @@ class AppRouter {
         ],
       ),
       GoRoute(
+        path: AppRoute.splash.route,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const SplashScreen(),
+      ),
+      GoRoute(
         path: AppRoute.authConfirm.route,
         parentNavigatorKey: _rootNavigatorKey, // 중요!
         builder: (context, state) => const PincodeConfirmPage(),
       ).fade(),
+      GoRoute(
+        path: AppRoute.login.route,
+        parentNavigatorKey: _rootNavigatorKey,
+        builder: (context, state) => const LoginScreen(),
+      ),
       GoRoute(
         path: AppRoute.eventsRullet.route,
         parentNavigatorKey: _rootNavigatorKey, // 중요!
