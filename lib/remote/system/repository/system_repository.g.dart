@@ -22,6 +22,40 @@ class _SystemRepository implements SystemRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
+  Future<HttpResponse<AppMaintenanceState>> checkAppMaintenance() async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
+    final _options = _setStreamType<HttpResponse<AppMaintenanceState>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/app-maintenance',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(
+            baseUrl: _combineBaseUrls(
+          _dio.options.baseUrl,
+          baseUrl,
+        )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late AppMaintenanceState _value;
+    try {
+      _value = AppMaintenanceState.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    final httpResponse = HttpResponse(_value, _result);
+    return httpResponse;
+  }
+
+  @override
   Future<HttpResponse<LoginSessionState>> getUserLoginSession(
       Map<String, dynamic> req) async {
     final _extra = <String, dynamic>{};

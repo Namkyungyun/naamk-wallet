@@ -6,26 +6,24 @@ import 'package:naamk_wallet/config/feature/exception/dio_exception_mapper.dart'
 import 'package:naamk_wallet/remote/common/states/data_state.dart';
 import 'package:naamk_wallet/remote/system/repository/system_repository.dart';
 import 'package:naamk_wallet/remote/system/repository/system_repository_mock.dart';
-import 'package:naamk_wallet/remote/system/states/feature_state/login_session_state.dart';
+import 'package:naamk_wallet/remote/system/states/feature_state/app_maintenance_state.dart';
 
-class GetUserLoginSession
-    implements BaseUseCase<DataState<LoginSessionState>, String> {
+class CheckAppMaintenance
+    implements
+        BaseUseCase<DataState<AppMaintenanceState>, Map<String, dynamic>?> {
   final SystemRepository _repository;
   final SystemRepositoryMock _repositoryMock;
 
   final DioExceptionMapper _dioException = DioExceptionMapper();
 
-  GetUserLoginSession(this._repository, this._repositoryMock);
+  CheckAppMaintenance(this._repository, this._repositoryMock);
 
   @override
-  Future<DataState<LoginSessionState>> call({required String req}) async {
+  Future<DataState<AppMaintenanceState>> call(
+      {Map<String, dynamic>? req}) async {
     try {
-      final reqBody = {'userId': req};
+      final httpResponse = await _repositoryMock.checkAppMaintenance();
 
-      final httpResponse = await _repositoryMock.getUserLoginSession(reqBody);
-      // final httpResponse =
-      //     await _repository.getUserLoginSession(reqBody);
-      // throw Exception('ddd');
       final int? statusCode = httpResponse.response.statusCode;
       if (statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);

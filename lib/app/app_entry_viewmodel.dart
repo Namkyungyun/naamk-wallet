@@ -7,6 +7,7 @@ import 'package:naamk_wallet/config/presentation/route/app_route_path.dart';
 import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
 import 'package:naamk_wallet/config/presentation/route/app_router.dart';
 import 'package:naamk_wallet/remote/common/states/view_state.dart';
+import 'package:naamk_wallet/remote/system/states/feature_state/app_maintenance_state.dart';
 import 'package:naamk_wallet/remote/system/states/feature_state/login_session_state.dart';
 import 'package:naamk_wallet/remote/system/states/screen_state/app_entry_state.dart';
 import 'package:naamk_wallet/remote/usecases/system_usecases.dart';
@@ -17,7 +18,7 @@ part 'app_entry_viewmodel.g.dart';
 enum AppEntryCheckStatus {
   none,
   checkingMaintenance,
-  checkingUpdate,
+  checkingForceUpdate,
   checkingAppLock,
   checkingLoginSession,
   applock,
@@ -39,6 +40,10 @@ class AppEntryViewModel extends _$AppEntryViewModel
   String get userLoginSessionReq => state.userLoginSessionReq;
   ViewState<LoginSessionState> get userLoginSessionState =>
       state.userLoginSessionRes;
+  ViewState<AppMaintenanceState> get appMaintenanceState =>
+      state.appMaintenanceRes;
+  // ViewState<AppForceUpdateState> get appForceUpdateState =>
+  //     state.appForceUpdateRes;
 
   @override
   AppEntryState build() {
@@ -98,31 +103,58 @@ class AppEntryViewModel extends _$AppEntryViewModel
 
   // 1. 앱 점검 중 확인
   Future<AppEntryCheckStatus?> checkAppMaintenance() async {
-    GlobalLogger.info("[checkAppMaintenance] Start ");
-    final result = await Future.delayed(const Duration(seconds: 1), () {
-      // return AppEntryCheckStatus.checkingMaintenance;
-      return null;
-    });
-    GlobalLogger.info("[checkAppMaintenance] Complete");
+    GlobalLogger.info("[AppEntryCheckStatus] checkAppMaintenance ");
+    AppEntryCheckStatus? result;
 
+    await executeApiCall(
+        request: _domain.checkAppMaintenance.call(req: null),
+        onLoading: () {},
+        onSuccess: (featureState) {
+          final AppMaintenanceState newState = featureState;
+
+          state = state.copyWith(
+              appMaintenanceRes: appMaintenanceState.toComplete(newState));
+
+          result = (newState.isMaintenance)
+              ? AppEntryCheckStatus.checkingMaintenance
+              : null;
+        },
+        onError: (exception) {
+          result = AppEntryCheckStatus.checkingMaintenance;
+          state = state.copyWith(
+              appMaintenanceRes: appMaintenanceState.toError(exception));
+        });
     return result;
   }
 
   // 2. 앱 강제 업데이트 여부 확인
   Future<AppEntryCheckStatus?> checkAppVersionUpdate() async {
-    GlobalLogger.info("[checkAppVersion] Start ");
-    final result = await Future.delayed(const Duration(seconds: 1), () {
-      // return AppEntryCheckStatus.checkingUpdate;
-      return null;
-    });
-    GlobalLogger.info("[checkAppVersion] Complete");
+    GlobalLogger.info("[AppEntryCheckStatus] checkAppVersion ");
+    AppEntryCheckStatus? result;
+
+    // await executeApiCall(
+    //     request: _domain.checkAppForeeUpdate.call(),
+    //     onLoading: () {},
+    //     onSuccess: (featureState) {
+    //       final AppForeceUpdateState newState = featureState;
+
+    //       state = state.copyWith(
+    //           appForceUpdateRes: appForceUpdateState.toComplete(newState));
+
+    //       result = (newState.isForce)
+    //           ? AppEntryCheckStatus.checkingForceUpdate
+    //           : null;
+    //     },
+    //     onError: (exception) {
+    //       result = AppEntryCheckStatus.checkingForceUpdate;
+    //     });
 
     return result;
   }
 
   // 3. 로그인 세션 만료
   Future<AppEntryCheckStatus?> checkUserLoginSession() async {
-    GlobalLogger.info("[checkLoginSession] Start");
+    GlobalLogger.info("[AppEntryCheckStatus] checkLoginSession ");
     AppEntryCheckStatus? result;
     // api connect
     await executeApiCall(
@@ -139,25 +171,18 @@ class AppEntryViewModel extends _$AppEntryViewModel
               : null;
         },
         onError: (exception) {
-          GlobalLogger.info(
-              'confirm !!! : userLoginSessionState + $userLoginSessionState');
           result = AppEntryCheckStatus.checkingLoginSession;
           state = state.copyWith(
               userLoginSessionRes: userLoginSessionState.toError(exception));
         });
-
-    GlobalLogger.info("[checkLoginSession] Complete");
-
     return result;
   }
 
   // 4. app 잠김상태 확인
   Future<AppEntryCheckStatus?> checkAppLock() async {
-    GlobalLogger.info('[checkAppLock] Start');
+    GlobalLogger.info("[AppEntryCheckStatus] checkAppLock ");
 
     final bool savedUseAppLock = SharedPreferencesManipulator.useAppLock;
-
-    GlobalLogger.info('[checkAppLock] Complete');
 
     return savedUseAppLock ? AppEntryCheckStatus.applock : null;
   }

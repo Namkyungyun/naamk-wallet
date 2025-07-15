@@ -24,7 +24,7 @@ class CustomDioException implements Exception {
         detailMessage = 'Request send timeout.';
         break;
       case DioExceptionType.badResponse:
-        detailMessage = handleStatusCode(dioError.response?.statusCode);
+        handleStatusCode(dioError.response?.statusCode);
         break;
       case DioExceptionType.unknown:
         if (dioError.message!.contains('SocketException')) {
@@ -47,38 +47,41 @@ class CustomDioException implements Exception {
     handleStatusCode(statusCode);
   }
 
-  String handleStatusCode(int? statusCode) {
+  void handleStatusCode(int? statusCode) {
     switch (statusCode) {
       case 400:
         appExceptionType = AppExceptionType.badRequest;
-        return 'Bad request.';
+        detailMessage = 'Bad request.';
       case 401:
         appExceptionType = AppExceptionType.unAuthorized;
-        return 'Authentication failed.';
+        detailMessage = 'Authentication failed.';
       case 403:
         appExceptionType = AppExceptionType.forbidden;
-        return 'The authenticated user is not allowed to access the specified API endpoint.';
+        detailMessage =
+            'The authenticated user is not allowed to access the specified API endpoint.';
       case 404:
         appExceptionType = AppExceptionType.notFound;
-        return 'The requested resource does not exist.';
+        detailMessage = 'The requested resource does not exist.';
       case 405:
         appExceptionType = AppExceptionType.methodNotAllowed;
-        return 'Method not allowed. Please check the Allow header for the allowed HTTP methods.';
+        detailMessage =
+            'Method not allowed. Please check the Allow header for the allowed HTTP methods.';
       case 415:
         appExceptionType = AppExceptionType.unsupportedMediaType;
-        return 'Unsupported media type. The requested content type or version number is invalid.';
+        detailMessage =
+            'Unsupported media type. The requested content type or version number is invalid.';
       case 422:
         appExceptionType = AppExceptionType.validationFailed;
-        return 'Data validation failed.';
+        detailMessage = 'Data validation failed.';
       case 429:
         appExceptionType = AppExceptionType.tooManyRequests;
-        return 'Too many requests.';
+        detailMessage = 'Too many requests.';
       case 500:
         appExceptionType = AppExceptionType.internalServerError;
-        return 'Internal server error.';
+        detailMessage = 'Internal server error.';
       default:
         appExceptionType = AppExceptionType.unknownError;
-        return 'Oops something went wrong!';
+        detailMessage = 'Oops something went wrong!';
     }
   }
 

@@ -23,10 +23,9 @@ class GetEventList
   );
 
   @override
-  Future<DataState<EventListState>> call(
-      {required EventBannerReqDto req}) async {
+  Future<DataState<EventListState>> call({EventBannerReqDto? req}) async {
     try {
-      final reqParams = req.toJson();
+      final reqParams = req?.toJson();
       final httpResponse = await _repositoryMock.getEventList(reqParams);
       // final httpResponse = await _repository.getEventList(
       //   req.options,

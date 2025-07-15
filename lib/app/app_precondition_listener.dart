@@ -11,6 +11,7 @@ import 'package:naamk_wallet/config/feature/auth/app_auth_state_manager.dart';
 import 'package:naamk_wallet/config/feature/auth/app_auth_type.dart';
 import 'package:naamk_wallet/config/feature/exception/app_exception_state_manager.dart';
 import 'package:naamk_wallet/remote/common/states/view_state.dart';
+import 'package:naamk_wallet/remote/system/states/feature_state/app_maintenance_state.dart';
 import 'package:naamk_wallet/remote/system/states/feature_state/login_session_state.dart';
 import 'package:naamk_wallet/remote/system/states/screen_state/app_entry_state.dart';
 
@@ -101,17 +102,36 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
         _appEntrySubscription = ref.listenManual<AppEntryState>(
           appEntryViewModelProvider,
           (prev, next) async {
-            GlobalLogger.info('[precondition state] $prev → $next');
+            GlobalLogger.info(
+                '[precondition state] ${prev?.appEntryStatus} → ${next.appEntryStatus}');
             final prevAppEntryStatus = prev?.appEntryStatus;
             final currentAppEntryStatus = next.appEntryStatus;
 
             if (currentAppEntryStatus ==
                 AppEntryCheckStatus.checkingMaintenance) {
-              await showAppMaintenance();
-              return;
+              final ViewState<AppMaintenanceState> viewState =
+                  next.appMaintenanceRes;
+
+              final ResponseStatus responseStatus = viewState.state;
+
+              switch (responseStatus) {
+                case ResponseStatus.COMPLETE:
+                  // 세션 끊겼을 때 연결
+                  await showAppMaintenance();
+                case ResponseStatus.ERROR:
+                  // 에러 연결
+                  Future.microtask(() {
+                    ref
+                        .read(appErrorStateManagerProvider.notifier)
+                        .showError(viewState.exception);
+                  });
+                default:
+                  return;
+              }
             }
 
-            if (currentAppEntryStatus == AppEntryCheckStatus.checkingUpdate) {
+            if (currentAppEntryStatus ==
+                AppEntryCheckStatus.checkingForceUpdate) {
               await showAppForceUpdate();
               return;
             }
