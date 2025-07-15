@@ -22,6 +22,8 @@ mixin _$AppEntryState {
       throw _privateConstructorUsedError;
   ViewState<AppMaintenanceState> get appMaintenanceRes =>
       throw _privateConstructorUsedError;
+  ViewState<AppVersionState> get appVersionRes =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of AppEntryState
   /// with the given fields replaced by the non-null parameter values.
@@ -40,10 +42,12 @@ abstract class $AppEntryStateCopyWith<$Res> {
       {dynamic appEntryStatus,
       String userLoginSessionReq,
       ViewState<LoginSessionState> userLoginSessionRes,
-      ViewState<AppMaintenanceState> appMaintenanceRes});
+      ViewState<AppMaintenanceState> appMaintenanceRes,
+      ViewState<AppVersionState> appVersionRes});
 
   $ViewStateCopyWith<LoginSessionState, $Res> get userLoginSessionRes;
   $ViewStateCopyWith<AppMaintenanceState, $Res> get appMaintenanceRes;
+  $ViewStateCopyWith<AppVersionState, $Res> get appVersionRes;
 }
 
 /// @nodoc
@@ -65,6 +69,7 @@ class _$AppEntryStateCopyWithImpl<$Res, $Val extends AppEntryState>
     Object? userLoginSessionReq = null,
     Object? userLoginSessionRes = null,
     Object? appMaintenanceRes = null,
+    Object? appVersionRes = null,
   }) {
     return _then(_value.copyWith(
       appEntryStatus: freezed == appEntryStatus
@@ -83,6 +88,10 @@ class _$AppEntryStateCopyWithImpl<$Res, $Val extends AppEntryState>
           ? _value.appMaintenanceRes
           : appMaintenanceRes // ignore: cast_nullable_to_non_nullable
               as ViewState<AppMaintenanceState>,
+      appVersionRes: null == appVersionRes
+          ? _value.appVersionRes
+          : appVersionRes // ignore: cast_nullable_to_non_nullable
+              as ViewState<AppVersionState>,
     ) as $Val);
   }
 
@@ -107,6 +116,17 @@ class _$AppEntryStateCopyWithImpl<$Res, $Val extends AppEntryState>
       return _then(_value.copyWith(appMaintenanceRes: value) as $Val);
     });
   }
+
+  /// Create a copy of AppEntryState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ViewStateCopyWith<AppVersionState, $Res> get appVersionRes {
+    return $ViewStateCopyWith<AppVersionState, $Res>(_value.appVersionRes,
+        (value) {
+      return _then(_value.copyWith(appVersionRes: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -121,12 +141,15 @@ abstract class _$$AppEntryStateImplCopyWith<$Res>
       {dynamic appEntryStatus,
       String userLoginSessionReq,
       ViewState<LoginSessionState> userLoginSessionRes,
-      ViewState<AppMaintenanceState> appMaintenanceRes});
+      ViewState<AppMaintenanceState> appMaintenanceRes,
+      ViewState<AppVersionState> appVersionRes});
 
   @override
   $ViewStateCopyWith<LoginSessionState, $Res> get userLoginSessionRes;
   @override
   $ViewStateCopyWith<AppMaintenanceState, $Res> get appMaintenanceRes;
+  @override
+  $ViewStateCopyWith<AppVersionState, $Res> get appVersionRes;
 }
 
 /// @nodoc
@@ -146,6 +169,7 @@ class __$$AppEntryStateImplCopyWithImpl<$Res>
     Object? userLoginSessionReq = null,
     Object? userLoginSessionRes = null,
     Object? appMaintenanceRes = null,
+    Object? appVersionRes = null,
   }) {
     return _then(_$AppEntryStateImpl(
       appEntryStatus:
@@ -162,6 +186,10 @@ class __$$AppEntryStateImplCopyWithImpl<$Res>
           ? _value.appMaintenanceRes
           : appMaintenanceRes // ignore: cast_nullable_to_non_nullable
               as ViewState<AppMaintenanceState>,
+      appVersionRes: null == appVersionRes
+          ? _value.appVersionRes
+          : appVersionRes // ignore: cast_nullable_to_non_nullable
+              as ViewState<AppVersionState>,
     ));
   }
 }
@@ -173,7 +201,8 @@ class _$AppEntryStateImpl implements _AppEntryState {
       {this.appEntryStatus = AppEntryCheckStatus.none,
       this.userLoginSessionReq = '',
       this.userLoginSessionRes = const ViewState<LoginSessionState>(),
-      this.appMaintenanceRes = const ViewState<AppMaintenanceState>()});
+      this.appMaintenanceRes = const ViewState<AppMaintenanceState>(),
+      this.appVersionRes = const ViewState<AppVersionState>()});
 
   @override
   @JsonKey()
@@ -187,10 +216,13 @@ class _$AppEntryStateImpl implements _AppEntryState {
   @override
   @JsonKey()
   final ViewState<AppMaintenanceState> appMaintenanceRes;
+  @override
+  @JsonKey()
+  final ViewState<AppVersionState> appVersionRes;
 
   @override
   String toString() {
-    return 'AppEntryState(appEntryStatus: $appEntryStatus, userLoginSessionReq: $userLoginSessionReq, userLoginSessionRes: $userLoginSessionRes, appMaintenanceRes: $appMaintenanceRes)';
+    return 'AppEntryState(appEntryStatus: $appEntryStatus, userLoginSessionReq: $userLoginSessionReq, userLoginSessionRes: $userLoginSessionRes, appMaintenanceRes: $appMaintenanceRes, appVersionRes: $appVersionRes)';
   }
 
   @override
@@ -205,7 +237,9 @@ class _$AppEntryStateImpl implements _AppEntryState {
             (identical(other.userLoginSessionRes, userLoginSessionRes) ||
                 other.userLoginSessionRes == userLoginSessionRes) &&
             (identical(other.appMaintenanceRes, appMaintenanceRes) ||
-                other.appMaintenanceRes == appMaintenanceRes));
+                other.appMaintenanceRes == appMaintenanceRes) &&
+            (identical(other.appVersionRes, appVersionRes) ||
+                other.appVersionRes == appVersionRes));
   }
 
   @override
@@ -214,7 +248,8 @@ class _$AppEntryStateImpl implements _AppEntryState {
       const DeepCollectionEquality().hash(appEntryStatus),
       userLoginSessionReq,
       userLoginSessionRes,
-      appMaintenanceRes);
+      appMaintenanceRes,
+      appVersionRes);
 
   /// Create a copy of AppEntryState
   /// with the given fields replaced by the non-null parameter values.
@@ -227,11 +262,11 @@ class _$AppEntryStateImpl implements _AppEntryState {
 
 abstract class _AppEntryState implements AppEntryState {
   const factory _AppEntryState(
-          {final dynamic appEntryStatus,
-          final String userLoginSessionReq,
-          final ViewState<LoginSessionState> userLoginSessionRes,
-          final ViewState<AppMaintenanceState> appMaintenanceRes}) =
-      _$AppEntryStateImpl;
+      {final dynamic appEntryStatus,
+      final String userLoginSessionReq,
+      final ViewState<LoginSessionState> userLoginSessionRes,
+      final ViewState<AppMaintenanceState> appMaintenanceRes,
+      final ViewState<AppVersionState> appVersionRes}) = _$AppEntryStateImpl;
 
   @override
   dynamic get appEntryStatus;
@@ -241,6 +276,8 @@ abstract class _AppEntryState implements AppEntryState {
   ViewState<LoginSessionState> get userLoginSessionRes;
   @override
   ViewState<AppMaintenanceState> get appMaintenanceRes;
+  @override
+  ViewState<AppVersionState> get appVersionRes;
 
   /// Create a copy of AppEntryState
   /// with the given fields replaced by the non-null parameter values.

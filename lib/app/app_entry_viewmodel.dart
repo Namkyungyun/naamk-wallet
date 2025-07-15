@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:naamk_wallet/common/utils/logger.dart';
 import 'package:naamk_wallet/config/core/local/shared_preferences_manipulator.dart';
 import 'package:naamk_wallet/config/core/remote/viewmodel_base_apihandler.dart';
@@ -8,6 +10,7 @@ import 'package:naamk_wallet/config/presentation/ui_common_module.dart';
 import 'package:naamk_wallet/config/presentation/route/app_router.dart';
 import 'package:naamk_wallet/remote/common/states/view_state.dart';
 import 'package:naamk_wallet/remote/system/states/feature_state/app_maintenance_state.dart';
+import 'package:naamk_wallet/remote/system/states/feature_state/app_version_state.dart';
 import 'package:naamk_wallet/remote/system/states/feature_state/login_session_state.dart';
 import 'package:naamk_wallet/remote/system/states/screen_state/app_entry_state.dart';
 import 'package:naamk_wallet/remote/usecases/system_usecases.dart';
@@ -42,8 +45,7 @@ class AppEntryViewModel extends _$AppEntryViewModel
       state.userLoginSessionRes;
   ViewState<AppMaintenanceState> get appMaintenanceState =>
       state.appMaintenanceRes;
-  // ViewState<AppForceUpdateState> get appForceUpdateState =>
-  //     state.appForceUpdateRes;
+  ViewState<AppVersionState> get appVersionState => state.appVersionRes;
 
   @override
   AppEntryState build() {
@@ -132,22 +134,29 @@ class AppEntryViewModel extends _$AppEntryViewModel
     GlobalLogger.info("[AppEntryCheckStatus] checkAppVersion ");
     AppEntryCheckStatus? result;
 
-    // await executeApiCall(
-    //     request: _domain.checkAppForeeUpdate.call(),
-    //     onLoading: () {},
-    //     onSuccess: (featureState) {
-    //       final AppForeceUpdateState newState = featureState;
+    await executeApiCall(
+        request: _domain.checkAppVersion
+            .call(req: {'os': Platform.isAndroid ? 'AOS' : 'iOS'}),
+        onLoading: () {},
+        onSuccess: (featureState) {
+          final AppVersionState newState = featureState;
 
-    //       state = state.copyWith(
-    //           appForceUpdateRes: appForceUpdateState.toComplete(newState));
+          state = state.copyWith(
+              appVersionRes: appVersionState.toComplete(newState));
 
-    //       result = (newState.isForce)
-    //           ? AppEntryCheckStatus.checkingForceUpdate
-    //           : null;
-    //     },
-    //     onError: (exception) {
-    //       result = AppEntryCheckStatus.checkingForceUpdate;
-    //     });
+          // 현재버전과 오리진에서 권장 버전이 맞는지 체크
+          final AppVersionState data = appVersionState.data;
+          final latestVersion = data.version;
+          final currentAppVersion = '0.0.0';
+
+          // latestVersion.
+          result = (newState.isForce)
+              ? AppEntryCheckStatus.checkingForceUpdate
+              : null;
+        },
+        onError: (exception) {
+          result = AppEntryCheckStatus.checkingForceUpdate;
+        });
 
     return result;
   }

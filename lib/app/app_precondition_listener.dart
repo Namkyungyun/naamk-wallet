@@ -128,11 +128,32 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
                 default:
                   return;
               }
+
+              return;
             }
 
             if (currentAppEntryStatus ==
                 AppEntryCheckStatus.checkingForceUpdate) {
-              await showAppForceUpdate();
+              final ViewState<AppMaintenanceState> viewState =
+                  next.appMaintenanceRes;
+
+              final ResponseStatus responseStatus = viewState.state;
+
+              switch (responseStatus) {
+                case ResponseStatus.COMPLETE:
+                  // 세션 끊겼을 때 연결
+                  await showAppForceUpdate();
+                case ResponseStatus.ERROR:
+                  // 에러 연결
+                  Future.microtask(() {
+                    ref
+                        .read(appErrorStateManagerProvider.notifier)
+                        .showError(viewState.exception);
+                  });
+                default:
+                  return;
+              }
+
               return;
             }
 

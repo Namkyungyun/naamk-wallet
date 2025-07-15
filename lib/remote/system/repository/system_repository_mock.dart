@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:naamk_wallet/common/utils/logger.dart';
 import 'package:naamk_wallet/remote/system/states/feature_state/app_maintenance_state.dart';
+import 'package:naamk_wallet/remote/system/states/feature_state/app_version_state.dart';
 import 'package:naamk_wallet/remote/system/states/feature_state/login_session_state.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -60,6 +61,30 @@ class SystemRepositoryMock {
     // HttpResponse
     return HttpResponse(response.data, response);
   }
+
+  Future<HttpResponse<AppVersionState?>> checkAppVersion() async {
+    GlobalLogger.info("[API] checkAppForceUpdate");
+
+    // mock data
+    final mockData = appVersionMockData;
+
+    // 500 mock
+    // final response = Response<AppForceUpdateState?>(
+    //   data: null,
+    //   statusCode: 500,
+    //   requestOptions: RequestOptions(path: '/mock/systems/maintenance'),
+    // );
+
+    // 200 mock response
+    final response = Response<AppVersionState>(
+      data: AppVersionState.fromJson(mockData),
+      statusCode: 200,
+      requestOptions: RequestOptions(path: '/mock/systems/version'),
+    );
+
+    // HttpResponse
+    return HttpResponse(response.data, response);
+  }
 }
 
 final userLoginSessionMockData = {
@@ -68,5 +93,11 @@ final userLoginSessionMockData = {
 };
 
 final appMaintenanceMockData = {
-  'isMaintenance': true,
+  'isMaintenance': false,
+};
+
+final appVersionMockData = {
+  'os': 'AOS',
+  'version': '1.0.0',
+  'isForce': false,
 };
