@@ -5,11 +5,14 @@ import 'package:naamk_wallet/app/app_entry_viewmodel.dart';
 import 'package:naamk_wallet/common/utils/logger.dart';
 import 'package:naamk_wallet/common/widgets/empty_appbar_widget.dart';
 import 'package:naamk_wallet/common/widgets/global_loading_widget/global_loading_dot_widget.dart';
-import 'package:naamk_wallet/common/widgets/image_widget.dart';
 import 'package:naamk_wallet/config/core/applifecycle/app_lifecyle_observer.dart';
 import 'package:naamk_wallet/config/feature/auth/app_auth_state.dart';
 import 'package:naamk_wallet/config/feature/auth/app_auth_state_manager.dart';
 import 'package:naamk_wallet/config/feature/auth/app_auth_type.dart';
+import 'package:naamk_wallet/config/feature/exception/app_exception_state_manager.dart';
+import 'package:naamk_wallet/remote/common/states/view_state.dart';
+import 'package:naamk_wallet/remote/system/states/feature_state/login_session_state.dart';
+import 'package:naamk_wallet/remote/system/states/screen_state/app_entry_state.dart';
 
 class AppPreconditionListener extends ConsumerStatefulWidget {
   const AppPreconditionListener({super.key});
@@ -21,7 +24,7 @@ class AppPreconditionListener extends ConsumerStatefulWidget {
 
 class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
     with AppPreconditionRouter {
-  late final ProviderSubscription<AppEntryCheckStatus>? _appEntrySubscription;
+  late final ProviderSubscription<AppEntryState>? _appEntrySubscription;
   late final AppLifecycleObserver? _appLifeCycleObserver;
 
   final _lockThreshold = const Duration(seconds: 5);
@@ -35,7 +38,8 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
   AppEntryViewModel get _appEntryLogic =>
       ref.watch<AppEntryViewModel>(appEntryViewModelProvider.notifier);
 
-  AppAuthState get _appAuthState => ref.watch(appAuthStateManagerProvider);
+  AppAuthState get _appAuthState =>
+      ref.watch<AppAuthState>(appAuthStateManagerProvider);
   AppAuthStateManager get _appAuthLogic => ref.watch<AppAuthStateManager>(
       appAuthStateManagerProvider.notifier); // 최신 상태를 읽기위해서는 read를 사용해야 함.
 
@@ -94,25 +98,51 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
 
       // Frame 이후 안전하게 context 사용
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _appEntrySubscription = ref.listenManual<AppEntryCheckStatus>(
+        _appEntrySubscription = ref.listenManual<AppEntryState>(
           appEntryViewModelProvider,
           (prev, next) async {
             GlobalLogger.info('[precondition state] $prev → $next');
+            final prevAppEntryStatus = prev?.appEntryStatus;
+            final currentAppEntryStatus = next.appEntryStatus;
 
-            if (next == AppEntryCheckStatus.checkingMaintenance) {
+            if (currentAppEntryStatus ==
+                AppEntryCheckStatus.checkingMaintenance) {
               await showAppMaintenance();
               return;
             }
 
-            if (next == AppEntryCheckStatus.checkingUpdate) {
+            if (currentAppEntryStatus == AppEntryCheckStatus.checkingUpdate) {
               await showAppForceUpdate();
               return;
             }
 
+            if (currentAppEntryStatus ==
+                AppEntryCheckStatus.checkingLoginSession) {
+              final ViewState<LoginSessionState> viewState =
+                  next.userLoginSessionRes;
+
+              final ResponseStatus responseStatus = viewState.state;
+
+              switch (responseStatus) {
+                case ResponseStatus.COMPLETE:
+                  // 세션 끊겼을 때 연결
+                  await showLoginSessionExpired();
+                case ResponseStatus.ERROR:
+                  // 에러 연결
+                  Future.microtask(() {
+                    ref
+                        .read(appErrorStateManagerProvider.notifier)
+                        .showError(viewState.exception);
+                  });
+                default:
+                  return;
+              }
+            }
+
             // 다른 상태 처리도 동일하게
-            if (next == AppEntryCheckStatus.applock) {
+            if (currentAppEntryStatus == AppEntryCheckStatus.applock) {
               final AppAuthStatus status =
-                  await _isLockRequiredAfterResume(prev);
+                  await _isLockRequiredAfterResume(prevAppEntryStatus);
 
               if (status == AppAuthStatus.required && mounted) {
                 await showAppAuth();
@@ -133,8 +163,8 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
               return;
             }
 
-            if (next == AppEntryCheckStatus.handlingDeeplink) {
-              _appEntryLogic.runPendingDeeplink();
+            if (currentAppEntryStatus == AppEntryCheckStatus.handlingDeeplink) {
+              _appEntryLogic.runPendingDeeplink(!_showInitUi);
               _appEntryLogic.setEntryCheckStatus(AppEntryCheckStatus.completed);
               return;
             }

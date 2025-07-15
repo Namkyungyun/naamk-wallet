@@ -6,12 +6,12 @@ part of 'app_entry_viewmodel.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appEntryViewModelHash() => r'90aea0305780f66c1ae9031878264d4524ce68a8';
+String _$appEntryViewModelHash() => r'3c410d770e875429b699861ba2ce45f4427a70bd';
 
 /// See also [AppEntryViewModel].
 @ProviderFor(AppEntryViewModel)
-final appEntryViewModelProvider = AutoDisposeNotifierProvider<AppEntryViewModel,
-    AppEntryCheckStatus>.internal(
+final appEntryViewModelProvider =
+    AutoDisposeNotifierProvider<AppEntryViewModel, AppEntryState>.internal(
   AppEntryViewModel.new,
   name: r'appEntryViewModelProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,6 +21,6 @@ final appEntryViewModelProvider = AutoDisposeNotifierProvider<AppEntryViewModel,
   allTransitiveDependencies: null,
 );
 
-typedef _$AppEntryViewModel = AutoDisposeNotifier<AppEntryCheckStatus>;
+typedef _$AppEntryViewModel = AutoDisposeNotifier<AppEntryState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

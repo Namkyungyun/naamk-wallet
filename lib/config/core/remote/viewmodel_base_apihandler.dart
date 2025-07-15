@@ -1,3 +1,4 @@
+import 'package:naamk_wallet/common/utils/logger.dart';
 import 'package:naamk_wallet/config/feature/exception/app_exception_state.dart';
 import 'package:naamk_wallet/remote/common/states/data_state.dart';
 
@@ -15,14 +16,21 @@ mixin ViewModelBaseApiHandler {
         onSuccess(result.data as T);
       } else if (result is DataFailed<T> && result.error != null) {
         onError(result.error!);
+        return;
       } else {
         onError(
           const AppExceptionState(
-              code: 'NULL_STATE', message: 'No data returned'),
+              code: 'ERROR', message: 'No feature state returned'),
         );
+        return;
       }
     } catch (e) {
-      onError(AppExceptionState(code: 'EXCEPTION', message: e.toString()));
+      GlobalLogger.error(
+          '[ViewModelBaseApiHandler] invoked error !!\n${e.toString()}');
+      onError(const AppExceptionState(
+        code: 'ERROR',
+        message: 'Invoked internal app error!',
+      ));
     }
   }
 }

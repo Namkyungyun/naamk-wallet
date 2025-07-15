@@ -1,0 +1,25 @@
+import 'package:dio/dio.dart';
+import 'package:naamk_wallet/remote/system/states/feature_state/login_session_state.dart';
+import 'package:retrofit/retrofit.dart';
+
+part 'system_repository.g.dart';
+
+@RestApi()
+abstract class SystemRepository {
+  factory SystemRepository(Dio dio) = _SystemRepository;
+
+  // @GET("/app-maintenance")
+  // Future<HttpResponse<AppMaintenanceState>> getAppMaintenanceInfo(
+  //   @Queries() Map<String, String>? req,
+  // );
+
+  // @GET("/app-version")
+  // Future<HttpResponse<AppVersionState>> getAppVersionInfo(
+  //   @Queries() Map<String, String>? req,
+  // );
+
+  @POST("/login-session")
+  Future<HttpResponse<LoginSessionState>> getUserLoginSession(
+    @Body() Map<String, dynamic> req,
+  );
+}
