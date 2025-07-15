@@ -34,6 +34,8 @@ class DeeplinkEntryHandler {
     _pendingDeeplink = uri;
   }
 
+  static bool get existPendingDeeplink => _pendingDeeplink != null;
+
   static void consumePendingDeeplink() {
     if (_pendingDeeplink == null) return;
 

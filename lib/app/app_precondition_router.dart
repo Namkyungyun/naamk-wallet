@@ -33,6 +33,19 @@ mixin AppPreconditionRouter<T extends ConsumerStatefulWidget>
     }
   }
 
+  Future<void> showLoginSessionExpired() async {
+    if (_currentcontext != null) {
+      await showDialog(
+        context: _currentcontext,
+        builder: (_) => const AlertDialog(
+          title: Text("로그인 세션 만료"),
+          content: Text("로그인 세션이 만료되었습니다.\n재로그인이 필요합니다."),
+        ),
+      );
+      _currentcontext.go('/login');
+    }
+  }
+
   Future<void> showAppAuth() async {
     if (_currentcontext != null) {
       await _currentcontext.push(AppRoute.authConfirm.route);

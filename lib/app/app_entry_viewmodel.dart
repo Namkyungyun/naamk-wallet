@@ -36,7 +36,7 @@ class AppEntryViewModel extends _$AppEntryViewModel {
   // 앱 최초 열렸을 때에 체크
   void onInit() {
     _initDeeplinkListener();
-    runAppEntryCheckList();
+    runAppEntryCheckList(false);
   }
 
   /// deeplink
@@ -44,12 +44,19 @@ class AppEntryViewModel extends _$AppEntryViewModel {
     DeeplinkEntryHandler.init(getRouter);
   }
 
-  void runPendingDeeplink() {
-    DeeplinkEntryHandler.consumePendingDeeplink();
+  void runPendingDeeplink(bool initialized) {
+    final bool exist = DeeplinkEntryHandler.existPendingDeeplink;
+    if (exist) {
+      DeeplinkEntryHandler.consumePendingDeeplink();
+    } else {
+      if (!initialized) {
+        getRouter.go(AppGnbRoute.home.route);
+      }
+    }
   }
 
   /// 앱 점검 리스트
-  Future<void> runAppEntryCheckList() async {
+  Future<void> runAppEntryCheckList(bool initialized) async {
     AppEntryCheckStatus? showStatus;
 
     showStatus ??= await checkAppMaintenance();

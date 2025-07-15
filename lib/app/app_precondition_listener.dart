@@ -72,7 +72,7 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
             _showInitUi = false;
             _appEntryLogic.setEntryCheckStatus(AppEntryCheckStatus.none);
           }
-          _appEntryLogic.runAppEntryCheckList();
+          _appEntryLogic.runAppEntryCheckList(!_showInitUi);
         }
       },
     );
@@ -177,38 +177,11 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
 
   @override
   Widget build(BuildContext context) {
-    // 1차 분기 :: initial > 스플래시 화면과 같이 진행 ?
-    // !initial && checkMaintenanace, checkAppversion, ... > loading 화면
-    // completed :: SizedBox.shrink()
-
     final AppEntryCheckStatus status =
-        ref.watch<AppEntryCheckStatus>(appEntryViewModelProvider);
+        ref.watch<AppEntryState>(appEntryViewModelProvider).appEntryStatus;
 
-    GlobalLogger.info('[!!!!!!!!!!!!!!!!!!!!!!!!] $_showInitUi $status');
-
-    if (_showInitUi) {
-      if (status == AppEntryCheckStatus.applock ||
-          status == AppEntryCheckStatus.completed) {
-        return const SizedBox.shrink(); // UI 없음
-      }
-
-      return const Scaffold(
-        appBar: EmptyAppbarWidget(),
-        backgroundColor: Colors.white,
-        body: Center(
-          child: ImageWidget(
-            imageName: 'init_icon.gif',
-            type: ImageType.asset,
-            size: Size(120, 120),
-          ),
-        ),
-      );
-    } else {
-      if (status == AppEntryCheckStatus.applock ||
-          status == AppEntryCheckStatus.completed) {
-        return const SizedBox.shrink(); // UI 없음
-      }
-
+    if (!_showInitUi && status == AppEntryCheckStatus.none) {
+      // 로딩 화면
       return Scaffold(
         appBar: const EmptyAppbarWidget(),
         backgroundColor: Theme.of(context).shadowColor,
@@ -220,5 +193,7 @@ class _AppEntryStatusListener extends ConsumerState<AppPreconditionListener>
         ),
       );
     }
+
+    return const SizedBox.shrink(); // UI 없음
   }
 }
